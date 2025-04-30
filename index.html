@@ -84,14 +84,18 @@
   </style>
   <script>
     let activated = false;
+let firstLoad = true;
 
     window.addEventListener('DOMContentLoaded', () => {
       const logo = document.querySelector('.logo-fixed');
       const grid = document.querySelector('.grid');
 
-      if (!activated) {
+      if (!activated && firstLoad) {
+        firstLoad = false;
         logo.classList.add('logo-centered');
+        logo.style.opacity = '0';
         setTimeout(() => {
+          logo.style.opacity = '1';
           logo.classList.remove('logo-centered');
           grid.style.opacity = 1;
           activated = true;
