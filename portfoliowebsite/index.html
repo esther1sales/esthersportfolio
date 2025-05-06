@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esther's Portfolio</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background-color: #c61e3b;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 32 32"><polygon points="0,0 32,16 0,32" fill="white"/></svg>') 0 0, auto;
+    }
+
+    .logo-container {
+      position: relative;
+      padding: 40px;
+      cursor: pointer;
+    }
+
+    .logo-container img {
+      max-width: 300px;
+      width: 80vw;
+      height: auto;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .logo-container:hover img {
+      transform: scale(1.05);
+    }
+
+    .lines {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .line {
+      position: absolute;
+      background-color: #fdf1dd;
+      transition: transform 0.6s ease;
+      pointer-events: none;
+    }
+
+    .line-top, .line-bottom {
+      height: 2px;
+      width: 100%;
+      left: 0;
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+
+    .line-top { top: 0; }
+    .line-bottom { bottom: 0; }
+
+    .line-left, .line-right {
+      width: 2px;
+      height: 100%;
+      top: 0;
+      transform: scaleY(0);
+      transform-origin: top;
+    }
+
+    .line-left { left: 0; }
+    .line-right { right: 0; }
+
+    .logo-container.animate .line-top,
+    .logo-container:hover .line-top,
+.logo-container:hover .line-bottom {
+  transform: scaleX(1);
+}
+
+    .logo-container.animate .line-left,
+    .logo-container:hover .line-left,
+.logo-container:hover .line-right {
+  transform: scaleY(1);
+}
+  </style>
+  
+</head>
+<body>
+  <div class="logo-container" onclick="window.location.href='main.html'">
+    <img src="loogos/mylogocream.png" alt="Esther Sales Logo">
+    <div class="lines">
+      <div class="line line-top"></div>
+      <div class="line line-bottom"></div>
+      <div class="line line-left"></div>
+      <div class="line line-right"></div>
+    </div>
+  </div>
+</body>
+</html>

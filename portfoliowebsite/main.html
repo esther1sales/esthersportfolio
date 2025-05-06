@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Esther Sales</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esther Sales — Main</title>
+  <link href="https://fonts.googleapis.com/css2?family=Axia&family=Ellery&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --cream: #fdf1dd;
+      --red: #c61e3b;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -12,109 +18,284 @@
     }
 
     html, body {
-      height: 100%;
-      background-color: #c61e3b;
-      color: #fdf1dd;
-      font-family: sans-serif;
-      overflow-x: hidden;
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 32 32"><polygon points="0,0 32,16 0,32" fill="%23c61e3b"/></svg>') 0 0, auto;
+      background-color: var(--cream);
+      color: var(--red);
+      font-family: 'Axia', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      padding-top: 160px;
     }
 
     .logo-fixed {
       position: fixed;
-      top: 20px;
-      left: 20px;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      text-align: center;
+      background-color: var(--cream);
+      padding: 20px 0;
+      width: 100%;
+    }
+
+    .logo-fixed img {
       width: 80px;
-      z-index: 10;
-      transform: translate(0, 0) scale(1);
-      transition: transform 0.5s ease, opacity 0.5s ease;
+    }
+
+    .logo-fixed .line {
+      margin-top: 10px;
+      width: 100vw;
+      height: 2px;
+      background-color: var(--red);
+    }
+
+    header {
+      text-align: center;
+    }
+
+    header h1 {
+      font-family: 'Ellery', serif;
+      font-size: 64px;
+      margin-bottom: 30px;
+    }
+
+    .filters {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .filters button {
+      border: 1px solid var(--red);
+      background: transparent;
+      color: var(--red);
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: bold;
+      margin: 5px;
       cursor: pointer;
     }
 
-    .logo-centered {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(3);
-      opacity: 1;
+    .filters button:hover {
+      background-color: var(--red);
+      color: var(--cream);
     }
 
-    .hidden {
-      display: none;
-    }
-
-    .grid {
+    .project-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      padding: 120px 40px 40px;
-      opacity: 0;
-      transition: opacity 0.5s ease;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+      padding: 20px 40px 80px;
     }
 
-    .tile {
-      background-color: #fdf1dd;
-      color: #c61e3b;
-      padding: 40px;
-      border-radius: 8px;
-      font-size: 1.2rem;
-      font-weight: bold;
+    .project {
       text-align: center;
+      border: 2px solid var(--red);
+      padding: 16px;
+      border-radius: 12px;
       transition: transform 0.3s ease;
       cursor: pointer;
     }
 
-    .tile:hover {
-      transform: scale(1.05);
+    .project:hover {
+      transform: scale(1.02);
     }
 
-    @media (max-width: 600px) {
-      .tile {
-        padding: 20px;
-        font-size: 1rem;
-      }
-      .logo-fixed {
-        width: 60px;
-      }
+    .project img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .project .label {
+      font-size: 10px;
+      text-transform: uppercase;
+      margin-top: 15px;
+    }
+
+    .project h2 {
+      font-family: 'Ellery', serif;
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+
+    .project[data-category] {
+      display: none;
+    }
+
+    .project.show {
+      display: block;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: var(--cream);
+      width: 90%;
+      max-width: 1000px;
+      display: flex;
+      gap: 40px;
+      padding: 40px;
+      border-radius: 8px;
+    }
+
+    .modal-text {
+      flex: 1;
+    }
+
+    .modal-text h2 {
+      font-family: 'Ellery', serif;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .modal-text h3 {
+      font-family: 'Ellery', serif;
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .modal-text p {
+      font-family: 'Axia', sans-serif;
+      font-size: 14px;
+    }
+
+    .modal-images {
+      flex: 1;
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+
+    .modal-images img {
+      width: 100%;
+      margin-bottom: 16px;
+      border-radius: 4px;
     }
   </style>
   <script>
-    let activated = false;
-
     window.addEventListener('DOMContentLoaded', () => {
-      const logo = document.querySelector('.logo-fixed');
-      const grid = document.querySelector('.grid');
+      const buttons = document.querySelectorAll('.filters button');
+      const projects = document.querySelectorAll('.project');
+      const modal = document.getElementById('projectModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalDesc = document.getElementById('modalDesc');
+      const modalImages = document.getElementById('modalImages');
 
-      if (!activated) {
-        logo.classList.add('logo-centered');
-        setTimeout(() => {
-          logo.classList.remove('logo-centered');
-          grid.style.opacity = 1;
-          activated = true;
-        }, 100);
+      function filterProjects(category) {
+        projects.forEach(project => {
+          if (category === 'all' || project.dataset.category === category) {
+            project.classList.add('show');
+          } else {
+            project.classList.remove('show');
+          }
+        });
       }
 
-      logo.addEventListener('click', () => {
-        grid.style.opacity = 0;
-        logo.classList.add('logo-centered');
-        setTimeout(() => {
-          grid.style.display = 'none';
-          logo.classList.remove('logo-centered');
-          grid.style.opacity = 1;
-        }, 600);
+      buttons.forEach(button => {
+        button.addEventListener('click', () => {
+          const category = button.dataset.filter;
+          filterProjects(category);
+        });
       });
+
+      projects.forEach(project => {
+        project.addEventListener('click', () => {
+          modalTitle.textContent = project.querySelector('h2').textContent;
+          modalDesc.innerHTML = `<p>This project was proposed in a course called Strategic Branding during my bachelor's at OCAD University</p>
+          <br></br>
+          <h3>Startup: A new film company begins operations.</h3> 
+          <p></p>`;
+          const imageList = project.dataset.images ? project.dataset.images.trim().split(',') : [];
+modalImages.innerHTML = imageList.map(src => `<img src="${src.trim()}" alt="${modalTitle.textContent}">`).join('');
+          modal.style.display = 'flex';
+        });
+      });
+
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.style.display = 'none';
+      });
+
+      filterProjects('all');
     });
   </script>
 </head>
 <body>
-  <img src="mylogocream.png" alt="Esther Sales Logo" class="logo-fixed" />
+  <div class="logo-fixed">
+    <img src="loogos/peersonalloogolight-02.png" alt="Esther Sales Logo">
+    <div class="line"></div>
+  </div>
 
-  <div class="grid">
-    <div class="tile">Branding & Packaging</div>
-    <div class="tile">Publications</div>
-    <div class="tile">Printed Matter</div>
-    <div class="tile">Websites</div>
-    <div class="tile">Case Studies</div>
-    <div class="tile">Posters</div>
+  <div style="display: flex; flex-direction: row; gap: 40px; padding: 40px;">
+  <section id="resume" style="flex: 1; max-width: 500px;">
+    <header>
+      <h1>RESUME.</h1>
+      <p style="font-size: 14px;">Esther Sales is a multidisciplinary designer with a focus on editorial, branding, and interactive work. Download my full CV <a href="#" style="color: var(--red); text-decoration: underline;">here</a>.</p>
+    </header>
+  </section>
+
+  <section id="work" style="flex: 2;">
+    <header>
+      <h1>WORK.</h1>
+      <div class="filters">
+        <button data-filter="all">All</button>
+        <button data-filter="branding">Branding</button>
+        <button data-filter="publications">Publications</button>
+        <button data-filter="websites">Websites</button>
+        <button data-filter="posters">Posters</button>
+      </div>
+    </header>
+
+  <section class="project-grid">
+  <div class="project" data-category="branding" data-description="This project was proposed in a course called Strategic Branding during my bachelor's at OCAD University" data-images="poetry/poetry4website-01.jpg,poetry/poetry4website-02.jpg,poetry/poetry4website-03.jpg,poetry/poetry4website-04.jpg,poetry/poetry4website-05.jpg,poetry/poetry4website-06.jpg,poetry/poetry4website-07.jpg">
+    <img src="poetry/poetry4website-01.jpg" alt="Project 1">
+    <p class="label">Branding</p>
+    <h2>Poetry Films Inc.</h2>
+  </div>
+
+  <div class="project" data-category="branding" data-description="This branding project critiques overconsumption through satirical visuals and powerful messaging." data-images="posters/howmuch1.jpg,posters/howmuch2.jpg">
+    <img src="posters/howmuch1.jpg" alt="Project 2">
+    <p class="label">Posters</p>
+    <h2>How Much is Too Much?</h2>
+  </div>
+
+  <div class="project" data-category="websites" data-description="An interactive timeline website showcasing visual storytelling." data-images="https://via.placeholder.com/600x404,https://via.placeholder.com/600x405">
+    <img src="https://via.placeholder.com/600x400" alt="Project 3">
+    <p class="label">Websites</p>
+    <h2>Interactive Timeline</h2>
+  </div>
+
+  <div class="project" data-category="posters" data-description="Poster design for a music and arts festival in São Paulo." data-images="https://via.placeholder.com/600x406,https://via.placeholder.com/600x407">
+    <img src="https://via.placeholder.com/600x400" alt="Project 4">
+    <p class="label">Posters</p>
+    <h2>Festival Promo Poster</h2>
+  </div>
+</section>
+    </section>
+  </div>
+
+<div class="modal" id="projectModal">
+    <div class="modal-content">
+      <div class="modal-text">
+        <h2 id="modalTitle">Title</h2>
+        <div id="modalDesc"></div>
+      </div>
+      <div class="modal-images" id="modalImages"></div>
+    </div>
   </div>
 </body>
 </html>
