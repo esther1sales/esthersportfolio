@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Esther Sales — Main</title>
   <link href="https://fonts.googleapis.com/css2?family=Axia&family=Ellery&display=swap" rel="stylesheet">
   <style>
@@ -98,6 +98,10 @@
       border-radius: 12px;
       transition: transform 0.3s ease;
       cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      height: auto;
     }
 
     .project:hover {
@@ -165,10 +169,11 @@
     }
 
     .modal-text h3 {
-      font-family: 'Ellery', serif;
-      font-size: 20px;
-      margin-bottom: 10px;
-    }
+  font-family: 'Ellery', serif;
+  font-size: 20px;
+  margin: 20px 0 10px;
+}
+
 
     .modal-text p {
       font-family: 'Axia', sans-serif;
@@ -215,13 +220,13 @@
 
       projects.forEach(project => {
         project.addEventListener('click', () => {
-          modalTitle.textContent = project.querySelector('h2').textContent;
-          modalDesc.innerHTML = `<p>This project was proposed in a course called Strategic Branding during my bachelor's at OCAD University</p>
-          <br></br>
-          <h3>Startup: A new film company begins operations.</h3> 
-          <p></p>`;
+          const title = project.querySelector('h2').textContent;
+          const description = project.dataset.description || '';
           const imageList = project.dataset.images ? project.dataset.images.trim().split(',') : [];
-modalImages.innerHTML = imageList.map(src => `<img src="${src.trim()}" alt="${modalTitle.textContent}">`).join('');
+
+          modalTitle.textContent = title;
+          modalDesc.innerHTML = description;
+          modalImages.innerHTML = imageList.map(src => `<img src="${src.trim()}" alt="${title}">`).join('');
           modal.style.display = 'flex';
         });
       });
@@ -241,54 +246,44 @@ modalImages.innerHTML = imageList.map(src => `<img src="${src.trim()}" alt="${mo
   </div>
 
   <div style="display: flex; flex-direction: row; gap: 40px; padding: 40px;">
-  <section id="resume" style="flex: 1; max-width: 500px;">
-    <header>
-      <h1>RESUME.</h1>
-      <p style="font-size: 14px;">Esther Sales is a multidisciplinary designer with a focus on editorial, branding, and interactive work. Download my full CV <a href="#" style="color: var(--red); text-decoration: underline;">here</a>.</p>
-    </header>
-  </section>
+    <section id="resume" style="flex: 1; max-width: 500px;">
+      <header>
+        <h1>RESUME.</h1>
+        <p style="font-size: 14px;">Esther Sales is a multidisciplinary designer with a focus on editorial, branding, and interactive work. Download my full CV <a href="#" style="color: var(--red); text-decoration: underline;">here</a>.</p>
+      </header>
+    </section>
 
-  <section id="work" style="flex: 2;">
-    <header>
-      <h1>WORK.</h1>
-      <div class="filters">
-        <button data-filter="all">All</button>
-        <button data-filter="branding">Branding</button>
-        <button data-filter="publications">Publications</button>
-        <button data-filter="websites">Websites</button>
-        <button data-filter="posters">Posters</button>
-      </div>
-    </header>
+    <section id="work" style="flex: 2;">
+      <header>
+        <h1>WORK.</h1>
+        <div class="filters">
+          <button data-filter="all">All</button>
+          <button data-filter="branding">Branding</button>
+          <button data-filter="publications">Publications</button>
+          <button data-filter="websites">Websites</button>
+          <button data-filter="posters">Posters</button>
+        </div>
+      </header>
 
-  <section class="project-grid">
-  <div class="project" data-category="branding" data-description="This project was proposed in a course called Strategic Branding during my bachelor's at OCAD University" data-images="poetry/poetry4website-01.jpg,poetry/poetry4website-02.jpg,poetry/poetry4website-03.jpg,poetry/poetry4website-04.jpg,poetry/poetry4website-05.jpg,poetry/poetry4website-06.jpg,poetry/poetry4website-07.jpg">
-    <img src="poetry/poetry4website-01.jpg" alt="Project 1">
-    <p class="label">Branding</p>
-    <h2>Poetry Films Inc.</h2>
-  </div>
-
-  <div class="project" data-category="branding" data-description="This branding project critiques overconsumption through satirical visuals and powerful messaging." data-images="posters/howmuch1.jpg,posters/howmuch2.jpg">
-    <img src="posters/howmuch1.jpg" alt="Project 2">
-    <p class="label">Posters</p>
-    <h2>How Much is Too Much?</h2>
-  </div>
-
-  <div class="project" data-category="websites" data-description="An interactive timeline website showcasing visual storytelling." data-images="https://via.placeholder.com/600x404,https://via.placeholder.com/600x405">
-    <img src="https://via.placeholder.com/600x400" alt="Project 3">
-    <p class="label">Websites</p>
-    <h2>Interactive Timeline</h2>
-  </div>
-
-  <div class="project" data-category="posters" data-description="Poster design for a music and arts festival in São Paulo." data-images="https://via.placeholder.com/600x406,https://via.placeholder.com/600x407">
-    <img src="https://via.placeholder.com/600x400" alt="Project 4">
-    <p class="label">Posters</p>
-    <h2>Festival Promo Poster</h2>
-  </div>
-</section>
+      <section class="project-grid">
+        <div class="project" data-category="branding"
+          data-description="<h3>About</h3>
+          <p>This project was proposed in a course called Strategic Branding during my bachelor's at OCAD University.</p>
+          <h3>Challenge</h3>
+          <p>Establish a visual identity for a startup film company.</p>
+          <h3>Positioning & Attributes</h3>
+          <p>Entertaining art.
+            Our canvas is the screen, our palette is life. Poetry is committed to creating provocative, intelligent movies that entertain. We will partner with the brightest and most talented artists, writers, directors, actors and others to create movies that will be seen as iconic and classic movies of their era. </p>"
+          data-images="poetry/poetry4website-01.jpg,poetry/poetry4website-02.jpg,poetry/poetry4website-03.jpg,poetry/poetry4website-04.jpg,poetry/poetry4website-05.jpg,poetry/poetry4website-06.jpg,poetry/poetry4website-07.jpg">
+          <img src="poetry/poetry4website-01.jpg" alt="Poetry Films Inc.">
+          <p class="label">Branding</p>
+          <h2>Poetry Films Inc.</h2>
+        </div>
+      </section>
     </section>
   </div>
 
-<div class="modal" id="projectModal">
+  <div class="modal" id="projectModal">
     <div class="modal-content">
       <div class="modal-text">
         <h2 id="modalTitle">Title</h2>
