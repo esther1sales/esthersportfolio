@@ -107,10 +107,17 @@
     .project:hover {
       transform: scale(1.02);
     }
-
+    .resume h2 {
+      font-family: 'Ellery', serif;
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 8px;
+      text-align: left;
+    }
     .project img {
       width: 100%;
-      height: auto;
+      aspect-ratio: 4 / 3; /* same shape as Poetry thumbnail */
+      object-fit: cover;
       border-radius: 8px;
     }
 
@@ -174,7 +181,12 @@
   margin: 20px 0 10px;
 }
 
-
+  .title-resume {
+    font-family: 'Ellery', serif;
+  font-size: 20px;
+  margin: 20px 0 14px;
+  text-align: left;
+  }
     .modal-text p {
       font-family: 'Axia', sans-serif;
       font-size: 14px;
@@ -250,8 +262,14 @@
     <section id="resume" style="flex: 1; max-width: 500px;">
       <header>
         <h1>RESUMÉ.</h1>
-        <p style="font-size: 14px;">Esther Sales is a multidisciplinary designer with a focus on editorial, branding, and interactive work. Download my full CV <a href="#" style="color: var(--red); text-decoration: underline;">here</a>.</p>
-      </header>
+        <h2 class="title-resume">About Me</h2>
+        <p style="font-size: 14px; text-align: justify;">I’m Esther, a Brazilian Toronto-based Graphic Designer.
+          I consider myself a generalist graphic designer as I am very adaptable and use my psychology and digital marketing background to build unique, captivating and accessible designs.
+          I dedicate myself to being a hard-working, organized artist with a good sense of professionalism, and I am passionate about all areas of visual arts. I am currently focusing on building a diverse skill set as a fourth year, and I am looking forward to graduating  from OCAD Univerisy in the spring of 2025.</p>
+          <h2 class="title-resume">Education</h2>
+          <li style="font-family: 'Ellery', serif; text-align: left; font-size: 12pt; font-weight: bold;">2018-2020</li>
+          <p style="text-align:left; margin-top:5px;">BACHELOR IN PSYCHOLOGY</p>
+        </header>
     </section>
 
     <section id="work" style="flex: 2;">
@@ -284,16 +302,11 @@
         </div>
         <div class="project" data-category="posters"
         data-description="<h3>About</h3>
-        <p>As part of the second course of Graphic Design at OCAD University, we were challenged to create a poster without using Adobe Cloud or any other design focused tools. The assignment was meant to </p>
-        <h3>Challenge</h3>
-        <p>Establish a visual identity for a startup film company.</p>
-        <h3>Positioning & Attributes</h3>
-        <p>Entertaining art.
-          Our canvas is the screen, our palette is life. Poetry is committed to creating provocative, intelligent movies that entertain. We will partner with the brightest and most talented artists, writers, directors, actors and others to create movies that will be seen as iconic and classic movies of their era. </p>
-          <h3>Logo Design Concept</h3>
-          <p>This logo emphasizes the Key Attribute of being Classic, while also incorporating two Valued Attributes: Smart and Sophisticated. The icon at the center represents a camera lens, and the two smaller elements are stylized quotation marks. These marks were derived from the classic calligraphic typeface Parfumerie Script, referencing the iconic “The End” often seen in vintage films. The chosen color palette—featuring red/orange and blue/green—pays homage to Kinemacolor, one of the earliest color processes used in cinema.</p>"
-        data-images="poetry/poetry4website-01.jpg,poetry/poetry4website-02.jpg,poetry/poetry4website-03.jpg,poetry/poetry4website-04.jpg,poetry/poetry4website-05.jpg,poetry/poetry4website-06.jpg,poetry/poetry4website-07.jpg">
-        <img src="poetry/poetry4website-01.jpg" alt="Poetry Films Inc.">
+        <p>As part of the second course of Graphic Design at OCAD University, we were challenged to create a poster without using Adobe Cloud or any other design focused tools. The assignment was meant to build our skills beyond the conventional practices and incentivise us to be resourceful when faced with limitations within our usual tools.</p>
+        <h3>Concept</h3>
+        <p>Using a barcode generator and PowerPoint, I assembled various posters made with the barcodes, which were created by removing words from the essay The Carrier Bag Theory of Fiction by Ursula K. Le Guin, as a metaphor to functionality or weapons in modern days.</p>"
+        data-images=" howmuchistoomuch/hmitm-03.jpg,howmuchistoomuch/hmitm-01.jpg,howmuchistoomuch/hmitm-02.jpg,howmuchistoomuch/howmuchistoomuchfinal.jpg">
+        <img src="howmuchistoomuch/Slide9.png" alt="How Much Is Too Much">
         <p class="label">Poster</p>
         <h2>How Much Is Too Much?</h2>
       </div>
