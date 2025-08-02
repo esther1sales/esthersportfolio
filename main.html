@@ -61,8 +61,8 @@
 
     header h1 {
       font-family: "ivyora-display", serif;
-    font-weight: 700;
-    font-style: normal;
+      font-weight: 700;
+      font-style: normal;
       font-size: 64px;
       margin-bottom: 30px;
     }
@@ -112,13 +112,15 @@
     .project:hover {
       transform: scale(1.02);
     }
+
     .resume h2 {
       font-family: "ivyora-display", serif;
-    font-weight: 700;
-    font-style: normal;
+      font-weight: 700;
+      font-style: normal;
       margin-top: 8px;
       text-align: left;
     }
+
     .project img {
       width: 100%;
       aspect-ratio: 4 / 3; 
@@ -169,6 +171,7 @@
       gap: 40px;
       padding: 40px;
       border-radius: 8px;
+      overflow: hidden; /* Added to prevent scrollbars from changing layout */
     }
 
     .modal-text {
@@ -191,18 +194,19 @@
       margin: 20px 0 10px;
     }
 
-  .title-resume {
-    font-family: "ivyora-display", serif;
-    font-weight: 700;
-    font-style: normal;
-    font-size: 20px;
-    margin: 20px 0 14px;
-    text-align: left;
+    .title-resume {
+      font-family: "ivyora-display", serif;
+      font-weight: 700;
+      font-style: normal;
+      font-size: 20px;
+      margin: 20px 0 14px;
+      text-align: left;
     }
+
     .modal-text p {
       font-family: Axia, sans-serif;
       font-weight: 400;
-    font-style: normal;
+      font-style: normal;
       font-size: 14px;
       text-align: justify;
     }
@@ -211,7 +215,20 @@
       flex: 1;
       max-height: 60vh;
       overflow-y: auto;
+      overflow-x: hidden;
+      box-sizing: content-box;
+      padding-right: 10px;
     }
+
+    .modal-images::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .modal-images::-webkit-scrollbar-thumb {
+      background-color: var(--red);
+      border-radius: 4px;
+    }
+
     .yearsref {
       font-family: "ivyora-display", serif;
       text-align: left; 
