@@ -297,10 +297,29 @@ header h1{
     padding-right: 0;
   }
 }
-/* lock background scroll when modal is open */
 body.modal-open {
   overflow: hidden;
   touch-action: none;
+}
+#resume {
+  padding-left: clamp(16px, 4vw, 40px);
+  padding-right: clamp(16px, 4vw, 40px);
+}
+@media (max-width: 1050px) {
+  .page {
+    justify-content: center;
+  }
+
+  #resume {
+    flex: 0 0 100% !important;     
+    max-width: 780px;             
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #work {
+    flex: 0 0 100% !important;
+  }
 }
 
   </style>
@@ -360,8 +379,6 @@ body.modal-open {
     <img src="loogos/peersonalloogolight-02.png" alt="Esther Sales Logo">
     <div class="line"></div>
   </div>
-
-  <!-- <div style="display: flex; flex-direction: row; gap: 40px; padding: 40px;"> -->
     <div class="page" style="display: flex; flex-direction: row; gap: 40px; padding: 40px;">
     <section id="resume" style="flex: 1; max-width: 500px;">
       <header>
