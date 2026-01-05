@@ -251,6 +251,58 @@
       margin-bottom: 16px;
       border-radius: 4px;
     }
+    /* --- RESPONSIVE PROPORTIONAL LAYOUT (no scaling/zoom) --- */
+
+.page{
+  max-width: 1400px;              /* keeps your “designed” feel on large screens */
+  margin: 0 auto;
+  padding: clamp(16px, 3vw, 40px) !important;
+  gap: clamp(16px, 3vw, 40px) !important;
+  flex-wrap: wrap;                /* allows stacking when needed */
+}
+
+/* allow columns to shrink proportionally */
+#resume{
+  flex: 1 1 380px !important; 
+  max-width: 520px;
+}
+
+#work{
+  flex: 2 1 520px !important;
+  min-width: 360px;
+}
+
+header h1{
+  font-size: clamp(40px, 5vw, 64px);
+}
+
+.project-grid{
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: clamp(18px, 3vw, 40px);
+  padding: 20px 0 80px;           
+}
+
+@media (max-width: 900px){
+  .modal-content{
+    flex-direction: column;
+    gap: 20px;
+    padding: 24px;
+    max-height: 90vh;
+    overflow: auto;
+  }
+
+  .modal-images{
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
+  }
+}
+/* lock background scroll when modal is open */
+body.modal-open {
+  overflow: hidden;
+  touch-action: none;
+}
+
   </style>
   <script>
     window.addEventListener('DOMContentLoaded', () => {
@@ -288,12 +340,16 @@
           modalDesc.innerHTML = description;
           modalImages.innerHTML = imageList.map(src => `<img src="${src.trim()}" alt="${title}">`).join('');
           modal.style.display = 'flex';
+          document.body.classList.add('modal-open');
         });
       });
 
       modal.addEventListener('click', (e) => {
-        if (e.target === modal) modal.style.display = 'none';
-      });
+  if (e.target === modal) {
+    modal.style.display = 'none';
+    document.body.classList.remove('modal-open');
+  }
+});
 
       filterProjects('all');
     });
@@ -305,7 +361,8 @@
     <div class="line"></div>
   </div>
 
-  <div style="display: flex; flex-direction: row; gap: 40px; padding: 40px;">
+  <!-- <div style="display: flex; flex-direction: row; gap: 40px; padding: 40px;"> -->
+    <div class="page" style="display: flex; flex-direction: row; gap: 40px; padding: 40px;">
     <section id="resume" style="flex: 1; max-width: 500px;">
       <header>
         <h1 style="font-weight: 800;">RESUMÉ.</h1>
@@ -335,7 +392,7 @@
           <p class="moreinfo"> - Assisted with the creation of alternative text for a publication on data visualization.</p>
           <li class="yearsref">2025-Present</li>
           <p style="font-weight:bold; text-align:left; margin-top:5px;">Graphic Designer for startup company and platform TalentLink</p>
-          <p class="moreinfo"> - Created the branding and stationary for the company;</p>
+          <p class="moreinfo"> - Created the branding and stationary for the company;
           <p class="moreinfo"> - Problem-solving related to consistency and design of the platform and social media presence; </p>
           <p class="moreinfo">- Desgins all posts and organizes produced content. </p>
             <h2 class="title-resume">Languages</h2>
