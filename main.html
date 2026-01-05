@@ -321,6 +321,11 @@ body.modal-open {
     flex: 0 0 100% !important;
   }
 }
+/* keep selected filter highlighted */
+.filters button.active {
+  background-color: var(--red);
+  color: var(--cream);
+}
 
   </style>
   <script>
@@ -342,12 +347,29 @@ body.modal-open {
         });
       }
 
-      buttons.forEach(button => {
-        button.addEventListener('click', () => {
-          const category = button.dataset.filter;
-          filterProjects(category);
-        });
-      });
+      let activeFilter = 'all';
+
+buttons.forEach(button => {
+  button.addEventListener('click', () => {
+    const clickedFilter = button.dataset.filter;
+
+    if (clickedFilter === activeFilter && clickedFilter !== 'all') {
+      activeFilter = 'all';
+    } else {
+      activeFilter = clickedFilter;
+    }
+
+    buttons.forEach(b => b.classList.remove('active'));
+    const activeBtn = document.querySelector(
+      `.filters button[data-filter="${activeFilter}"]`
+    );
+    if (activeBtn) activeBtn.classList.add('active');
+
+    filterProjects(activeFilter);
+  });
+});
+
+
       projects.forEach(project => {
   project.addEventListener('click', () => {
     const title = project.querySelector('h2').textContent;
@@ -400,6 +422,9 @@ body.modal-open {
 });
 
       filterProjects('all');
+const defaultBtn = document.querySelector('.filters button[data-filter="all"]');
+if (defaultBtn) defaultBtn.classList.add('active');
+
     });
   </script>
 </head>
