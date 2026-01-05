@@ -348,20 +348,49 @@ body.modal-open {
           filterProjects(category);
         });
       });
-
       projects.forEach(project => {
-        project.addEventListener('click', () => {
-          const title = project.querySelector('h2').textContent;
-          const description = project.dataset.description || '';
-          const imageList = project.dataset.images ? project.dataset.images.trim().split(',') : [];
+  project.addEventListener('click', () => {
+    const title = project.querySelector('h2').textContent;
+    const description = project.dataset.description || '';
+    const imageList = project.dataset.images ? project.dataset.images.trim().split(',') : [];
 
-          modalTitle.textContent = title;
-          modalDesc.innerHTML = description;
-          modalImages.innerHTML = imageList.map(src => `<img src="${src.trim()}" alt="${title}">`).join('');
-          modal.style.display = 'flex';
-          document.body.classList.add('modal-open');
-        });
-      });
+    modalTitle.textContent = title;
+    modalDesc.innerHTML = description;
+    modalImages.innerHTML = imageList.map(src => `<img src="${src.trim()}" alt="${title}">`).join('');
+
+    
+    modal.style.display = 'flex';
+    document.body.classList.add('modal-open');
+
+    
+    const modalContent = modal.querySelector('.modal-content');
+
+    requestAnimationFrame(() => {
+      modal.scrollTop = 0;
+      if (modalContent) modalContent.scrollTop = 0;
+      modalImages.scrollTop = 0;
+
+      
+      modalImages.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      if (modalContent) modalContent.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    });
+  });
+});
+
+
+      // projects.forEach(project => {
+      //   project.addEventListener('click', () => {
+      //     const title = project.querySelector('h2').textContent;
+      //     const description = project.dataset.description || '';
+      //     const imageList = project.dataset.images ? project.dataset.images.trim().split(',') : [];
+
+      //     modalTitle.textContent = title;
+      //     modalDesc.innerHTML = description;
+      //     modalImages.innerHTML = imageList.map(src => `<img src="${src.trim()}" alt="${title}">`).join('');
+      //     modal.style.display = 'flex';
+      //     document.body.classList.add('modal-open');
+      //   });
+      // });
 
       modal.addEventListener('click', (e) => {
   if (e.target === modal) {
