@@ -399,21 +399,6 @@ buttons.forEach(button => {
   });
 });
 
-
-      // projects.forEach(project => {
-      //   project.addEventListener('click', () => {
-      //     const title = project.querySelector('h2').textContent;
-      //     const description = project.dataset.description || '';
-      //     const imageList = project.dataset.images ? project.dataset.images.trim().split(',') : [];
-
-      //     modalTitle.textContent = title;
-      //     modalDesc.innerHTML = description;
-      //     modalImages.innerHTML = imageList.map(src => `<img src="${src.trim()}" alt="${title}">`).join('');
-      //     modal.style.display = 'flex';
-      //     document.body.classList.add('modal-open');
-      //   });
-      // });
-
       modal.addEventListener('click', (e) => {
   if (e.target === modal) {
     modal.style.display = 'none';
