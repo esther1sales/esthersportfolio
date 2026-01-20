@@ -5,466 +5,422 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Esther Sales — Main</title>
   <link rel="icon" type="image/png" href="loogos/peersonalloogolight-02.png">
-
   <link rel="stylesheet" href="https://use.typekit.net/zbf7fls.css">
+
   <style>
-    :root {
-      --cream: #fdf1dd;
-      --red: #c61e3b;
+    :root{
+      --cream:#fdf1dd;
+      --red:#c61e3b;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    *{ box-sizing:border-box; margin:0; padding:0; }
+
+    html, body{
+      cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 32 32"><polygon points="0,0 32,16 0,32" fill="%23c61e3b"/></svg>') 0 0, auto;
+      background-color:var(--cream);
+      color:var(--red);
+      font-family:axia, sans-serif;
+      font-weight:400;
+      font-size:15px;
+      font-style:normal;
+      scroll-behavior:smooth;
     }
 
-    html, body {
-      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 32 32"><polygon points="0,0 32,16 0,32" fill="%23c61e3b"/></svg>') 0 0, auto;
-      background-color: var(--cream);
-      color: var(--red);
-      font-family: axia, sans-serif;
-      font-weight: 400;
-      font-size: 15px;
-      font-style: normal;
-      scroll-behavior: smooth;
+    body{ padding-top:160px; }
+
+    body.modal-open{
+      overflow:hidden;
+      touch-action:none;
     }
 
-    body {
-      padding-top: 160px;
+    /* fixed logo header */
+    .logo-fixed{
+      position:fixed;
+      top:0;
+      left:50%;
+      transform:translateX(-50%);
+      z-index:1000;
+      text-align:center;
+      background-color:var(--cream);
+      padding:20px 0;
+      width:100%;
     }
 
-    .logo-fixed {
-      position: fixed;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1000;
-      text-align: center;
-      background-color: var(--cream);
-      padding: 20px 0;
-      width: 100%;
+    .logo-fixed img{ width:80px; }
+
+    .logo-fixed .line{
+      margin-top:10px;
+      width:100vw;
+      height:2px;
+      background-color:var(--red);
     }
 
-    .logo-fixed img {
-      width: 80px;
+    /* layout */
+    .page{
+      max-width:1400px;
+      margin:0 auto;
+      padding:clamp(16px, 3vw, 40px);
+      display:flex;
+      flex-direction:row;
+      gap:clamp(16px, 3vw, 40px);
+      flex-wrap:wrap;
+      align-items:flex-start;
     }
 
-    .logo-fixed .line {
-      margin-top: 10px;
-      width: 100vw;
-      height: 2px;
-      background-color: var(--red);
+    #resume{
+      flex:1 1 380px;
+      max-width:520px;
+      padding-left:clamp(16px, 4vw, 40px);
+      padding-right:clamp(16px, 4vw, 40px);
     }
 
-    header {
-      text-align: center;
+    #work{
+      flex:2 1 520px;
+      min-width:360px;
     }
 
-    header h1 {
-      font-family: "ivyora-display", serif;
-      font-weight: 700;
-      font-style: normal;
-      font-size: 64px;
-      margin-bottom: 30px;
+    @media (max-width:1050px){
+      .page{ justify-content:center; }
+      #resume{
+        flex:0 0 100%;
+        max-width:780px;
+        margin-left:auto;
+        margin-right:auto;
+      }
+      #work{ flex:0 0 100%; }
     }
 
-    .filters {
-      text-align: center;
-      margin-bottom: 40px;
+    /* typography */
+    .section-title{
+      font-family:"ivyora-display", serif;
+      font-weight:700;
+      font-style:normal;
+      font-size:clamp(40px, 5vw, 64px);
+      margin-bottom:30px;
+      text-align:center;
     }
 
-    .filters button {
-      border: 1px solid var(--red);
-      background: transparent;
-      color: var(--red);
-      padding: 8px 16px;
-      border-radius: 30px;
-      font-size: 12px;
-      font-weight: bold;
-      margin: 5px;
-      cursor: pointer;
+    .title-resume{
+      font-family:"ivyora-display", serif;
+      font-weight:700;
+      font-style:normal;
+      font-size:20px;
+      margin:20px 0 14px;
+      text-align:left;
     }
 
-    .filters button:hover {
-      background-color: var(--red);
-      color: var(--cream);
+    .yearsref{
+      font-family:"ivyora-display", serif;
+      text-align:left;
+      font-size:13pt;
+      font-weight:700;
+      margin-top:10px;
+      list-style:none;
     }
 
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 40px;
-      padding: 20px 40px 80px;
-    }
-
-    .project {
-      text-align: center;
-      border: 2px solid var(--red);
-      padding: 16px;
-      border-radius: 12px;
-      transition: transform 0.3s ease;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      height: auto;
-    }
-
-    .project:hover {
-      transform: scale(1.02);
-    }
-
-    .resume h2 {
-      font-family: "ivyora-display", serif;
-      font-weight: 700;
-      font-style: normal;
-      margin-top: 8px;
-      text-align: left;
-    }
-
-    .project img {
-      width: 100%;
-      aspect-ratio: 4 / 3; 
-      object-fit: cover;
-      border-radius: 8px;
-    }
-
-    .project .label {
-      font-size: 10px;
-      text-transform: uppercase;
-      margin-top: 15px;
-    }
-
-    .project h2 {
-      font-family: "ivyora-display", serif;
-      font-weight: 700;
-      font-style: normal;
-      font-size: 20px;
-      margin-top: 8px;
-    }
-
-    .project[data-category] {
-      display: none;
-    }
-
-    .project.show {
-      display: block;
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 2000;
-      left: 0;
-      top: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: rgba(0,0,0,0.5);
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal-content {
-      background: var(--cream);
-      width: 90%;
-      max-width: 1000px;
-      display: flex;
-      gap: 40px;
-      padding: 40px;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    .modal-text {
-      flex: 1;
-    }
-
-    .modal-text h2 {
-      font-family: "ivyora-display", serif;
-      font-weight: 700;
-      font-style: normal;
-      font-size: 24px;
-      margin-bottom: 10px;
-    }
-
-    .modal-text h3 {
-      font-family: "ivyora-display", serif;
-      font-weight: 700;
-      font-style: normal;
-      font-size: 20px;
-      margin: 20px 0 10px;
-    }
-
-    .title-resume {
-      font-family: "ivyora-display", serif;
-      font-weight: 700;
-      font-style: normal;
-      font-size: 20px;
-      margin: 20px 0 14px;
-      text-align: left;
-    }
-
-    .modal-text p {
-      font-family: Axia, sans-serif;
-      font-weight: 400;
-      font-style: normal;
-      font-size: 14px;
-      text-align: justify;
-    }
-
-    .modal-images {
-      flex: 1;
-      max-height: 85vh;
-      overflow-y: auto;
-      overflow-x: hidden;
-      box-sizing: border-box;
-      padding-right: 10px;
-    }
-
-    .modal-images::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    .modal-images::-webkit-scrollbar-thumb {
-      background-color: var(--red);
-      border-radius: 4px;
-    }
-
-
-
-    .yearsref {
-      font-family: "ivyora-display", serif;
-      text-align: left; 
-      font-size: 13pt; 
-      font-weight: 700;
-      margin-top: 5px;
-    }
-
-    .moreinfo {
-      text-align:justify; 
+    .moreinfo{
+      text-align:justify;
       margin-top:5px;
     }
 
-    .modal-images img {
-      width: 100%;
-      margin-bottom: 16px;
-      border-radius: 4px;
+    /* filters */
+    .filters{
+      text-align:center;
+      margin-bottom:40px;
     }
-  
-.page{
-  max-width: 1400px;              
-  margin: 0 auto;
-  padding: clamp(16px, 3vw, 40px) !important;
-  gap: clamp(16px, 3vw, 40px) !important;
-  flex-wrap: wrap;                
+
+    .filters button{
+      border:1px solid var(--red);
+      background:transparent;
+      color:var(--red);
+      padding:8px 16px;
+      border-radius:30px;
+      font-size:12px;
+      font-weight:bold;
+      margin:5px;
+      cursor:pointer;
+    }
+
+    .filters button:hover{
+      background-color:var(--red);
+      color:var(--cream);
+    }
+
+    .filters button.active{
+      background-color:var(--red);
+      color:var(--cream);
+    }
+
+    /* projects */
+    .project-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+      gap:clamp(18px, 3vw, 40px);
+      padding:20px 0 80px;
+    }
+
+    .project{
+      text-align:center;
+      border:2px solid var(--red);
+      padding:16px;
+      border-radius:12px;
+      transition:transform 0.3s ease;
+      cursor:pointer;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-start;
+      height:auto;
+      background:transparent;
+    }
+
+    .project:hover{ transform:scale(1.02); }
+    .project.hidden{ display:none !important; }
+
+    .project img{
+      width:100%;
+      aspect-ratio:4 / 3;
+      object-fit:cover;
+      border-radius:8px;
+    }
+
+    .project .label{
+      font-size:10px;
+      text-transform:uppercase;
+      margin-top:15px;
+    }
+
+    .project h2{
+      font-family:"ivyora-display", serif;
+      font-weight:700;
+      font-style:normal;
+      font-size:20px;
+      margin-top:8px;
+    }
+
+    /* modal */
+    .modal{
+      display:none;
+      position:fixed;
+      z-index:2000;
+      left:0;
+      top:0;
+      width:100vw;
+      height:100vh;
+      background-color:rgba(0,0,0,0.5);
+      justify-content:center;
+      align-items:center;
+    }
+
+    .modal.open{ display:flex; }
+
+    .modal-content{
+      background:var(--cream);
+      width:90%;
+      max-width:1000px;
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+      padding:28px;
+      border-radius:8px;
+      overflow:auto;
+      position:relative;
+      max-height:90vh;
+    }
+
+    @media (min-width: 901px){
+      .modal-content{ padding:40px; }
+    }
+
+    .modal-close{
+      position:absolute;
+      top:14px;
+      right:16px;
+      border:1px solid var(--red);
+      background:transparent;
+      color:var(--red);
+      width:34px;
+      height:34px;
+      border-radius:999px;
+      cursor:pointer;
+      font-size:18px;
+      line-height:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:10;
+    }
+
+    .modal-close:hover{
+      background:var(--red);
+      color:var(--cream);
+    }
+
+    .modal-text h2{
+      font-family:"ivyora-display", serif;
+      font-weight:700;
+      font-style:normal;
+      font-size:24px;
+      margin-bottom:8px;
+      padding-right:44px;
+    }
+
+    .modal-text h3{
+      font-family:"ivyora-display", serif;
+      font-weight:700;
+      font-style:normal;
+      font-size:20px;
+      margin:18px 0 10px;
+    }
+
+    .modal-text p{
+      font-family:axia, sans-serif;
+      font-weight:400;
+      font-style:normal;
+      font-size:14px;
+      text-align:justify;
+    }
+
+    /* ===== Gallery (primary + centered thumbnails, auto-rotate) ===== */
+    .gallery{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .gallery-primary img{
+  width:100%;
+  height:clamp(240px, 34vh, 360px);
+  object-fit:contain;
+  display:block;
+  background:transparent;
+
+  /* fade */
+  opacity:1;
+  transition: opacity 380ms ease;
+
 }
 
-/* allow columns to shrink proportionally */
-#resume{
-  flex: 1 1 380px !important; 
-  max-width: 520px;
+.gallery-primary img.is-fading{
+  opacity:0;
 }
 
-#work{
-  flex: 2 1 520px !important;
-  min-width: 360px;
-}
 
-header h1{
-  font-size: clamp(40px, 5vw, 64px);
-}
 
-.project-grid{
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: clamp(18px, 3vw, 40px);
-  padding: 20px 0 80px;           
-}
+    .thumbs{
+      display:flex;
+      justify-content:center;  /* centered */
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;         /* wraps nicely instead of left-bias scroll */
+    }
 
-@media (max-width: 900px){
-  .modal-content{
-    flex-direction: column;
-    gap: 20px;
-    padding: 24px;
-    max-height: 90vh;
-    overflow: auto;
-  }
+    .thumb{
+      border:none;
+      background:transparent;
+      padding:0;
+      cursor:pointer;
+      border-radius:10px;
+      overflow:hidden;
+    }
 
-  .modal-images{
-    max-height: none;
-    overflow: visible;
-    padding-right: 0;
-  }
-}
-body.modal-open {
-  overflow: hidden;
-  touch-action: none;
-}
-#resume {
-  padding-left: clamp(16px, 4vw, 40px);
-  padding-right: clamp(16px, 4vw, 40px);
-}
-@media (max-width: 1050px) {
-  .page {
-    justify-content: center;
-  }
+    .thumb img{
+      width:96px;
+      height:70px;
+      object-fit:cover;
+      display:block;
+      border-radius:10px;
+      opacity:0.82;
+      transition:transform 150ms ease, opacity 150ms ease;
+    }
 
-  #resume {
-    flex: 0 0 100% !important;     
-    max-width: 780px;             
-    margin-left: auto;
-    margin-right: auto;
-  }
+    .thumb:hover img{
+      opacity:1;
+      transform:scale(1.05);
+    }
 
-  #work {
-    flex: 0 0 100% !important;
-  }
-}
-/* keep selected filter highlighted */
-.filters button.active {
-  background-color: var(--red);
-  color: var(--cream);
-}
+    .thumb.active img{
+      opacity:1;
+      transform:scale(1.05);
+    }
 
+    .gallery-empty{
+      padding:18px;
+      text-align:center;
+      font-size:14px;
+    }
   </style>
-  <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      const buttons = document.querySelectorAll('.filters button');
-      const projects = document.querySelectorAll('.project');
-      const modal = document.getElementById('projectModal');
-      const modalTitle = document.getElementById('modalTitle');
-      const modalDesc = document.getElementById('modalDesc');
-      const modalImages = document.getElementById('modalImages');
-
-      function filterProjects(category) {
-        projects.forEach(project => {
-          if (category === 'all' || project.dataset.category === category) {
-            project.classList.add('show');
-          } else {
-            project.classList.remove('show');
-          }
-        });
-      }
-
-      let activeFilter = 'all';
-
-buttons.forEach(button => {
-  button.addEventListener('click', () => {
-    const clickedFilter = button.dataset.filter;
-
-    if (clickedFilter === activeFilter && clickedFilter !== 'all') {
-      activeFilter = 'all';
-    } else {
-      activeFilter = clickedFilter;
-    }
-
-    buttons.forEach(b => b.classList.remove('active'));
-    const activeBtn = document.querySelector(
-      `.filters button[data-filter="${activeFilter}"]`
-    );
-    if (activeBtn) activeBtn.classList.add('active');
-
-    filterProjects(activeFilter);
-  });
-});
-
-
-      projects.forEach(project => {
-  project.addEventListener('click', () => {
-    const title = project.querySelector('h2').textContent;
-    const description = project.dataset.description || '';
-    const imageList = project.dataset.images ? project.dataset.images.trim().split(',') : [];
-
-    modalTitle.textContent = title;
-    modalDesc.innerHTML = description;
-    modalImages.innerHTML = imageList.map(src => `<img src="${src.trim()}" alt="${title}">`).join('');
-
-    
-    modal.style.display = 'flex';
-    document.body.classList.add('modal-open');
-
-    
-    const modalContent = modal.querySelector('.modal-content');
-
-    requestAnimationFrame(() => {
-      modal.scrollTop = 0;
-      if (modalContent) modalContent.scrollTop = 0;
-      modalImages.scrollTop = 0;
-
-      
-      modalImages.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-      if (modalContent) modalContent.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-    });
-  });
-});
-
-      modal.addEventListener('click', (e) => {
-  if (e.target === modal) {
-    modal.style.display = 'none';
-    document.body.classList.remove('modal-open');
-  }
-});
-
-      filterProjects('all');
-const defaultBtn = document.querySelector('.filters button[data-filter="all"]');
-if (defaultBtn) defaultBtn.classList.add('active');
-
-    });
-  </script>
 </head>
+
 <body>
   <div class="logo-fixed">
     <img src="loogos/peersonalloogolight-02.png" alt="Esther Sales Logo">
     <div class="line"></div>
   </div>
-    <div class="page" style="display: flex; flex-direction: row; gap: 40px; padding: 40px;">
-    <section id="resume" style="flex: 1; max-width: 500px;">
+
+  <div class="page" style="display:flex; flex-direction:row; gap:40px;">
+    <section id="resume" style="flex:1; max-width:500px;">
       <header>
-        <h1 style="font-weight: 800;">RESUMÉ.</h1>
+        <h1 class="section-title" style="font-weight:800;">RESUMÉ.</h1>
+
         <h2 class="title-resume">About Me</h2>
-        <p style="font-size: 15px; text-align: justify;">I’m Esther, a Brazilian Toronto-based Graphic Designer. I consider myself an interdisciplinary graphic designer because I am adaptable and utilize my background in psychology and digital marketing to create unique, captivating, and accessible designs. I am dedicated to being a hardworking, organized artist with a strong sense of professionalism, and I am passionate about all areas of the visual arts. 
+        <p style="font-size:15px; text-align:justify;">
+          I’m Esther, a Brazilian Toronto-based Graphic Designer. I consider myself an interdisciplinary graphic designer because I am adaptable and utilize my background in psychology and digital marketing to create unique, captivating, and accessible designs. I am dedicated to being a hardworking, organized artist with a strong sense of professionalism, and I am passionate about all areas of the visual arts.
         </p>
-          <h2 class="title-resume">Education</h2>
+
+        <h2 class="title-resume">Education</h2>
+        <ul style="list-style:none; padding-left:0;">
           <li class="yearsref">2018-2020</li>
-          <p style="text-align:left; margin-top:5px;">Bachelor in Psychology at the Pernambucan University of Health (FPS), Recife, Brazil;</p>
+          <li style="text-align:left; margin-top:5px;">Bachelor in Psychology at the Pernambucan University of Health (FPS), Recife, Brazil;</li>
+
           <li class="yearsref">2020-2021</li>
-          <p style="text-align:left; margin-top:5px;">Bachelor in Digital Marketing at the University of Boa Viagem (FBV), Recife, Brazil;</p>
+          <li style="text-align:left; margin-top:5px;">Bachelor in Digital Marketing at the University of Boa Viagem (FBV), Recife, Brazil;</li>
+
           <li class="yearsref">2021-2025</li>
-          <p style="text-align:left; margin-top:5px;">Bachelor in Graphic Design, OCAD University.</p>
-          <h2 class="title-resume">Experience</h2>
+          <li style="text-align:left; margin-top:5px;">Bachelor in Graphic Design, OCAD University.</li>
+        </ul>
+
+        <h2 class="title-resume">Experience</h2>
+        <ul style="list-style:none; padding-left:0;">
           <li class="yearsref">2018-2019</li>
-          <p style="font-weight:bold; text-align:left; margin-top:5px;">Internship rotation at the Pernambucan University of Health (FPS)</p>
-          <p style="text-align:justify; margin-top:5px;"> - Worked at a children's hospital IMIP, focusing in art therapy;</p>
-          <p style="text-align:justify; margin-top:5px;"> - Wrote a children's book about navegating the challenges of growing up chronically ill;</p>
-          <p style="text-align:justify; margin-top:5px;"> - Assisted graduated professionals with craft workshops for addicts during a rotation at a rehab center.</p>
+          <li style="font-weight:bold; text-align:left; margin-top:5px;">Internship rotation at the Pernambucan University of Health (FPS)</li>
+          <li style="text-align:justify; margin-top:5px;"> - Worked at a children's hospital IMIP, focusing in art therapy;</li>
+          <li style="text-align:justify; margin-top:5px;"> - Wrote a children's book about navegating the challenges of growing up chronically ill;</li>
+          <li style="text-align:justify; margin-top:5px;"> - Assisted graduated professionals with craft workshops for addicts during a rotation at a rehab center.</li>
+
           <li class="yearsref">2020-2021</li>
-          <p style="font-weight:bold; text-align:left; margin-top:5px;">Internship in digital marketing at Brazilian company Coco do Vale</p>
-          <p class="moreinfo"> - Worked with a digital marketing studio to create content for the company's social;</p>
-          <p class="moreinfo"> - Supervised a year-long process of rebranding which included approving and reviewing over a dozen different packaging designs and colour palettes;</p>
-          <p class="moreinfo"> - Organized data from socials and hosted meetings to improve and adapt produced content.</p>
+          <li style="font-weight:bold; text-align:left; margin-top:5px;">Internship in digital marketing at Brazilian company Coco do Vale</li>
+          <li class="moreinfo"> - Worked with a digital marketing studio to create content for the company's social;</li>
+          <li class="moreinfo"> - Supervised a year-long process of rebranding which included approving and reviewing over a dozen different packaging designs and colour palettes;</li>
+          <li class="moreinfo"> - Organized data from socials and hosted meetings to improve and adapt produced content.</li>
+
           <li class="yearsref">2024-2025</li>
-          <p style="font-weight:bold; text-align:left; margin-top:5px;">Research Assistant at OCAD University</p>
-          <p class="moreinfo"> - Assisted with the creation of alternative text for a publication on data visualization.</p>
+          <li style="font-weight:bold; text-align:left; margin-top:5px;">Research Assistant at OCAD University</li>
+          <li class="moreinfo"> - Assisted with the creation of alternative text for a publication on data visualization.</li>
+
           <li class="yearsref">2025-Present</li>
-          <p style="font-weight:bold; text-align:left; margin-top:5px;">Self-Employed Graphic Designer</p>
-          <p class="moreinfo"> - Created the branding and stationary for a variety of companies and startups;
-          <p class="moreinfo"> - Problem-solving related to consistency and designs of companies across different social media platforms; </p>
-            <h2 class="title-resume">Languages</h2>
-            <li class="yearsref">English</li>
-            <li class="yearsref">Portuguese</li>
-            <li class="yearsref">Spanish</li>
-        </header>
+          <li style="font-weight:bold; text-align:left; margin-top:5px;">Self-Employed Graphic Designer</li>
+          <li class="moreinfo"> - Created the branding and stationary for a variety of companies and startups;</li>
+          <li class="moreinfo"> - Problem-solving related to consistency and designs of companies across different social media platforms;</li>
+        </ul>
+
+        <h2 class="title-resume">Languages</h2>
+        <ul style="list-style:none; padding-left:0;">
+          <li class="yearsref">English</li>
+          <li class="yearsref">Portuguese</li>
+          <li class="yearsref">Spanish</li>
+        </ul>
+      </header>
     </section>
 
-    <section id="work" style="flex: 2;">
+    <section id="work" style="flex:2;">
       <header>
-        <h1 style="font-weight: 800;">WORK.</h1>
+        <h1 class="section-title" style="font-weight:800;">WORK.</h1>
         <div class="filters">
-          <button data-filter="all">All</button>
-          <button data-filter="branding">Branding</button>
-          <button data-filter="publications">Publications</button>
-          <button data-filter="websites">Websites</button>
-          <button data-filter="posters">Posters</button>
+          <button type="button" data-filter="all" class="active">All</button>
+          <button type="button" data-filter="branding">Branding</button>
+          <button type="button" data-filter="publications">Publications</button>
+          <button type="button" data-filter="websites">Websites</button>
+          <button type="button" data-filter="posters">Posters</button>
         </div>
       </header>
 
@@ -477,109 +433,342 @@ if (defaultBtn) defaultBtn.classList.add('active');
           <h3>Positioning & Attributes</h3>
           <p>Entertaining art.
             Our canvas is the screen, our palette is life. Poetry is committed to creating provocative, intelligent movies that entertain. We will partner with the brightest and most talented artists, writers, directors, actors and others to create movies that will be seen as iconic and classic movies of their era. </p>
-            <h3>Logo Design Concept</h3>
-            <p>This logo emphasizes the Key Attribute of being Classic, while also incorporating two Valued Attributes: Smart and Sophisticated. The icon at the center represents a camera lens, and the two smaller elements are stylized quotation marks. These marks were derived from the classic calligraphic typeface Parfumerie Script, referencing the iconic “The End” often seen in vintage films. The chosen color palette—featuring red/orange and blue/green—pays homage to Kinemacolor, one of the earliest color processes used in cinema.</p>"
+          <h3>Logo Design Concept</h3>
+          <p>This logo emphasizes the Key Attribute of being Classic, while also incorporating two Valued Attributes: Smart and Sophisticated. The icon at the center represents a camera lens, and the two smaller elements are stylized quotation marks. These marks were derived from the classic calligraphic typeface Parfumerie Script, referencing the iconic “The End” often seen in vintage films. The chosen color palette—featuring red/orange and blue/green—pays homage to Kinemacolor, one of the earliest color processes used in cinema.</p>"
           data-images="poetry/poetry4website-01.jpg,poetry/poetry4website-02.jpg,poetry/poetry4website-03.jpg,poetry/poetry4website-04.jpg,poetry/poetry4website-05.jpg,poetry/poetry4website-06.jpg,poetry/poetry4website-07.jpg">
           <img src="poetry/poetry4website-01.jpg" alt="Poetry Films Inc.">
           <p class="label">Branding</p>
           <h2>Poetry Films Inc.</h2>
         </div>
+
         <div class="project" data-category="branding"
-        data-description="<h3>About</h3>
-        <p>This project is part of a course at OCAD University called Packaging Design 1. We were given three options of products to design: beer, whiskey or maple syrup.</p>
-        <h3>Brief</h3>
-        <p>Molson is launching a new special edition beer into the Canadian Marketplace. This will be a celebration of all things Canadian - This beer is aimed at a younger audience – It will celebrate winter, winter sports, gatherings with friends, Canadian inventions?, Canadian heroes? Provinces? Landmarks? Nature? (LDA – 35yrs).
-          To be consumed – while hanging with friends. It will be a limited series, launched in Winter 2023/24, celebrating our friendships, what makes us proud, and Canada as a country.</p>
-        <h3>Concept</h3>
-        <p>Since the company wanted to launch a special edition of beer related to Canada, the design focuses on the different provinces in the country. A total of 13 different designs were made, one for each province.
-          The designs consist of patterns made inspired by cartography drawings, gradients and the provinces logo, as well as initials, located on the top right corner of the label. Every design is unique to that province, but it is intended to be repeated, since the cans are supposed to be collectables.
-        </p>
-        "data-images="N49/n49mockup1main.jpg,N49/n49mockup2.jpg,N49/n49mockup3.jpg">
-        <img src="N49/n49mockup1main.jpg" alt="Poetry Films Inc.">
-        <p class="label">Packaging</p>
-        <h2>Beer, N49</h2>
-      </div>
-       
-      <div class="project" data-category="publications"
-      data-description="<h3>About</h3>
-      <p>Neologisms are new words or expressions that have achieved popular or institutional recognition. 
-        This portion of the project explores the words in Brazilian Portuguese that came from cultural syncretism and/or are untranslatable to English. It also explains expressions that have a racist connotation today, due to their roots in colonization and oppression of Indigenous Brazilians and Afro-Brazilian peoples.
-          At first, Neologisms was my entire thesis. It started as a publication inspired by Literaturas de Cordel, a traditional publication style from the northeast region of Brazil, which consists of hand-stamped illustrations made with linotype. The name of this style of publication can be translated to string books since they are put to dry and sold by being hung from strings.</p>
-      <h3>Taxonomy of Textures</h3>
-      <p>This booklet is the re-edition of the starting point of the project: a publication that describes and illustrates the Hair Chart.</p>
-      <h3>In Other Words</h3>
-      <p>The first publication to be written and conceptualized, In Other Words, is an archive of terms that are considered racist in Brazil due to its history of slavery. The words generally refer to Brazilian-African traits negatively or as a way to fetishize said traits.</p>
-      <h3>Syncretism</h3>
-      <p>Publication focused on religious and cultural syncretism, going beyond translation (In Other Words being the responsible for that area) and explaining the historic background of objects, deities and practices that came from colonization.</p>
-      <h3>Untranslatable Affections</h3>
-      <p>Publication that explored Brazilian expressions that do not exist in English. The expressions are explained, but not adapted, as the idea is to give them context, not other words.</p>"
-      data-images="neologisms/taxonomyoftexture.jpg,neologisms/inotherwords.jpg,neologisms/syncretism.jpg,neologisms/untranslatableaffections.jpg">
-      <img src="neologisms/neologismspreview.jpg" alt="How Much Is Too Much">
-      <p class="label">Under the Surface: The Series</p>
-      <h2>Neologisms</h2>
-    </div>
-    <div class="project" data-category="websites"
-    data-description="<h3>About</h3>
-    <p>Living Voices is an online archive of videos that speak about Brazilian culture, narratives, history, and other topics. There weren’t many changes to the website in general since I had a pretty clear idea of what I wanted it to look like.</p>
-    <h3>Functionality</h3>
-    <p>The website was designed and coded with accessibility in mind. Since the vertically oriented titles might be too hard to read, a hover function was added, making the title of the videos horizontal and larger to facilitate legibility.
-    The legend for the colour coding system also functions as a filter for the different subjects on the website, making it easier to find similar videos.
-    </p>
-    <h3>Content</h3>
-    <p>I wanted to keep the content free and easy to access, which is why it was a priority to source the videos directly from YouTube and add them to the website so that people could view them without opening other tabs. It was also a necessity for the content itself not to be reduced to political and historical facts. I want the entire project to include more details about the Brazilian experience and our people.
-      I included the “General” category because there are many videos that speak on racism in Brazil and on the cultural aspects that influenced the way Black people suffer discrimination in the country, even though racism is illegal. Since the project’s goal is also to bring awareness to the issue, I included much content on the subject throughout the experience and all the projects. </p>"
-    data-images="livingvoices/screenshot2.png,livingvoices/screenshot3.png,livingvoices/screenshot4.png,livingvoices/livingvoicesmockup2.jpg">
-    <img src="livingvoices/livingvoicesmockup1.jpg" alt="Os Ritmos do Brasil">
-    <p class="label">Website</p>
-    <h2>Living Voices</h2>
-  </div>
-  <div class="project" data-category="branding"
-  data-description="<h3>About</h3>
-  <p>This project started with a brief generated on goodbrief.io</p>
-  <h3>Brief</h3>
-  <p>Keeper is a cozy corner shop that sells jewelry. Their main product, known for its affordability and authenticity, is designed to bring comfort and a touch of modernity to their customers, particularly those who live alone.
-    The company had a couple of requirements-the brief requested red in the colour palette and a unique pictorial mark for uniforms and packaging.</p>
-  <h3>Concept</h3>
-  <p>In the brief, the company mentions bringing comfort to customers, being a cozy shop and affordability. They also requested a unique pictorial mark and to have red in the palette.
-    With that in mind, the logomark designed represents the name and values of the brand by using two hands to illustrate comfort and authenticity, and the diamond to symbolize modernity and preciousness. The heart part of the design was a coincidence that ended up positively influencing the course of the design.
-    The company also requested the colour red, but I did not want it to be an intimidating shade of red, so I slowly added pink to it, which is also present in the other tone of the palette.</p>"
-  data-images="KEEPER PROJECT/keeperbrandingforbehance.png">
-  <img src="KEEPER PROJECT/keepermain.jpg" alt="Keeper">
-  <p class="label">Branding</p>
-  <h2>Keeper</h2>
-</div>
-<div class="project" data-category="websites"
-data-description="<h3>About</h3>
-<p>As part of the second course of Graphic Design at OCAD University, we were challenged to create a poster without using Adobe Cloud or any other design focused tools. The assignment was meant to build our skills beyond the conventional practices and incentivise us to be resourceful when faced with limitations within our usual tools.</p>
-<h3>Concept</h3>
-<p>This website was created as part of a project about Brazilian music. Brazil is mainly known internationally for its soccer, samba, and funk, but it has many other beautiful cultural expressions, primarily music-related. ‘Os Ritmos do Brasil’ (The Rhythms of Brazil) is an archive of the most famous Brazilian genres, their history, and their prominent representatives.</p>"
-data-images=" osritmosdobrasil/osritmosdobrasilprints1.png, osritmosdobrasil/osritmosdobrasilprints5.png, osritmosdobrasil/osritmosdobrasilprints2.png, osritmosdobrasil/osritmosdobrasilprints3.png, osritmosdobrasil/osritmosdobrasilprints4.png">
-<img src="osritmosdobrasil/osritmosdobrasilmockup.jpg" alt="Os Ritmos do Brasil">
-<p class="label">Website</p>
-<h2>Os Ritmos do Brasil</h2>
-</div>
-<div class="project" data-category="posters"
-data-description="<h3>About</h3>
-<p>As part of the second course of Graphic Design at OCAD University, we were challenged to create a poster without using Adobe Cloud or any other design focused tools. The assignment was meant to build our skills beyond the conventional practices and incentivise us to be resourceful when faced with limitations within our usual tools.</p>
-<h3>Concept</h3>
-<p>Using a barcode generator and PowerPoint, I assembled various posters made with the barcodes, which were created by removing words from the essay The Carrier Bag Theory of Fiction by Ursula K. Le Guin, as a metaphor to functionality or weapons in modern days.</p>"
-data-images=" howmuchistoomuch/hmitm-03.jpg,howmuchistoomuch/hmitm-01.jpg,howmuchistoomuch/hmitm-02.jpg,howmuchistoomuch/howmuchistoomuchfinal.jpg">
-<img src="howmuchistoomuch/howmuchistoomuchmockup.jpg" alt="How Much Is Too Much">
-<p class="label">Poster</p>
-<h2>How Much Is Too Much?</h2>
-</div>
+          data-description="<h3>About</h3>
+          <p>This project is part of a course at OCAD University called Packaging Design 1. We were given three options of products to design: beer, whiskey or maple syrup.</p>
+          <h3>Brief</h3>
+          <p>Molson is launching a new special edition beer into the Canadian Marketplace. This will be a celebration of all things Canadian - This beer is aimed at a younger audience – It will celebrate winter, winter sports, gatherings with friends, Canadian inventions?, Canadian heroes? Provinces? Landmarks? Nature? (LDA – 35yrs).
+            To be consumed – while hanging with friends. It will be a limited series, launched in Winter 2023/24, celebrating our friendships, what makes us proud, and Canada as a country.</p>
+          <h3>Concept</h3>
+          <p>Since the company wanted to launch a special edition of beer related to Canada, the design focuses on the different provinces in the country. A total of 13 different designs were made, one for each province.
+            The designs consist of patterns made inspired by cartography drawings, gradients and the provinces logo, as well as initials, located on the top right corner of the label. Every design is unique to that province, but it is intended to be repeated, since the cans are supposed to be collectables.
+          </p>"
+          data-images="N49/n49mockup1main.jpg,N49/n49mockup2.jpg,N49/n49mockup3.jpg">
+          <img src="N49/n49mockup1main.jpg" alt="Beer, N49">
+          <p class="label">Packaging</p>
+          <h2>Beer, N49</h2>
+        </div>
+
+        <div class="project" data-category="publications"
+          data-description="<h3>About</h3>
+          <p>Neologisms are new words or expressions that have achieved popular or institutional recognition. 
+            This portion of the project explores the words in Brazilian Portuguese that came from cultural syncretism and/or are untranslatable to English. It also explains expressions that have a racist connotation today, due to their roots in colonization and oppression of Indigenous Brazilians and Afro-Brazilian peoples.
+            At first, Neologisms was my entire thesis. It started as a publication inspired by Literaturas de Cordel, a traditional publication style from the northeast region of Brazil, which consists of hand-stamped illustrations made with linotype. The name of this style of publication can be translated to string books since they are put to dry and sold by being hung from strings.</p>
+          <h3>Taxonomy of Textures</h3>
+          <p>This booklet is the re-edition of the starting point of the project: a publication that describes and illustrates the Hair Chart.</p>
+          <h3>In Other Words</h3>
+          <p>The first publication to be written and conceptualized, In Other Words, is an archive of terms that are considered racist in Brazil due to its history of slavery. The words generally refer to Brazilian-African traits negatively or as a way to fetishize said traits.</p>
+          <h3>Syncretism</h3>
+          <p>Publication focused on religious and cultural syncretism, going beyond translation (In Other Words being the responsible for that area) and explaining the historic background of objects, deities and practices that came from colonization.</p>
+          <h3>Untranslatable Affections</h3>
+          <p>Publication that explored Brazilian expressions that do not exist in English. The expressions are explained, but not adapted, as the idea is to give them context, not other words.</p>"
+          data-images="neologisms/taxonomyoftexture.jpg,neologisms/inotherwords.jpg,neologisms/syncretism.jpg,neologisms/untranslatableaffections.jpg">
+          <img src="neologisms/neologismspreview.jpg" alt="Neologisms">
+          <p class="label">Under the Surface: The Series</p>
+          <h2>Neologisms</h2>
+        </div>
+
+        <div class="project" data-category="websites"
+          data-description="<h3>About</h3>
+          <p>Living Voices is an online archive of videos that speak about Brazilian culture, narratives, history, and other topics. There weren’t many changes to the website in general since I had a pretty clear idea of what I wanted it to look like.</p>
+          <h3>Functionality</h3>
+          <p>The website was designed and coded with accessibility in mind. Since the vertically oriented titles might be too hard to read, a hover function was added, making the title of the videos horizontal and larger to facilitate legibility.
+            The legend for the colour coding system also functions as a filter for the different subjects on the website, making it easier to find similar videos.
+          </p>
+          <h3>Content</h3>
+          <p>I wanted to keep the content free and easy to access, which is why it was a priority to source the videos directly from YouTube and add them to the website so that people could view them without opening other tabs. It was also a necessity for the content itself not to be reduced to political and historical facts. I want the entire project to include more details about the Brazilian experience and our people.
+            I included the “General” category because there are many videos that speak on racism in Brazil and on the cultural aspects that influenced the way Black people suffer discrimination in the country, even though racism is illegal. Since the project’s goal is also to bring awareness to the issue, I included much content on the subject throughout the experience and all the projects. </p>"
+          data-images="livingvoices/screenshot2.png,livingvoices/screenshot3.png,livingvoices/screenshot4.png,livingvoices/livingvoicesmockup2.jpg">
+          <img src="livingvoices/livingvoicesmockup1.jpg" alt="Living Voices">
+          <p class="label">Website</p>
+          <h2>Living Voices</h2>
+        </div>
+
+        <div class="project" data-category="branding"
+          data-description="<h3>About</h3>
+          <p>This project started with a brief generated on goodbrief.io</p>
+          <h3>Brief</h3>
+          <p>Keeper is a cozy corner shop that sells jewelry. Their main product, known for its affordability and authenticity, is designed to bring comfort and a touch of modernity to their customers, particularly those who live alone.
+            The company had a couple of requirements-the brief requested red in the colour palette and a unique pictorial mark for uniforms and packaging.</p>
+          <h3>Concept</h3>
+          <p>In the brief, the company mentions bringing comfort to customers, being a cozy shop and affordability. They also requested a unique pictorial mark and to have red in the palette.
+            With that in mind, the logomark designed represents the name and values of the brand by using two hands to illustrate comfort and authenticity, and the diamond to symbolize modernity and preciousness. The heart part of the design was a coincidence that ended up positively influencing the course of the design.
+            The company also requested the colour red, but I did not want it to be an intimidating shade of red, so I slowly added pink to it, which is also present in the other tone of the palette.</p>"
+          data-images="KEEPER PROJECT/keeperbrandingforbehance.png">
+          <img src="KEEPER PROJECT/keepermain.jpg" alt="Keeper">
+          <p class="label">Branding</p>
+          <h2>Keeper</h2>
+        </div>
+
+        <div class="project" data-category="websites"
+          data-description="<h3>About</h3>
+          <p>As part of the second course of Graphic Design at OCAD University, we were challenged to create a poster without using Adobe Cloud or any other design focused tools. The assignment was meant to build our skills beyond the conventional practices and incentivise us to be resourceful when faced with limitations within our usual tools.</p>
+          <h3>Concept</h3>
+          <p>This website was created as part of a project about Brazilian music. Brazil is mainly known internationally for its soccer, samba, and funk, but it has many other beautiful cultural expressions, primarily music-related. ‘Os Ritmos do Brasil’ (The Rhythms of Brazil) is an archive of the most famous Brazilian genres, their history, and their prominent representatives.</p>"
+          data-images="osritmosdobrasil/osritmosdobrasilprints1.png,osritmosdobrasil/osritmosdobrasilprints5.png,osritmosdobrasil/osritmosdobrasilprints2.png,osritmosdobrasil/osritmosdobrasilprints3.png,osritmosdobrasil/osritmosdobrasilprints4.png">
+          <img src="osritmosdobrasil/osritmosdobrasilmockup.jpg" alt="Os Ritmos do Brasil">
+          <p class="label">Website</p>
+          <h2>Os Ritmos do Brasil</h2>
+        </div>
+
+        <div class="project" data-category="posters"
+          data-description="<h3>About</h3>
+          <p>As part of the second course of Graphic Design at OCAD University, we were challenged to create a poster without using Adobe Cloud or any other design focused tools. The assignment was meant to build our skills beyond the conventional practices and incentivise us to be resourceful when faced with limitations within our usual tools.</p>
+          <h3>Concept</h3>
+          <p>Using a barcode generator and PowerPoint, I assembled various posters made with the barcodes, which were created by removing words from the essay The Carrier Bag Theory of Fiction by Ursula K. Le Guin, as a metaphor to functionality or weapons in modern days.</p>"
+          data-images="howmuchistoomuch/hmitm-03.jpg,howmuchistoomuch/hmitm-01.jpg,howmuchistoomuch/hmitm-02.jpg,howmuchistoomuch/howmuchistoomuchfinal.jpg">
+          <img src="howmuchistoomuch/howmuchistoomuchmockup.jpg" alt="How Much Is Too Much">
+          <p class="label">Poster</p>
+          <h2>How Much Is Too Much?</h2>
+        </div>
       </section>
     </section>
   </div>
 
-  <div class="modal" id="projectModal">
-    <div class="modal-content">
+  <!-- Modal -->
+  <div class="modal" id="projectModal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" type="button" aria-label="Close modal">×</button>
+
+      <div id="galleryMount"></div>
+
       <div class="modal-text">
         <h2 id="modalTitle">Title</h2>
         <div id="modalDesc"></div>
       </div>
-      <div class="modal-images" id="modalImages"></div>
     </div>
   </div>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const buttons = document.querySelectorAll('.filters button');
+      const projects = document.querySelectorAll('.project');
+
+      const modal = document.getElementById('projectModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalDesc = document.getElementById('modalDesc');
+      const closeBtn = modal.querySelector('.modal-close');
+      const galleryMount = document.getElementById('galleryMount');
+
+      let lastFocusedEl = null;
+
+      // Gallery state
+      let fadeTimeout = null;
+      let currentImages = [];
+      let currentIndex = 0;
+      let timer = null;
+      const ROTATE_MS = 3000;
+
+      function stopRotation(){
+        if (timer){
+          clearInterval(timer);
+          timer = null;
+        }
+      }
+
+      function startRotation(){
+        stopRotation();
+        if (currentImages.length <= 1) return;
+        timer = setInterval(() => {
+          currentIndex = (currentIndex + 1) % currentImages.length;
+          setPrimary(currentIndex, false);
+        }, ROTATE_MS);
+      }
+
+      function setPrimary(index, resetTimer = true){
+  if (!currentImages.length) return;
+
+  currentIndex = (index % currentImages.length + currentImages.length) % currentImages.length;
+
+  const primaryImg = galleryMount.querySelector('.gallery-primary img');
+  if (!primaryImg) return;
+
+  // clear any pending fade swap (prevents glitching on fast clicks)
+  if (fadeTimeout) {
+    clearTimeout(fadeTimeout);
+    fadeTimeout = null;
+  }
+
+  // start fade out
+  primaryImg.classList.add('is-fading');
+
+  // after fade-out, swap src then fade back in
+  fadeTimeout = setTimeout(() => {
+    primaryImg.src = currentImages[currentIndex];
+    primaryImg.alt = `${modalTitle.textContent} — image ${currentIndex + 1} of ${currentImages.length}`;
+
+    // force next frame so opacity transition applies cleanly
+    requestAnimationFrame(() => {
+      primaryImg.classList.remove('is-fading');
+    });
+
+    fadeTimeout = null;
+  }, 160); // swap near the middle of the transition
+
+  // update active thumb immediately
+  const thumbs = galleryMount.querySelectorAll('.thumb');
+  thumbs.forEach((t, i) => t.classList.toggle('active', i === currentIndex));
+
+  if (resetTimer) startRotation();
+}
+
+
+      function buildGallery(images, title){
+        galleryMount.innerHTML = '';
+        stopRotation();
+
+        currentImages = (images || []).filter(Boolean);
+        currentIndex = 0;
+
+        if (!currentImages.length){
+          const empty = document.createElement('div');
+          empty.className = 'gallery-empty';
+          empty.textContent = 'No images available.';
+          galleryMount.appendChild(empty);
+          return;
+        }
+
+        const gallery = document.createElement('div');
+        gallery.className = 'gallery';
+
+        // Primary
+        const primary = document.createElement('div');
+        primary.className = 'gallery-primary';
+
+        const pImg = document.createElement('img');
+        pImg.loading = 'lazy';
+        pImg.src = currentImages[0];
+        pImg.alt = `${title} — image 1 of ${currentImages.length}`;
+        primary.appendChild(pImg);
+
+        // Thumbs
+        const thumbsWrap = document.createElement('div');
+        thumbsWrap.className = 'thumbs';
+
+        currentImages.forEach((src, i) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'thumb' + (i === 0 ? ' active' : '');
+          btn.setAttribute('aria-label', `Select image ${i + 1}`);
+
+          const img = document.createElement('img');
+          img.loading = 'lazy';
+          img.src = src;
+          img.alt = `${title} thumbnail ${i + 1}`;
+          btn.appendChild(img);
+
+          btn.addEventListener('click', () => setPrimary(i, true));
+          thumbsWrap.appendChild(btn);
+        });
+
+        gallery.appendChild(primary);
+        if (currentImages.length > 1) gallery.appendChild(thumbsWrap);
+
+        // Pause on hover
+        gallery.addEventListener('mouseenter', stopRotation);
+        gallery.addEventListener('mouseleave', startRotation);
+
+        galleryMount.appendChild(gallery);
+
+        startRotation();
+      }
+
+      // Filters
+      function applyFilter(category){
+        projects.forEach(project => {
+          const matches = category === 'all' || project.dataset.category === category;
+          project.classList.toggle('hidden', !matches);
+        });
+      }
+
+      buttons.forEach(button => {
+        button.addEventListener('click', () => {
+          const clicked = button.dataset.filter;
+
+          buttons.forEach(b => b.classList.remove('active'));
+          button.classList.add('active');
+
+          applyFilter(clicked);
+        });
+      });
+
+      // Open modal
+      function openModalFromProject(project){
+        lastFocusedEl = document.activeElement;
+
+        const title = project.querySelector('h2')?.textContent?.trim() || 'Project';
+        const descriptionHTML = project.dataset.description || '';
+        const imageList = project.dataset.images
+          ? project.dataset.images.split(',').map(s => s.trim()).filter(Boolean)
+          : [];
+
+        modalTitle.textContent = title;
+        modalDesc.innerHTML = descriptionHTML;
+
+        buildGallery(imageList, title);
+
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+
+        requestAnimationFrame(() => closeBtn.focus());
+      }
+
+      projects.forEach(project => {
+        project.setAttribute('tabindex', '0');
+
+        project.addEventListener('click', () => openModalFromProject(project));
+        project.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openModalFromProject(project);
+          }
+        });
+      });
+
+      // Close modal
+      function closeModal(){
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+
+        stopRotation();
+        galleryMount.innerHTML = '';
+        currentImages = [];
+        currentIndex = 0;
+
+        if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') {
+          lastFocusedEl.focus();
+        }
+      }
+
+      closeBtn.addEventListener('click', closeModal);
+
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        const isOpen = modal.classList.contains('open');
+        if (!isOpen) return;
+
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          closeModal();
+        }
+      });
+
+      // Init
+      applyFilter('all');
+    });
+  </script>
 </body>
 </html>
