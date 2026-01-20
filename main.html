@@ -280,38 +280,44 @@
       text-align:justify;
     }
 
-    /* ===== Gallery (primary + centered thumbnails, auto-rotate) ===== */
+    /* ===== Gallery (primary fixed size + centered thumbnails, manual only) ===== */
     .gallery{
       display:flex;
       flex-direction:column;
       gap:12px;
     }
 
+    .gallery-primary{
+      width:100%;
+      border-radius:12px;
+      overflow:hidden;
+      background:transparent;
+    }
+
+    /* ✅ Primary is ALWAYS same size; images may crop (taller rectangle) */
     .gallery-primary img{
-  width:100%;
-  height:clamp(240px, 34vh, 360px);
-  object-fit:contain;
-  display:block;
-  background:transparent;
+      width:100%;
+      height:clamp(360px, 48vh, 620px); /* TALLER than before */
+      object-fit:cover;
+      object-position:center;
+      display:block;
+      background:transparent;
 
-  /* fade */
-  opacity:1;
-  transition: opacity 380ms ease;
+      /* fade */
+      opacity:1;
+      transition:opacity 380ms ease;
+    }
 
-}
-
-.gallery-primary img.is-fading{
-  opacity:0;
-}
-
-
+    .gallery-primary img.is-fading{
+      opacity:0;
+    }
 
     .thumbs{
       display:flex;
-      justify-content:center;  /* centered */
+      justify-content:center;
       align-items:center;
       gap:14px;
-      flex-wrap:wrap;         /* wraps nicely instead of left-bias scroll */
+      flex-wrap:wrap;
     }
 
     .thumb{
@@ -500,7 +506,7 @@
             The company had a couple of requirements-the brief requested red in the colour palette and a unique pictorial mark for uniforms and packaging.</p>
           <h3>Concept</h3>
           <p>In the brief, the company mentions bringing comfort to customers, being a cozy shop and affordability. They also requested a unique pictorial mark and to have red in the palette.
-            With that in mind, the logomark designed represents the name and values of the brand by using two hands to illustrate comfort and authenticity, and the diamond to symbolize modernity and preciousness. The heart part of the design was a coincidence that ended up positively influencing the course of the design.
+            With that in mind, the logomark designed represents the name and values of the brand by using two hands to illustrate comfort and authenticity, and the diamond to symbolise modernity and preciousness. The heart part of the design was a coincidence that ended up positively influencing the course of the design.
             The company also requested the colour red, but I did not want it to be an intimidating shade of red, so I slowly added pink to it, which is also present in the other tone of the palette.</p>"
           data-images="KEEPER PROJECT/keeperbrandingforbehance.png">
           <img src="KEEPER PROJECT/keepermain.jpg" alt="Keeper">
@@ -560,70 +566,49 @@
 
       let lastFocusedEl = null;
 
-      // Gallery state
-      let fadeTimeout = null;
+      // Gallery state (manual only)
       let currentImages = [];
       let currentIndex = 0;
-      let timer = null;
-      const ROTATE_MS = 3000;
 
-      function stopRotation(){
-        if (timer){
-          clearInterval(timer);
-          timer = null;
+      // fade swap timeout
+      let fadeTimeout = null;
+
+      function setPrimary(index){
+        if (!currentImages.length) return;
+
+        currentIndex = (index % currentImages.length + currentImages.length) % currentImages.length;
+
+        const primaryImg = galleryMount.querySelector('.gallery-primary img');
+        if (!primaryImg) return;
+
+        // prevent overlapping fades
+        if (fadeTimeout){
+          clearTimeout(fadeTimeout);
+          fadeTimeout = null;
         }
+
+        // fade out
+        primaryImg.classList.add('is-fading');
+
+        // swap mid-fade, then fade in
+        fadeTimeout = setTimeout(() => {
+          primaryImg.src = currentImages[currentIndex];
+          primaryImg.alt = `${modalTitle.textContent} — image ${currentIndex + 1} of ${currentImages.length}`;
+
+          requestAnimationFrame(() => {
+            primaryImg.classList.remove('is-fading');
+          });
+
+          fadeTimeout = null;
+        }, 210);
+
+        // update active thumb
+        const thumbs = galleryMount.querySelectorAll('.thumb');
+        thumbs.forEach((t, i) => t.classList.toggle('active', i === currentIndex));
       }
-
-      function startRotation(){
-        stopRotation();
-        if (currentImages.length <= 1) return;
-        timer = setInterval(() => {
-          currentIndex = (currentIndex + 1) % currentImages.length;
-          setPrimary(currentIndex, false);
-        }, ROTATE_MS);
-      }
-
-      function setPrimary(index, resetTimer = true){
-  if (!currentImages.length) return;
-
-  currentIndex = (index % currentImages.length + currentImages.length) % currentImages.length;
-
-  const primaryImg = galleryMount.querySelector('.gallery-primary img');
-  if (!primaryImg) return;
-
-  // clear any pending fade swap (prevents glitching on fast clicks)
-  if (fadeTimeout) {
-    clearTimeout(fadeTimeout);
-    fadeTimeout = null;
-  }
-
-  // start fade out
-  primaryImg.classList.add('is-fading');
-
-  // after fade-out, swap src then fade back in
-  fadeTimeout = setTimeout(() => {
-    primaryImg.src = currentImages[currentIndex];
-    primaryImg.alt = `${modalTitle.textContent} — image ${currentIndex + 1} of ${currentImages.length}`;
-
-    // force next frame so opacity transition applies cleanly
-    requestAnimationFrame(() => {
-      primaryImg.classList.remove('is-fading');
-    });
-
-    fadeTimeout = null;
-  }, 160); // swap near the middle of the transition
-
-  // update active thumb immediately
-  const thumbs = galleryMount.querySelectorAll('.thumb');
-  thumbs.forEach((t, i) => t.classList.toggle('active', i === currentIndex));
-
-  if (resetTimer) startRotation();
-}
-
 
       function buildGallery(images, title){
         galleryMount.innerHTML = '';
-        stopRotation();
 
         currentImages = (images || []).filter(Boolean);
         currentIndex = 0;
@@ -649,7 +634,7 @@
         pImg.alt = `${title} — image 1 of ${currentImages.length}`;
         primary.appendChild(pImg);
 
-        // Thumbs
+        // Thumbnails
         const thumbsWrap = document.createElement('div');
         thumbsWrap.className = 'thumbs';
 
@@ -665,20 +650,14 @@
           img.alt = `${title} thumbnail ${i + 1}`;
           btn.appendChild(img);
 
-          btn.addEventListener('click', () => setPrimary(i, true));
+          btn.addEventListener('click', () => setPrimary(i));
           thumbsWrap.appendChild(btn);
         });
 
         gallery.appendChild(primary);
         if (currentImages.length > 1) gallery.appendChild(thumbsWrap);
 
-        // Pause on hover
-        gallery.addEventListener('mouseenter', stopRotation);
-        gallery.addEventListener('mouseleave', startRotation);
-
         galleryMount.appendChild(gallery);
-
-        startRotation();
       }
 
       // Filters
@@ -691,12 +670,9 @@
 
       buttons.forEach(button => {
         button.addEventListener('click', () => {
-          const clicked = button.dataset.filter;
-
           buttons.forEach(b => b.classList.remove('active'));
           button.classList.add('active');
-
-          applyFilter(clicked);
+          applyFilter(button.dataset.filter);
         });
       });
 
@@ -724,7 +700,6 @@
 
       projects.forEach(project => {
         project.setAttribute('tabindex', '0');
-
         project.addEventListener('click', () => openModalFromProject(project));
         project.addEventListener('keydown', (e) => {
           if (e.key === 'Enter' || e.key === ' ') {
@@ -740,10 +715,14 @@
         modal.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('modal-open');
 
-        stopRotation();
         galleryMount.innerHTML = '';
         currentImages = [];
         currentIndex = 0;
+
+        if (fadeTimeout){
+          clearTimeout(fadeTimeout);
+          fadeTimeout = null;
+        }
 
         if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') {
           lastFocusedEl.focus();
@@ -763,6 +742,17 @@
         if (e.key === 'Escape') {
           e.preventDefault();
           closeModal();
+        }
+
+        // keyboard navigation (manual)
+        if (!currentImages.length) return;
+        if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          setPrimary(currentIndex - 1);
+        }
+        if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          setPrimary(currentIndex + 1);
         }
       });
 
