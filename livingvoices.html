@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Living Voices</title>
+  <link href="https://fonts.googleapis.com/css2?family=PT+Mono&family=Kodchasan&display=swap" rel="stylesheet">
+
+  <style>
+    @font-face {
+      font-family: 'ABCDiatype';
+      src: url('ABCDiatypeSemi-Mono-Light.woff') format('woff');
+      font-weight: 300;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'ABCDiatype';
+      src: url('ABCDiatypeSemi-Mono-Regular.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'ABCDiatype';
+      src: url('ABCDiatypeSemi-Mono-Bold.woff') format('woff');
+      font-weight: 800;
+      font-style: normal;
+    }
+
+    html { font-size: calc(100vw / 1920 * 16); }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #ffdfe9;
+      font-family: 'ABCDiatype', sans-serif;
+      font-weight: 400;
+      color: rgb(255, 254, 254);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .title-container h4,
+    .title-container h1 {
+      margin: 0;
+      text-align: center;
+    }
+
+    .title-container h4 {
+      font-weight: 800;
+      padding-top: 3rem;
+      color: #C71585;
+      font-size: 1.5rem;
+    }
+
+    .title-container h1 {
+      font-family: 'Kodchasan', sans-serif;
+      margin-top: 0.6rem;
+      color: #C71585;
+      font-weight: bold;
+      font-size: 2.5rem;
+    }
+
+    .spacer { height: 7.5rem; width: 100%; }
+
+    .carousel-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin-top: 1.2rem;
+      position: relative;
+    }
+
+    .scroll-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: #fff;
+      border: 0;
+      border-radius: 50%;
+      width: 3.125rem;
+      height: 3.125rem;
+      cursor: pointer;
+      font-size: 1.5rem;
+      text-align: center;
+      line-height: 3rem;
+      font-weight: bold;
+      z-index: 999;
+      color: #C71585;
+      box-shadow: 0px 2px 5px rgba(113, 13, 94, 0.2);
+    }
+    .left-scroll { left: 0.6rem; }
+    .right-scroll { right: 0.6rem; }
+
+    .content-stack {
+      display: flex;
+      gap: 0.625rem;
+      align-items: center;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 0.625rem;
+      white-space: nowrap;
+      width: 100%;
+      text-align: center;
+      transition: transform 0.3s ease-in-out;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .content-stack::-webkit-scrollbar { display: none; }
+
+    .card {
+      border-radius: 0.625rem;
+      width: 4rem;
+      height: 21.875rem;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      z-index: 1;
+      flex-shrink: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: inherit;
+      transition: width 0.3s ease-in-out;
+      position: relative;
+      overflow: hidden;
+      user-select: none;
+    }
+    .card:hover { width: 15rem; }
+
+    .card h4 {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-size: 1rem;
+      color: white;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1.25rem 0.75rem;
+      font-weight: 400;
+      opacity: 1;
+      transition: opacity 0.2s ease-in-out;
+      box-sizing: border-box;
+      white-space: normal;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .card:hover h4 { opacity: 0; transition-delay: 0s; }
+
+    .card .expanded-text {
+      position: absolute;
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      width: 90%;
+      max-height: 90%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      opacity: 0;
+      visibility: hidden;
+      font-family: 'Kodchasan', sans-serif;
+      white-space: normal;
+      word-break: break-word;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.3s ease-in-out;
+      transition-delay: 0.2s;
+    }
+    .card:hover .expanded-text { opacity: 1; visibility: visible; }
+
+    .button-container {
+      position: fixed;
+      bottom: 4vh;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 30;
+    }
+
+    .button-style {
+      background-color: #fff;
+      border: 0;
+      border-radius: 0.3rem;
+      padding: 0.75rem 1.1rem;
+      cursor: pointer;
+      font-weight: 400;
+      text-decoration: none;
+      color: #C71585;
+      width: 8.75rem;
+      text-align: center;
+      transition: all 0.3s ease-in-out;
+    }
+    .button-style:hover {
+      background-color: #C71585;
+      color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .legend-dropdown {
+      display: none;
+      position: fixed;
+      bottom: 14vh;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #C71585;
+      background-color: #fff;
+      border-radius: 0.3rem;
+      padding: 1.25rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      z-index: 100;
+      min-width: 12.5rem;
+      min-height: 9.375rem;
+    }
+
+    .legend-dropdown div {
+      display: flex;
+      align-items: center;
+      margin-top: 0.625rem;
+      cursor: pointer;
+      font-weight: bold;
+      font-family: 'Kodchasan', sans-serif;
+      padding: 0.25rem 0.75rem;
+    }
+    .legend-dropdown div:hover { text-decoration: underline; }
+
+    .legend-dropdown span {
+      display: inline-block;
+      width: 1.25rem;
+      height: 1.25rem;
+      margin-right: 0.3125rem;
+      border-radius: 0.1875rem;
+    }
+
+    .legend-close {
+      position: absolute;
+      top: 0.625rem;
+      right: 0.625rem;
+      font-size: 1.25rem;
+      cursor: pointer;
+      color: #C71585;
+      background: none;
+      border: none;
+      padding: 0.25rem;
+      transition: color 0.2s ease-in-out;
+    }
+    .legend-close:hover { color: black; }
+
+    .reset-filter {
+      position: relative;
+      right: 4.375rem;
+      bottom: 0.125rem;
+      background: none;
+      border: none;
+      color: gray;
+      font-size: 0.7rem;
+      font-weight: 400;
+      text-decoration: underline;
+      cursor: pointer;
+      width: 100%;
+      transition: color 0.2s ease-in-out;
+    }
+    .reset-filter:hover { color: #C71585; }
+
+    .under-surface-title {
+      font-weight: 400;
+      font-size: 8rem;
+      color: #C71585;
+      text-align: center;
+      width: 100%;
+      margin-top: 2.5rem;
+      opacity: 0.2;
+      position: absolute;
+      bottom: 0;
+      z-index: -1;
+    }
+
+    .reset-link {
+      position: fixed;
+      top: 1.25rem;
+      right: 1.25rem;
+      font-weight: 400;
+      color: #C71585;
+      text-decoration: underline;
+      cursor: pointer;
+      z-index: 9999;
+      transition: color 0.3s ease;
+      font-size: 1rem;
+    }
+    .reset-link:hover { color: #ffd000; }
+
+    /* Backdrop blocks page clicks and dims background */
+    #popup-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 99998;
+    }
+
+    /* Popup above everything */
+    #popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      border: 2px solid #333;
+      border-radius: 0.3rem;
+      padding: 1.875rem;
+      width: 60vw;
+      max-width: 62.5rem;
+      height: 45vw;
+      max-height: 80vh;
+      z-index: 99999;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+      text-align: center;
+    }
+
+    /* YouTube playback permissions */
+    #video-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 0.3rem;
+    }
+
+    .popup-close {
+      position: absolute;
+      top: 0.1rem;
+      right: 0.3rem;
+      font-size: 1.75rem;
+      cursor: pointer;
+      color: #FF69B4;
+      background: none;
+      border: none;
+      padding: 0.625rem;
+      transition: color 0.2s ease-in-out;
+      z-index: 100000;
+    }
+    .popup-close:hover { color: #C71585; }
+
+    /* Practical: make popup fit small screens better */
+    @media (max-width: 768px) {
+      #popup {
+        width: 92vw;
+        height: 56vw; /* keeps roughly 16:9 on mobile */
+        padding: 1rem;
+      }
+      .under-surface-title { font-size: 4rem; }
+    }
+  </style>
+
+  <!-- OPTIONAL CSP (only if your host uses a strict CSP and blocks YouTube)
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' https:; frame-src https://www.youtube.com https://www.youtube-nocookie.com; child-src https://www.youtube.com https://www.youtube-nocookie.com;">
+  -->
+</head>
+
+<body>
+  <!-- Backdrop -->
+  <div id="popup-backdrop" onclick="closePopup()"></div>
+
+  <!-- Popup -->
+  <div id="popup" role="dialog" aria-modal="true" aria-label="Video popup">
+    <button class="popup-close" onclick="closePopup()" aria-label="Close video">✖</button>
+    <iframe
+      id="video-frame"
+      title="Video player"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <a href="index.html" class="reset-link">Cultural Fingerprints</a>
+
+  <div class="title-container">
+    <h1>Living Voices</h1>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="carousel-container">
+    <button class="scroll-btn left-scroll" onclick="scrollCarousel(-1)">&#9664;</button>
+
+    <div class="content-stack" id="carousel">
+      <!-- ✅ Updated: pass ONLY the videoId -->
+      <div class="card general" style="background-color: #720039;" onclick="openPopup('0RSpnpm8X4I')">
+        <h4>Brazil: History, Geography, Economy & Culture</h4>
+        <p class="expanded-text">Brazil: History, Geography, Economy & Culture</p>
+      </div>
+      <div class="card general" style="background-color: #720039;" onclick="openPopup('SAZAKPUQMw0')">
+        <h4>The destruction of the Amazon, explained</h4>
+        <p class="expanded-text">The destruction of the Amazon, explained</p>
+      </div>
+      <div class="card general" style="background-color: #720039;" onclick="openPopup('n-uk0r92Y88')">
+        <h4>Inside Brazil's Most Dangerous Favela</h4>
+        <p class="expanded-text">Inside Brazil's Most Dangerous Favela</p>
+      </div>
+      <div class="card general" style="background-color: #720039;" onclick="openPopup('gkTB_nmhHhA')">
+        <h4>WONDERS OF BRAZIL | The most fascinating places in Brazil</h4>
+        <p class="expanded-text">WONDERS OF BRAZIL | The most fascinating places in Brazil</p>
+      </div>
+      <div class="card general" style="background-color: #720039;" onclick="openPopup('WyKHV0Ae44A')">
+        <h4>Truth or Myth: Brazilians React to Stereotypes</h4>
+        <p class="expanded-text">Truth or Myth: Brazilians React to Stereotypes</p>
+      </div>
+      <div class="card general" style="background-color: #720039;" onclick="openPopup('wfs_PNA_R-M')">
+        <h4>Brazilian Portuguese vs. European Portuguese | Speaking Brazilian</h4>
+        <p class="expanded-text">Brazilian Portuguese vs. European Portuguese | Speaking Brazilian</p>
+      </div>
+      <div class="card general" style="background-color: #720039;" onclick="openPopup('jk1eTURC8sA')">
+        <h4>What it means to be Black in Brazil</h4>
+        <p class="expanded-text">What it means to be Black in Brazil</p>
+      </div>
+
+      <div class="card narratives" style="background-color: #b6004f;" onclick="openPopup('GFuNTV-hi9M')">
+        <h4>The void that a void leaves</h4>
+        <p class="expanded-text">The void that a void leaves</p>
+      </div>
+      <div class="card narratives" style="background-color: #b6004f;" onclick="openPopup('6AsWXMAewIk')">
+        <h4>In case you are almost ending a friendship</h4>
+        <p class="expanded-text">In case you are almost ending a friendship</p>
+      </div>
+      <div class="card narratives" style="background-color: #b6004f;" onclick="openPopup('2T0GqEmvd68')">
+        <h4>The Sauape tribe in the Brazilian Amazon</h4>
+        <p class="expanded-text">The Sauape tribe in the Brazilian Amazon</p>
+      </div>
+      <div class="card narratives" style="background-color: #b6004f;" onclick="openPopup('A0u8rgz4qlA')">
+        <h4>Life in Brazil</h4>
+        <p class="expanded-text">Life in Brazil</p>
+      </div>
+      <div class="card narratives" style="background-color: #b6004f;" onclick="openPopup('7vPnp-H_hVA')">
+        <h4>I Hope It Lasts Forever (But Nothing Does)</h4>
+        <p class="expanded-text">I Hope It Lasts Forever (But Nothing Does)</p>
+      </div>
+
+      <div class="card culture" style="background-color: #ec1998;" onclick="openPopup('8wIRaCgONTg')">
+        <h4>São João</h4>
+        <p class="expanded-text">São João</p>
+      </div>
+      <div class="card culture" style="background-color: #ec1998;" onclick="openPopup('_wwBv_ar2QY')">
+        <h4>The Racism Against Afro Brazilian That The Media Don’t Show You!</h4>
+        <p class="expanded-text">The Racism Against Afro Brazilian That The Media Don’t Show You!</p>
+      </div>
+      <div class="card culture" style="background-color: #ec1998;" onclick="openPopup('Py0Tl2PvlJo')">
+        <h4>Brazil Carnival: The Rio de Janeiro parade in 1 minute</h4>
+        <p class="expanded-text">Brazil Carnival: The Rio de Janeiro parade in 1 minute</p>
+      </div>
+      <div class="card culture" style="background-color: #ec1998;" onclick="openPopup('haw3ROMgP7g')">
+        <h4>Why race in Brazil is a confusing, loaded topic</h4>
+        <p class="expanded-text">Why race in Brazil is a confusing, loaded topic</p>
+      </div>
+      <div class="card culture" style="background-color: #ec1998;" onclick="openPopup('nJSEUkS3SYE')">
+        <h4>Don't do this in Brazil!</h4>
+        <p class="expanded-text">Don't do this in Brazil!</p>
+      </div>
+      <div class="card culture" style="background-color: #ec1998;" onclick="openPopup('rPyijDBTYgI')">
+        <h4>Brazilians Don't Say "Sim"</h4>
+        <p class="expanded-text">Brazilians Don't Say "Sim"</p>
+      </div>
+
+      <div class="card history" style="background-color: #ff639f;" onclick="openPopup('poM7eGygK5E')">
+        <h4>Brazilian History (Taught by a Brazilian Teacher!)</h4>
+        <p class="expanded-text">Brazilian History (Taught by a Brazilian Teacher!)</p>
+      </div>
+      <div class="card history" style="background-color: #ff639f;" onclick="openPopup('LbNrrE6h7Og')">
+        <h4>The History of Brazil - Everything You Need to Know</h4>
+        <p class="expanded-text">The History of Brazil - Everything You Need to Know</p>
+      </div>
+      <div class="card history" style="background-color: #ff639f;" onclick="openPopup('DzUNfnVnIkw')">
+        <h4>Empire of Brazil - Part 1</h4>
+        <p class="expanded-text">Empire of Brazil - Part 1</p>
+      </div>
+      <div class="card history" style="background-color: #ff639f;" onclick="openPopup('N9Qb-CRXGyg')">
+        <h4>Empire of Brazil - Part 2</h4>
+        <p class="expanded-text">Empire of Brazil - Part 2</p>
+      </div>
+      <div class="card history" style="background-color: #ff639f;" onclick="openPopup('Cug8DeQWsEk')">
+        <h4>Empire of Brazil - Part 3</h4>
+        <p class="expanded-text">Empire of Brazil - Part 3</p>
+      </div>
+      <div class="card history" style="background-color: #ff639f;" onclick="openPopup('Y6ZmbqGI2n4')">
+        <h4>Empire of Brazil - Part 4</h4>
+        <p class="expanded-text">Empire of Brazil - Part 4</p>
+      </div>
+      <div class="card history" style="background-color: #ff639f;" onclick="openPopup('QywX2lN6rbY')">
+        <h4>Empire of Brazil - Part 5</h4>
+        <p class="expanded-text">Empire of Brazil - Part 5</p>
+      </div>
+      <div class="card history" style="background-color: #ff639f;" onclick="openPopup('ZUt_OO_C4Eo')">
+        <h4>Brazil Before 1500: The Untold Story</h4>
+        <p class="expanded-text">Brazil Before 1500: The Untold Story</p>
+      </div>
+    </div>
+
+    <button class="scroll-btn right-scroll" onclick="scrollCarousel(1)">&#9654;</button>
+  </div>
+
+  <div class="under-surface-title">UNDER THE SURFACE</div>
+
+  <div class="button-container">
+    <button class="button-style" onclick="toggleLegend()">Legend</button>
+  </div>
+
+  <div id="legend-dropdown" class="legend-dropdown">
+    <button class="legend-close" onclick="toggleLegend()">✖</button>
+    <button class="reset-filter" onclick="resetFilter()">Reset</button>
+    <div onclick="filterCards('general')"><span style="background-color: #720039;"></span> General</div>
+    <div onclick="filterCards('narratives')"><span style="background-color: #b6004f;"></span> Narratives</div>
+    <div onclick="filterCards('culture')"><span style="background-color: #ec1998;"></span> Culture</div>
+    <div onclick="filterCards('history')"><span style="background-color: #ff639f;"></span> History</div>
+  </div>
+
+  <script>
+    function toggleLegend() {
+      const legend = document.getElementById("legend-dropdown");
+      legend.style.display = (legend.style.display === "block") ? "none" : "block";
+    }
+
+    function filterCards(category) {
+      const cards = document.querySelectorAll('.card');
+      const carousel = document.getElementById("carousel");
+      let hasVisibleCards = false;
+
+      cards.forEach(card => {
+        if (card.classList.contains(category)) {
+          card.style.display = "flex";
+          hasVisibleCards = true;
+        } else {
+          card.style.display = "none";
+        }
+      });
+
+      carousel.style.minHeight = hasVisibleCards ? "" : "350px";
+    }
+
+    function resetFilter() {
+      const cards = document.querySelectorAll('.card');
+      const carousel = document.getElementById("carousel");
+
+      cards.forEach(card => { card.style.display = "flex"; });
+      carousel.style.minHeight = "";
+    }
+
+    // ✅ Fixed: reliable embed, correct origin (NOT encoded), safe for local testing, ESC-to-close
+    function openPopup(videoId) {
+      const popup = document.getElementById('popup');
+      const backdrop = document.getElementById('popup-backdrop');
+      const iframe = document.getElementById('video-frame');
+
+      const origin = window.location.origin;
+      const originParam = (origin && origin.startsWith('http')) ? `&origin=${origin}` : '';
+
+      const finalUrl =
+        `https://www.youtube-nocookie.com/embed/${videoId}` +
+        `?autoplay=1&rel=0&modestbranding=1&playsinline=1${originParam}`;
+
+      backdrop.style.display = 'block';
+      popup.style.display = 'block';
+
+      // Set src after showing popup (more reliable)
+      iframe.src = finalUrl;
+
+      // Practical: allow ESC to close while open
+      document.addEventListener('keydown', escToClose);
+    }
+
+    function escToClose(e) {
+      if (e.key === 'Escape') closePopup();
+    }
+
+    function closePopup() {
+      const popup = document.getElementById('popup');
+      const backdrop = document.getElementById('popup-backdrop');
+      const iframe = document.getElementById('video-frame');
+
+      popup.style.display = 'none';
+      backdrop.style.display = 'none';
+
+      // Stop playback
+      iframe.src = '';
+
+      document.removeEventListener('keydown', escToClose);
+    }
+
+    function scrollCarousel(direction) {
+      const carousel = document.getElementById("carousel");
+      const scrollAmount = 400;
+      carousel.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
+    }
+  </script>
+</body>
+</html>
