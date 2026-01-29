@@ -11,6 +11,15 @@
     :root{
       --cream:#fdf1dd;
       --red:#c61e3b;
+      --black:#000;
+      --overlay: rgba(0,0,0,0.5);
+
+      /* Work cards */
+      --cardW: clamp(240px, 30vw, 300px);
+
+      /* Gallery thumbs */
+      --thumbW: clamp(74px, 9vw, 108px);
+      --thumbH: clamp(54px, 6.5vw, 78px);
     }
 
     *{ box-sizing:border-box; margin:0; padding:0; }
@@ -33,7 +42,14 @@
       touch-action:none;
     }
 
-    /* fixed logo header */
+    /* ===== Night mode ===== */
+    body.night-mode{
+      --cream:#c61e3b;
+      --red:#fdf1dd;
+      --overlay: rgba(0,0,0,0.6);
+    }
+
+    /* ===== Fixed header ===== */
     .logo-fixed{
       position:fixed;
       top:0;
@@ -55,13 +71,38 @@
       background-color:var(--red);
     }
 
-    /* layout */
+    /* ===== Theme toggle ===== */
+    .theme-toggle{
+      position:absolute;
+      top:18px;
+      right:18px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:6px;
+      border:none;
+      background:transparent;
+      cursor:pointer;
+      border-radius:999px;
+      z-index:1100;
+    }
+
+    .theme-dot{
+      width:18px;
+      height:18px;
+      border-radius:50%;
+      border:1.5px solid var(--black);
+    }
+
+    .theme-dot.pink{ background:var(--red); }
+    .theme-dot.beige{ background:var(--cream); }
+
+    /* ===== Layout ===== */
     .page{
       max-width:1400px;
       margin:0 auto;
       padding:clamp(16px, 3vw, 40px);
       display:flex;
-      flex-direction:row;
       gap:clamp(16px, 3vw, 40px);
       flex-wrap:wrap;
       align-items:flex-start;
@@ -90,11 +131,10 @@
       #work{ flex:0 0 100%; }
     }
 
-    /* typography */
+    /* ===== Typography ===== */
     .section-title{
       font-family:"ivyora-display", serif;
       font-weight:700;
-      font-style:normal;
       font-size:clamp(40px, 5vw, 64px);
       margin-bottom:30px;
       text-align:center;
@@ -103,7 +143,6 @@
     .title-resume{
       font-family:"ivyora-display", serif;
       font-weight:700;
-      font-style:normal;
       font-size:20px;
       margin:20px 0 14px;
       text-align:left;
@@ -111,7 +150,6 @@
 
     .yearsref{
       font-family:"ivyora-display", serif;
-      text-align:left;
       font-size:13pt;
       font-weight:700;
       margin-top:10px;
@@ -123,7 +161,7 @@
       margin-top:5px;
     }
 
-    /* filters */
+    /* ===== Filters ===== */
     .filters{
       text-align:center;
       margin-bottom:40px;
@@ -141,20 +179,17 @@
       cursor:pointer;
     }
 
-    .filters button:hover{
-      background-color:var(--red);
-      color:var(--cream);
-    }
-
+    .filters button:hover,
     .filters button.active{
       background-color:var(--red);
       color:var(--cream);
     }
 
-    /* projects */
+    /* ===== Projects ===== */
     .project-grid{
       display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns:repeat(auto-fill, minmax(var(--cardW), var(--cardW)));
+      justify-content:center;
       gap:clamp(18px, 3vw, 40px);
       padding:20px 0 80px;
     }
@@ -164,24 +199,26 @@
       border:2px solid var(--red);
       padding:16px;
       border-radius:12px;
-      transition:transform 0.3s ease;
       cursor:pointer;
       display:flex;
       flex-direction:column;
-      justify-content:flex-start;
-      height:auto;
       background:transparent;
     }
 
     .project:hover{ transform:scale(1.02); }
+
     .project.hidden{ display:none !important; }
 
-    .project img{
-      width:100%;
-      aspect-ratio:4 / 3;
-      object-fit:cover;
-      border-radius:8px;
-    }
+    /* ✅ proportional scaling */
+   .project img{
+  width:100%;
+  height:auto;              /* ✅ height follows width */
+  aspect-ratio:4 / 3;       /* ✅ fixed proportion */
+  object-fit:cover;
+  border-radius:8px;
+  display:block;            /* ✅ removes tiny inline-image gaps */
+}
+
 
     .project .label{
       font-size:10px;
@@ -192,21 +229,17 @@
     .project h2{
       font-family:"ivyora-display", serif;
       font-weight:700;
-      font-style:normal;
       font-size:20px;
       margin-top:8px;
     }
 
-    /* modal */
+    /* ===== Modal ===== */
     .modal{
       display:none;
       position:fixed;
       z-index:2000;
-      left:0;
-      top:0;
-      width:100vw;
-      height:100vh;
-      background-color:rgba(0,0,0,0.5);
+      inset:0;
+      background-color:var(--overlay);
       justify-content:center;
       align-items:center;
     }
@@ -217,19 +250,31 @@
       background:var(--cream);
       width:90%;
       max-width:1000px;
-      display:flex;
-      flex-direction:column;
-      gap:16px;
       padding:28px;
       border-radius:8px;
       overflow:auto;
       position:relative;
       max-height:90vh;
     }
+    
+    .modal-text p{
+  font-family:axia, sans-serif;
+  font-weight:400;
+  font-style:normal;
+  font-size:14px;
+  line-height:1.6;      /* ✅ easier reading */
+  text-align:justify;
+  margin:10px 0;        /* ✅ space between paragraphs */
+}
+.modal-text h3{
+  font-family:"ivyora-display", serif;
+  font-weight:700;
+  font-style:normal;
+  font-size:20px;
+  margin:26px 0 10px;   /* ✅ more separation between sections */
+  line-height:1.15;
+}
 
-    @media (min-width: 901px){
-      .modal-content{ padding:40px; }
-    }
 
     .modal-close{
       position:absolute;
@@ -240,126 +285,64 @@
       color:var(--red);
       width:34px;
       height:34px;
-      border-radius:999px;
+      border-radius:50%;
       cursor:pointer;
-      font-size:18px;
-      line-height:1;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      z-index:10;
     }
 
-    .modal-close:hover{
-      background:var(--red);
-      color:var(--cream);
-    }
-
-    .modal-text h2{
-      font-family:"ivyora-display", serif;
-      font-weight:700;
-      font-style:normal;
-      font-size:24px;
-      margin-bottom:8px;
-      padding-right:44px;
-    }
-
-    .modal-text h3{
-      font-family:"ivyora-display", serif;
-      font-weight:700;
-      font-style:normal;
-      font-size:20px;
-      margin:18px 0 10px;
-    }
-
-    .modal-text p{
-      font-family:axia, sans-serif;
-      font-weight:400;
-      font-style:normal;
-      font-size:14px;
-      text-align:justify;
-    }
-
-    /* ===== Gallery (primary fixed size + centered thumbnails, manual only) ===== */
+    /* ===== Gallery ===== */
     .gallery{
       display:flex;
       flex-direction:column;
       gap:12px;
     }
 
-    .gallery-primary{
-      width:100%;
-      border-radius:12px;
-      overflow:hidden;
-      background:transparent;
-    }
-
-    /* ✅ Primary is ALWAYS same size; images may crop (taller rectangle) */
     .gallery-primary img{
       width:100%;
       height: clamp(480px, 62vh, 820px);
       object-fit:cover;
-      object-position:center;
-      display:block;
-      background:transparent;
-
-      /* fade */
-      opacity:1;
       transition:opacity 380ms ease;
     }
 
-    .gallery-primary img.is-fading{
-      opacity:0;
-    }
+    .gallery-primary img.is-fading{ opacity:0; }
 
     .thumbs{
       display:flex;
-      justify-content:center;
-      align-items:center;
       gap:14px;
-      flex-wrap:wrap;
-    }
-
-    .thumb{
-      border:none;
-      background:transparent;
-      padding:0;
-      cursor:pointer;
-      border-radius:10px;
-      overflow:hidden;
+      overflow-x:auto;
+      margin-top:12px;
     }
 
     .thumb img{
-      width:96px;
-      height:70px;
+      width:var(--thumbW);
+      height:var(--thumbH);
       object-fit:cover;
-      display:block;
       border-radius:10px;
-      opacity:0.82;
-      transition:transform 150ms ease, opacity 150ms ease;
-    }
-
-    .thumb:hover img{
-      opacity:1;
-      transform:scale(1.05);
+      opacity:.82;
     }
 
     .thumb.active img{
       opacity:1;
-      transform:scale(1.05);
-    }
-
-    .gallery-empty{
-      padding:18px;
-      text-align:center;
-      font-size:14px;
+      outline:2px solid var(--red);
     }
   </style>
 </head>
 
 <body>
   <div class="logo-fixed">
-    <img src="loogos/peersonalloogolight-02.png" alt="Esther Sales Logo">
+    <!-- Theme toggle: pink = night, beige = day -->
+    <button class="theme-toggle" type="button" id="themeToggle" aria-label="Toggle night mode">
+      <span class="theme-dot pink" aria-hidden="true"></span>
+      <span class="theme-dot beige" aria-hidden="true"></span>
+    </button>
+
+    <!-- ✅ Logo swaps on night mode (replace data-night filename with yours) -->
+    <img
+      id="siteLogo"
+      src="loogos/peersonalloogolight-02.png"
+      data-day="loogos/peersonalloogolight-02.png"
+      data-night="loogos/mylogocream.png"
+      alt="Esther Sales Logo"
+    >
     <div class="line"></div>
   </div>
 
@@ -564,6 +547,10 @@
       const closeBtn = modal.querySelector('.modal-close');
       const galleryMount = document.getElementById('galleryMount');
 
+      // Theme toggle + logo swap
+      const themeToggle = document.getElementById('themeToggle');
+      const siteLogo = document.getElementById('siteLogo');
+
       let lastFocusedEl = null;
 
       // Gallery state (manual only)
@@ -573,6 +560,29 @@
       // fade swap timeout
       let fadeTimeout = null;
 
+      function applyTheme(isNight){
+        document.body.classList.toggle('night-mode', isNight);
+
+        if (siteLogo){
+          siteLogo.src = isNight ? siteLogo.dataset.night : siteLogo.dataset.day;
+        }
+
+        try { localStorage.setItem('theme', isNight ? 'night' : 'day'); } catch (e) {}
+      }
+
+      // init theme (default day); pink = night, beige = day
+      try {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'night') applyTheme(true);
+      } catch (e) {}
+
+      if (themeToggle){
+        themeToggle.addEventListener('click', () => {
+          const isNight = document.body.classList.contains('night-mode');
+          applyTheme(!isNight);
+        });
+      }
+
       function setPrimary(index){
         if (!currentImages.length) return;
 
@@ -581,16 +591,13 @@
         const primaryImg = galleryMount.querySelector('.gallery-primary img');
         if (!primaryImg) return;
 
-        // prevent overlapping fades
         if (fadeTimeout){
           clearTimeout(fadeTimeout);
           fadeTimeout = null;
         }
 
-        // fade out
         primaryImg.classList.add('is-fading');
 
-        // swap mid-fade, then fade in
         fadeTimeout = setTimeout(() => {
           primaryImg.src = currentImages[currentIndex];
           primaryImg.alt = `${modalTitle.textContent} — image ${currentIndex + 1} of ${currentImages.length}`;
@@ -602,7 +609,6 @@
           fadeTimeout = null;
         }, 210);
 
-        // update active thumb
         const thumbs = galleryMount.querySelectorAll('.thumb');
         thumbs.forEach((t, i) => t.classList.toggle('active', i === currentIndex));
       }
@@ -624,7 +630,6 @@
         const gallery = document.createElement('div');
         gallery.className = 'gallery';
 
-        // Primary
         const primary = document.createElement('div');
         primary.className = 'gallery-primary';
 
@@ -634,7 +639,6 @@
         pImg.alt = `${title} — image 1 of ${currentImages.length}`;
         primary.appendChild(pImg);
 
-        // Thumbnails
         const thumbsWrap = document.createElement('div');
         thumbsWrap.className = 'thumbs';
 
@@ -744,7 +748,6 @@
           closeModal();
         }
 
-        // keyboard navigation (manual)
         if (!currentImages.length) return;
         if (e.key === 'ArrowLeft') {
           e.preventDefault();
