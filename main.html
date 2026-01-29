@@ -23,9 +23,15 @@
     }
 
     *{ box-sizing:border-box; margin:0; padding:0; }
+body{
+  cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 32 32"><polygon points="0,0 32,16 0,32" fill="%23c61e3b"/></svg>') 0 0, auto;
+}
 
+body.night-mode{
+  cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 32 32"><polygon points="0,0 32,16 0,32" fill="%23fdf1dd"/></svg>') 0 0, auto;
+}
     html, body{
-      cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 32 32"><polygon points="0,0 32,16 0,32" fill="%23c61e3b"/></svg>') 0 0, auto;
+      
       background-color:var(--cream);
       color:var(--red);
       font-family:axia, sans-serif;
@@ -296,12 +302,16 @@
       gap:12px;
     }
 
-    .gallery-primary img{
-      width:100%;
-      height: clamp(480px, 62vh, 820px);
-      object-fit:cover;
-      transition:opacity 380ms ease;
-    }
+.gallery-primary img{
+  width:100%;
+  height:auto;
+  aspect-ratio: 16 / 9;
+  object-fit:contain;   /* ✅ no cropping */
+  display:block;
+  max-height:70vh;
+}
+
+
 
     .gallery-primary img.is-fading{ opacity:0; }
 
@@ -570,11 +580,16 @@
         try { localStorage.setItem('theme', isNight ? 'night' : 'day'); } catch (e) {}
       }
 
-      // init theme (default day); pink = night, beige = day
-      try {
-        const saved = localStorage.getItem('theme');
-        if (saved === 'night') applyTheme(true);
-      } catch (e) {}
+    try {
+  const saved = localStorage.getItem('theme');
+  if (saved === 'night') {
+    applyTheme(true);
+  } else {
+    applyTheme(false); // force light mode
+  }
+} catch (e) {
+  applyTheme(false);   // fallback to light
+}
 
       if (themeToggle){
         themeToggle.addEventListener('click', () => {
