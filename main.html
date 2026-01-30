@@ -4,15 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Esther Sales — Main</title>
-<meta property="og:title" content="Esther Sales — Graphic Designer" />
-<meta property="og:description" content="Portfolio of Esther Sales, a Brazilian, Toronto-based graphic designer working with branding, publications, and web design." />
-<meta property="og:image" content="https://esthersportfolio.com/preview.png" />
-<meta property="og:url" content="https://esthersportfolio.com/" />
-<meta property="og:type" content="website" />
-<meta property="og:image:type" content="image/png" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-<meta name="twitter:card" content="summary_large_image">
+
+  <meta property="og:title" content="Esther Sales — Graphic Designer" />
+  <meta property="og:description" content="Portfolio of Esther Sales, a Brazilian, Toronto-based graphic designer working with branding, publications, and web design." />
+  <meta property="og:image" content="https://esthersportfolio.com/preview.png" />
+  <meta property="og:url" content="https://esthersportfolio.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image">
 
   <link rel="icon" type="image/png" href="loogos/peersonalloogolight-02.png">
   <link rel="stylesheet" href="https://use.typekit.net/zbf7fls.css">
@@ -26,22 +27,18 @@
 
       /* Work cards */
       --cardW: clamp(240px, 30vw, 300px);
-
-      /* Gallery thumbs */
-      --thumbW: clamp(74px, 9vw, 108px);
-      --thumbH: clamp(54px, 6.5vw, 78px);
     }
 
     *{ box-sizing:border-box; margin:0; padding:0; }
-body{
-  cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 32 32"><polygon points="0,0 32,16 0,32" fill="%23c61e3b"/></svg>') 0 0, auto;
-}
 
-body.night-mode{
-  cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 32 32"><polygon points="0,0 32,16 0,32" fill="%23fdf1dd"/></svg>') 0 0, auto;
-}
+    body{
+      cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 32 32"><polygon points="0,0 32,16 0,32" fill="%23c61e3b"/></svg>') 0 0, auto;
+    }
+    body.night-mode{
+      cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 32 32"><polygon points="0,0 32,16 0,32" fill="%23fdf1dd"/></svg>') 0 0, auto;
+    }
+
     html, body{
-      
       background-color:var(--cream);
       color:var(--red);
       font-family:axia, sans-serif;
@@ -222,19 +219,16 @@ body.night-mode{
     }
 
     .project:hover{ transform:scale(1.02); }
-
     .project.hidden{ display:none !important; }
 
-    /* ✅ proportional scaling */
-   .project img{
-  width:100%;
-  height:auto;              /* ✅ height follows width */
-  aspect-ratio:4 / 3;       /* ✅ fixed proportion */
-  object-fit:cover;
-  border-radius:8px;
-  display:block;            /* ✅ removes tiny inline-image gaps */
-}
-
+    .project img{
+      width:100%;
+      height:auto;
+      aspect-ratio:4 / 3;
+      object-fit:cover;
+      border-radius:8px;
+      display:block;
+    }
 
     .project .label{
       font-size:10px;
@@ -266,96 +260,126 @@ body.night-mode{
       background:var(--cream);
       width:90%;
       max-width:1000px;
-      padding:28px;
+      padding:56px 28px 28px;
       border-radius:8px;
-      overflow:auto;
       position:relative;
-      max-height:90vh;
-    }
-    
-    .modal-text p{
-  font-family:axia, sans-serif;
-  font-weight:400;
-  font-style:normal;
-  font-size:14px;
-  line-height:1.6;      /* ✅ easier reading */
-  text-align:justify;
-  margin:10px 0;        /* ✅ space between paragraphs */
-}
-.modal-text h3{
-  font-family:"ivyora-display", serif;
-  font-weight:700;
-  font-style:normal;
-  font-size:20px;
-  margin:26px 0 10px;   /* ✅ more separation between sections */
-  line-height:1.15;
-}
 
+      max-height:90vh;
+      overflow:auto;   /* ✅ single scroll for the entire modal content */
+      display:flex;
+      flex-direction:column;
+      gap:26px;
+    }
 
     .modal-close{
       position:absolute;
       top:14px;
       right:16px;
       border:1px solid var(--red);
-      background:transparent;
+      background:var(--cream);
       color:var(--red);
       width:34px;
       height:34px;
       border-radius:50%;
       cursor:pointer;
-    }
-
-    /* ===== Gallery ===== */
-    .gallery{
+      z-index:10;
       display:flex;
-      flex-direction:column;
-      gap:12px;
+      align-items:center;
+      justify-content:center;
+      font-size:18px;
+      line-height:1;
     }
 
-.gallery-primary img{
-  width:100%;
-  height:auto;
-  aspect-ratio: 16 / 9;
-  object-fit:contain;   /* ✅ no cropping */
-  display:block;
-  max-height:70vh;
-}
-
-
-
-    .gallery-primary img.is-fading{ opacity:0; }
-
-    .thumbs{
-      display:flex;
-      gap:14px;
-      overflow-x:auto;
-      margin-top:12px;
+    /* ===== Scrollable gallery inside modal ===== */
+    #galleryMount{
+      width:100%;
     }
 
-    .thumb img{
-      width:var(--thumbW);
-      height:var(--thumbH);
-      object-fit:cover;
-      border-radius:10px;
-      opacity:.82;
+    .gallery-scroll{
+      height: clamp(280px, 55vh, 620px); /* ✅ not rigid; scales with screen */
+      overflow-y:auto;
+      overflow-x:hidden;
+      border-radius:12px;
+      -webkit-overflow-scrolling: touch;
+
+      /* Visible scrollbar styling */
+      scrollbar-gutter: stable;
+      scrollbar-width: thin;
+      scrollbar-color: var(--red) var(--cream);
+      padding-right:10px;
+    }
+    .gallery-scroll::-webkit-scrollbar{ width:12px; }
+    .gallery-scroll::-webkit-scrollbar-track{
+      background: var(--cream);
+      border-left: 1px solid var(--red);
+    }
+    .gallery-scroll::-webkit-scrollbar-thumb{
+      background: var(--red);
+      border-radius: 999px;
+      border: 3px solid var(--cream);
     }
 
-    .thumb.active img{
-      opacity:1;
-      outline:2px solid var(--red);
+    .gallery-item{
+      padding:0 0 18px 0;
+    }
+
+    .gallery-item img{
+      width:100%;
+      height:auto;
+      object-fit:contain;
+      display:block;
+      border-radius:12px;
+      background:transparent;
+    }
+
+    .gallery-empty{
+      padding:18px;
+      text-align:center;
+      font-size:14px;
+    }
+
+    /* ===== Modal text styling (no separate scroll) ===== */
+    .modal-text{
+      max-width:70ch;
+    }
+
+    .modal-text h2{
+      font-family:"ivyora-display", serif;
+      font-weight:700;
+      font-size:clamp(28px, 3.2vw, 40px);
+      line-height:1.1;
+      margin-top:6px;
+      margin-bottom:20px;
+    }
+
+    .modal-text p{
+      font-family:axia, sans-serif;
+      font-weight:400;
+      font-style:normal;
+      font-size:14px;
+      line-height:1.6;
+      text-align:justify;
+      margin:10px 0;
+    }
+
+    .modal-text h3{
+      font-family:"ivyora-display", serif;
+      font-weight:700;
+      font-style:normal;
+      font-size:20px;
+      margin:26px 0 10px;
+      line-height:1.15;
     }
   </style>
 </head>
 
 <body>
   <div class="logo-fixed">
-    <!-- Theme toggle: pink = night, beige = day -->
     <button class="theme-toggle" type="button" id="themeToggle" aria-label="Toggle night mode">
       <span class="theme-dot pink" aria-hidden="true"></span>
       <span class="theme-dot beige" aria-hidden="true"></span>
     </button>
 
-    <!-- ✅ Logo swaps on night mode (replace data-night filename with yours) -->
     <img
       id="siteLogo"
       src="loogos/peersonalloogolight-02.png"
@@ -391,13 +415,13 @@ body.night-mode{
         <h2 class="title-resume">Experience</h2>
         <ul style="list-style:none; padding-left:0;">
           <li class="yearsref">2018-2019</li>
-          <li style="font-weight:bold; text-align:left; margin-top:5px;">Internship rotation at the Pernambucan University of Health (FPS)</li>
+          <li style="font-weight:bold; text-align:left; margin-top:5px;">Art Therapy Intern at the Pernambucan University of Health (FPS)</li>
           <li style="text-align:justify; margin-top:5px;"> - Worked at a children's hospital IMIP, focusing in art therapy;</li>
           <li style="text-align:justify; margin-top:5px;"> - Wrote a children's book about navegating the challenges of growing up chronically ill;</li>
           <li style="text-align:justify; margin-top:5px;"> - Assisted graduated professionals with craft workshops for addicts during a rotation at a rehab center.</li>
 
           <li class="yearsref">2020-2021</li>
-          <li style="font-weight:bold; text-align:left; margin-top:5px;">Internship in digital marketing at Brazilian company Coco do Vale</li>
+          <li style="font-weight:bold; text-align:left; margin-top:5px;">Graphic Design & Digital Marketing Intern at Company Coco do Vale</li>
           <li class="moreinfo"> - Worked with a digital marketing studio to create content for the company's social;</li>
           <li class="moreinfo"> - Supervised a year-long process of rebranding which included approving and reviewing over a dozen different packaging designs and colour palettes;</li>
           <li class="moreinfo"> - Organized data from socials and hosted meetings to improve and adapt produced content.</li>
@@ -434,6 +458,7 @@ body.night-mode{
       </header>
 
       <section class="project-grid">
+        <!-- Your projects unchanged (kept exactly as you posted) -->
         <div class="project" data-category="branding"
           data-description="<h3>About</h3>
           <p>This project was proposed in a course called Strategic Branding during my bachelor's at OCAD University.</p>
@@ -572,13 +597,7 @@ body.night-mode{
       const siteLogo = document.getElementById('siteLogo');
 
       let lastFocusedEl = null;
-
-      // Gallery state (manual only)
       let currentImages = [];
-      let currentIndex = 0;
-
-      // fade swap timeout
-      let fadeTimeout = null;
 
       function applyTheme(isNight){
         document.body.classList.toggle('night-mode', isNight);
@@ -590,16 +609,13 @@ body.night-mode{
         try { localStorage.setItem('theme', isNight ? 'night' : 'day'); } catch (e) {}
       }
 
-    try {
-  const saved = localStorage.getItem('theme');
-  if (saved === 'night') {
-    applyTheme(true);
-  } else {
-    applyTheme(false); // force light mode
-  }
-} catch (e) {
-  applyTheme(false);   // fallback to light
-}
+      try {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'night') applyTheme(true);
+        else applyTheme(false);
+      } catch (e) {
+        applyTheme(false);
+      }
 
       if (themeToggle){
         themeToggle.addEventListener('click', () => {
@@ -608,41 +624,9 @@ body.night-mode{
         });
       }
 
-      function setPrimary(index){
-        if (!currentImages.length) return;
-
-        currentIndex = (index % currentImages.length + currentImages.length) % currentImages.length;
-
-        const primaryImg = galleryMount.querySelector('.gallery-primary img');
-        if (!primaryImg) return;
-
-        if (fadeTimeout){
-          clearTimeout(fadeTimeout);
-          fadeTimeout = null;
-        }
-
-        primaryImg.classList.add('is-fading');
-
-        fadeTimeout = setTimeout(() => {
-          primaryImg.src = currentImages[currentIndex];
-          primaryImg.alt = `${modalTitle.textContent} — image ${currentIndex + 1} of ${currentImages.length}`;
-
-          requestAnimationFrame(() => {
-            primaryImg.classList.remove('is-fading');
-          });
-
-          fadeTimeout = null;
-        }, 210);
-
-        const thumbs = galleryMount.querySelectorAll('.thumb');
-        thumbs.forEach((t, i) => t.classList.toggle('active', i === currentIndex));
-      }
-
       function buildGallery(images, title){
         galleryMount.innerHTML = '';
-
         currentImages = (images || []).filter(Boolean);
-        currentIndex = 0;
 
         if (!currentImages.length){
           const empty = document.createElement('div');
@@ -652,44 +636,26 @@ body.night-mode{
           return;
         }
 
-        const gallery = document.createElement('div');
-        gallery.className = 'gallery';
-
-        const primary = document.createElement('div');
-        primary.className = 'gallery-primary';
-
-        const pImg = document.createElement('img');
-        pImg.loading = 'lazy';
-        pImg.src = currentImages[0];
-        pImg.alt = `${title} — image 1 of ${currentImages.length}`;
-        primary.appendChild(pImg);
-
-        const thumbsWrap = document.createElement('div');
-        thumbsWrap.className = 'thumbs';
+        const scroller = document.createElement('div');
+        scroller.className = 'gallery-scroll';
+        scroller.setAttribute('aria-label', `${title} gallery`);
 
         currentImages.forEach((src, i) => {
-          const btn = document.createElement('button');
-          btn.type = 'button';
-          btn.className = 'thumb' + (i === 0 ? ' active' : '');
-          btn.setAttribute('aria-label', `Select image ${i + 1}`);
+          const item = document.createElement('div');
+          item.className = 'gallery-item';
 
           const img = document.createElement('img');
           img.loading = 'lazy';
           img.src = src;
-          img.alt = `${title} thumbnail ${i + 1}`;
-          btn.appendChild(img);
+          img.alt = `${title} — image ${i + 1}`;
 
-          btn.addEventListener('click', () => setPrimary(i));
-          thumbsWrap.appendChild(btn);
+          item.appendChild(img);
+          scroller.appendChild(item);
         });
 
-        gallery.appendChild(primary);
-        if (currentImages.length > 1) gallery.appendChild(thumbsWrap);
-
-        galleryMount.appendChild(gallery);
+        galleryMount.appendChild(scroller);
       }
 
-      // Filters
       function applyFilter(category){
         projects.forEach(project => {
           const matches = category === 'all' || project.dataset.category === category;
@@ -705,7 +671,6 @@ body.night-mode{
         });
       });
 
-      // Open modal
       function openModalFromProject(project){
         lastFocusedEl = document.activeElement;
 
@@ -738,7 +703,6 @@ body.night-mode{
         });
       });
 
-      // Close modal
       function closeModal(){
         modal.classList.remove('open');
         modal.setAttribute('aria-hidden', 'true');
@@ -746,12 +710,6 @@ body.night-mode{
 
         galleryMount.innerHTML = '';
         currentImages = [];
-        currentIndex = 0;
-
-        if (fadeTimeout){
-          clearTimeout(fadeTimeout);
-          fadeTimeout = null;
-        }
 
         if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') {
           lastFocusedEl.focus();
@@ -772,19 +730,8 @@ body.night-mode{
           e.preventDefault();
           closeModal();
         }
-
-        if (!currentImages.length) return;
-        if (e.key === 'ArrowLeft') {
-          e.preventDefault();
-          setPrimary(currentIndex - 1);
-        }
-        if (e.key === 'ArrowRight') {
-          e.preventDefault();
-          setPrimary(currentIndex + 1);
-        }
       });
 
-      // Init
       applyFilter('all');
     });
   </script>
