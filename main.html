@@ -296,13 +296,11 @@
     }
 
     .gallery-scroll{
-      height: clamp(280px, 55vh, 620px); /* ✅ not rigid; scales with screen */
-      overflow-y:auto;
-      overflow-x:hidden;
+      height: clamp(280px, 55vh, 620px);
+      overflow-y: scroll;
+      overflow-x: hidden;
       border-radius:12px;
       -webkit-overflow-scrolling: touch;
-
-      /* Visible scrollbar styling */
       scrollbar-gutter: stable;
       scrollbar-width: thin;
       scrollbar-color: var(--red) var(--cream);
@@ -338,7 +336,6 @@
       font-size:14px;
     }
 
-    /* ===== Modal text styling (no separate scroll) ===== */
     .modal-text{
       max-width:70ch;
     }
