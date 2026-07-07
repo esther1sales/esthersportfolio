@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cultural Fingerprints</title>
+
+  <style>
+    @font-face {
+      font-family: 'ABCDiatype';
+      src: url('ABCDiatypeSemi-Mono-Light.woff') format('woff');
+      font-weight: 300;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'ABCDiatype';
+      src: url('ABCDiatypeSemi-Mono-Regular.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'ABCDiatype';
+      src: url('ABCDiatypeSemi-Mono-Bold.woff') format('woff');
+      font-weight: 800;
+      font-style: normal;
+    }
+    
+    html {
+      font-size: calc(100vw / 1920 * 16); /* 16px on 1920px screen, scales proportionally */
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background-color: rgb(255, 191, 0);
+      overflow: hidden;
+      font-family: 'ABCDiatype', sans-serif;
+      font-weight: 400;
+      position: relative;
+    }
+    
+    /* Proportional title and subtitle */
+    .title {
+      position: absolute;
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: black;
+      font-size: 4rem; /* base on html font-size */
+      z-index: 2;
+      text-align: center;
+      pointer-events: none;
+      font-family: 'ABCDiatype', sans-serif;
+      font-weight: 800;
+    }
+    
+    .subtitle {
+      position: absolute;
+      top: 55%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: black;
+      font-size: 1.5rem;
+      z-index: 2;
+      text-align: center;
+      pointer-events: none;
+    }
+    
+    /* Tag box remains proportionate */
+    .tag-box {
+      display: inline-block;
+      background-color: black;
+      color: rgb(255, 191, 0);
+      padding: 0.3rem 0.7rem;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    
+    /* Top link proportional */
+    .top-right-link {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.2rem;
+      color: black;
+      text-decoration: underline;
+      font-size: 1rem;
+      z-index: 3;
+      transition: color 0.3s ease;
+    }
+    .top-right-link:hover {
+      color: rgb(255, 0, 102);
+    }
+    
+    /* Square image scales proportionally */
+    #dvd-square {
+      position: absolute;
+      width: 18.75rem;  /* 300px at base scale */
+      height: 11.25rem; /* 180px at base scale */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: 4;
+      border: 2px solid rgb(255, 191, 0);
+      border-radius: 0.5rem;
+    }
+    </style>
+    
+    
+</head>
+<body>
+  <a class="top-right-link" href="livingvoices.html">Living Voices</a>
+  <div class="title">Under the Surface</div>
+  <div class="subtitle" id="subtitle"></div>
+  <div id="dvd-square"></div>
+
+  <script>
+    const square = document.getElementById("dvd-square");
+    const subtitle = document.getElementById("subtitle");
+
+    const images = [
+      "culturalfingerprints/themedia/street_bars/bar1.jpg",
+      "culturalfingerprints/themedia/street_bars/bar2.jpg",
+      "culturalfingerprints/themedia/street_bars/bar3.jpg",
+      "culturalfingerprints/themedia/street_bars/bar4.jpg",
+      "culturalfingerprints/themedia/street_bars/bar5.jpg",
+      "culturalfingerprints/themedia/street_bars/bar7.jpg",
+      "culturalfingerprints/themedia/street_bars/bar9.jpg",
+      "culturalfingerprints/themedia/street_bars/bar10.jpg",
+      "culturalfingerprints/themedia/street_bars/bar11.jpg",
+      "culturalfingerprints/themedia/street_bars/bar12.jpg",
+      "culturalfingerprints/themedia/street_bars/bar13.jpg",
+      "culturalfingerprints/themedia/street_bars/bar14.jpg",
+      "culturalfingerprints/themedia/street_bars/bar15.jpg",
+      "culturalfingerprints/themedia/street_bars/bar16.jpg",
+      "culturalfingerprints/themedia/street_bars/bar17.jpg",
+      "culturalfingerprints/themedia/street_bars/bar18.jpg",
+      "culturalfingerprints/themedia/street_bars/bar19.jpg",
+      "culturalfingerprints/themedia/street_bars/bar20.jpg",
+      "culturalfingerprints/themedia/carnaval/carnaval1.jpg",
+      "culturalfingerprints/themedia/carnaval/carnaval2.jpg",
+      "culturalfingerprints/themedia/carnaval/carnaval3.jpg",
+      "culturalfingerprints/themedia/carnaval/carnaval4.jpg",
+      "culturalfingerprints/themedia/carnaval/carnaval5.jpg",
+      "culturalfingerprints/themedia/carnaval/carnaval6.jpg",
+      "culturalfingerprints/themedia/carnaval/carnaval7.jpg",
+      "culturalfingerprints/themedia/carnaval/carnaval8.jpg",
+      "culturalfingerprints/themedia/carnaval/carnaval9.jpg",
+      "culturalfingerprints/themedia/carnaval/carnaval10.jpg",
+      "culturalfingerprints/themedia/carnaval/carnaval11.jpg",
+      "culturalfingerprints/themedia/carnaval/carnaval12.jpg",
+      "culturalfingerprints/themedia/carnaval/carnaval13.jpg",
+      "culturalfingerprints/themedia/carnaval/carnaval14.jpg",
+      "culturalfingerprints/themedia/carnaval/carnaval15.jpg",
+      "culturalfingerprints/themedia/carnaval/carnaval16.jpg",
+      "culturalfingerprints/themedia/carnaval/carnaval17.jpg",
+      "culturalfingerprints/themedia/carnaval/carnaval18.jpg",
+      "culturalfingerprints/themedia/caramel_dog/viracara1.jpg",
+      "culturalfingerprints/themedia/caramel_dog/viracara2.jpg",
+      "culturalfingerprints/themedia/caramel_dog/viracara3.jpg",
+      "culturalfingerprints/themedia/caramel_dog/viracara4.jpg",
+      "culturalfingerprints/themedia/caramel_dog/viracara5.jpg",
+      "culturalfingerprints/themedia/caramel_dog/viracara6.jpg",
+      "culturalfingerprints/themedia/caramel_dog/viracara7.jpg",
+      "culturalfingerprints/themedia/caramel_dog/viracara8.jpg",
+      "culturalfingerprints/themedia/caramel_dog/viracara9.jpg",
+      "culturalfingerprints/themedia/caramel_dog/viracara10.jpg",
+      "culturalfingerprints/themedia/caramel_dog/viracara11.jpg",
+      "culturalfingerprints/themedia/caramel_dog/viracara12.jpg",
+      "culturalfingerprints/themedia/caramel_dog/viracara13.jpg",
+      "culturalfingerprints/themedia/caramel_dog/viracara14.jpg",
+      "culturalfingerprints/themedia/caramel_dog/viracara15.jpg",
+      "culturalfingerprints/themedia/caramel_dog/viracara16.jpg",
+      "culturalfingerprints/themedia/caramel_dog/viracara17.jpg",
+      "culturalfingerprints/themedia/caramel_dog/viracara18.jpg",
+      "culturalfingerprints/themedia/caramel_dog/viracara19.jpg",
+      "culturalfingerprints/themedia/caramel_dog/viracara20.jpg",
+      "culturalfingerprints/themedia/architecture/casa1.jpg",
+      "culturalfingerprints/themedia/architecture/casa2.jpg",
+      "culturalfingerprints/themedia/architecture/casa3.jpg",
+      "culturalfingerprints/themedia/architecture/casa4.jpg",
+      "culturalfingerprints/themedia/architecture/casa5.jpg",
+      "culturalfingerprints/themedia/architecture/casa6.jpg",
+      "culturalfingerprints/themedia/architecture/casa7.jpg",
+      "culturalfingerprints/themedia/architecture/casa8.jpg",
+      "culturalfingerprints/themedia/architecture/casa9.jpg",
+      "culturalfingerprints/themedia/architecture/casa10.jpg",
+      "culturalfingerprints/themedia/architecture/casa11.jpg",
+      "culturalfingerprints/themedia/architecture/casa12.jpg",
+      "culturalfingerprints/themedia/architecture/casa13.jpg",
+      "culturalfingerprints/themedia/architecture/casa14.jpg",
+      "culturalfingerprints/themedia/architecture/casa15.jpg",
+      "culturalfingerprints/themedia/architecture/casa16.jpg",
+      "culturalfingerprints/themedia/architecture/casa17.jpg",
+      "culturalfingerprints/themedia/architecture/casa18.jpg",
+      "culturalfingerprints/themedia/architecture/casa19.jpg",
+      "culturalfingerprints/themedia/architecture/casa20.jpg",
+      "culturalfingerprints/themedia/phone_booths/orelhao1.jpg",
+      "culturalfingerprints/themedia/phone_booths/orelhao2.jpg",
+      "culturalfingerprints/themedia/phone_booths/orelhao3.jpg",
+      "culturalfingerprints/themedia/phone_booths/orelhao4.jpg",
+      "culturalfingerprints/themedia/phone_booths/orelhao5.png.jpg",
+      "culturalfingerprints/themedia/phone_booths/orelhao6.jpg",
+      "culturalfingerprints/themedia/phone_booths/orelhao7.jpg",
+      "culturalfingerprints/themedia/phone_booths/orelhao8.jpg",
+      "culturalfingerprints/themedia/phone_booths/orelhao9.jpg",
+      "culturalfingerprints/themedia/phone_booths/orelhao10.jpg",
+      "culturalfingerprints/themedia/phone_booths/orelhao11.jpg",
+      "culturalfingerprints/themedia/phone_booths/orelhao12.jpg",
+      "culturalfingerprints/themedia/phone_booths/orelhao13.jpg",
+      "culturalfingerprints/themedia/phone_booths/orelhao14.jpg",
+      "culturalfingerprints/themedia/phone_booths/orelhao15.jpg.jpg",
+      "culturalfingerprints/themedia/phone_booths/orelhao16.jpg",
+      "culturalfingerprints/themedia/phone_booths/orelhao17.jpg",
+      "culturalfingerprints/themedia/phone_booths/orelhao18.jpg",
+      "culturalfingerprints/themedia/phone_booths/orelhao19.jpg",
+      "culturalfingerprints/themedia/phone_booths/orelhao20.jpg",
+      "culturalfingerprints/themedia/rooftop_parties/festanalaj1.jpg",
+      "culturalfingerprints/themedia/rooftop_parties/festanalaj2.jpg",
+      "culturalfingerprints/themedia/rooftop_parties/festanalaj3.jpg",
+      "culturalfingerprints/themedia/rooftop_parties/festanalaj4.jpg",
+      "culturalfingerprints/themedia/rooftop_parties/festanalaj5.jpg",
+      "culturalfingerprints/themedia/rooftop_parties/festanalaj6.jpg",
+      "culturalfingerprints/themedia/rooftop_parties/festanalaj7.jpg",
+      "culturalfingerprints/themedia/rooftop_parties/festanalaj8.jpg",
+      "culturalfingerprints/themedia/rooftop_parties/festanalaj9.jpg",
+      "culturalfingerprints/themedia/rooftop_parties/festanalaj10.jpg",
+      "culturalfingerprints/themedia/rooftop_parties/festanalaj11.jpg",
+      "culturalfingerprints/themedia/rooftop_parties/festanalaj12.jpg",
+      "culturalfingerprints/themedia/rooftop_parties/festanalaj13.jpg",
+      "culturalfingerprints/themedia/rooftop_parties/festanalaj14.jpg.jpg",
+      "culturalfingerprints/themedia/rooftop_parties/festanalaj15.jpg",
+      "culturalfingerprints/themedia/rooftop_parties/festanalaj16.jpg",
+      "culturalfingerprints/themedia/rooftop_parties/festanalaj17.jpg",
+      "culturalfingerprints/themedia/rooftop_parties/festanalaj18.jpg",
+      "culturalfingerprints/themedia/rooftop_parties/festanalaj19.jpg",
+      "culturalfingerprints/themedia/rooftop_parties/festanalaj20.jpg",
+   
+
+    ].sort(() => Math.random() - 0.5);
+
+    let preloadedImages = [];
+    let imageIndex = 0;
+    let x = 100;
+    let y = 100;
+    let dx = 3;
+    let dy = 2.2;
+    const width = 300;
+    const height = 180;
+
+    function getTagFromImage(imagePath) {
+      const parts = imagePath.split('/');
+      return parts.length >= 2 ? parts[1] : "unknown";
+    }
+
+ 
+    function changeImage() {
+  if (preloadedImages.length === 0) return;
+  imageIndex = (imageIndex + 1) % preloadedImages.length;
+  const currentImage = preloadedImages[imageIndex];
+  square.style.backgroundImage = `url('${currentImage}')`;
+  const tag = getTagFromImage(currentImage);
+  subtitle.innerHTML = `Cultural Fingerprints: <span class="tag-box">${tag}</span>`;
+}
+
+
+    function updatePosition() {
+      const windowWidth = window.innerWidth;
+      const windowHeight = window.innerHeight;
+
+      x += dx;
+      y += dy;
+
+      if (x + width >= windowWidth || x <= 0) {
+        dx = -dx;
+        changeImage();
+      }
+
+      if (y + height >= windowHeight || y <= 0) {
+        dy = -dy;
+        changeImage();
+      }
+
+      square.style.left = `${x}px`;
+      square.style.top = `${y}px`;
+
+      requestAnimationFrame(updatePosition);
+    }
+
+    preloadImages(images);
+    const initialTag = getTagFromImage(images[imageIndex]);
+    subtitle.innerHTML = `Cultural Fingerprints: <span class="tag-box">${initialTag}</span>`;
+    square.style.backgroundImage = `url('${images[imageIndex]}')`;
+    updatePosition();
+
+    function preloadImages(urls) {
+  urls.forEach((url) => {
+    const img = new Image();
+    img.onload = () => preloadedImages.push(url);
+    img.onerror = () => console.warn(`Image failed to load: ${url}`);
+    img.src = url;
+  });
+}
+
+  </script>
+</body>
+</html>

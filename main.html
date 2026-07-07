@@ -367,6 +367,28 @@
       margin:26px 0 10px;
       line-height:1.15;
     }
+
+    .project-link{
+      display:none;
+      width:fit-content;
+      margin-top:24px;
+      padding:10px 22px;
+      border:1px solid var(--red);
+      border-radius:30px;
+      color:var(--red);
+      background:transparent;
+      text-decoration:none;
+      font-size:12px;
+      font-weight:bold;
+      transition:all 0.25s ease;
+    }
+
+    .project-link:hover,
+    .project-link:focus{
+      background:var(--red);
+      color:var(--cream);
+      outline:none;
+    }
   </style>
 </head>
 
@@ -505,6 +527,8 @@
         </div>
 
         <div class="project" data-category="websites"
+          data-link="livingvoices.html"
+          data-link-label="Visit Website"
           data-description="<h3>About</h3>
           <p>Living Voices is an online archive of videos that speak about Brazilian culture, narratives, history, and other topics. There weren’t many changes to the website in general since I had a pretty clear idea of what I wanted it to look like.</p>
           <h3>Functionality</h3>
@@ -518,6 +542,20 @@
           <img src="livingvoices/livingvoicesmockup1.jpg" alt="Living Voices">
           <p class="label">Website</p>
           <h2>Living Voices</h2>
+        </div>
+              <div class="project" data-category="websites"
+          data-link="culturalfingerprints.html"
+          data-link-label="Visit Website"
+          data-description="<h3>About</h3>
+          <p>Digital Fingerprints is one chapter of Under the Surface, a multimedia taxonomy of Brazilian culture that documents the many ways identity is expressed through language, memory, media, and everyday experiences. While each project explores a different cultural lens, Digital Fingerprints investigates Brazil's online identity, celebrating the humour, spontaneity, and visual language that have become defining characteristics of Brazilian internet culture.</p>
+          <h3>Functionality</h3>
+          <p>Designed as an interactive screensaver, the website presents a continuous stream of images associated with the Brazil Aesthetic as they bounce across the screen, evoking the nostalgic movement of classic DVD screensavers. As part of the taxonomy, each image has been catalogued using descriptive tags that appear and change whenever an image collides with the edge of the screen, revealing recurring themes, visual patterns, and cultural references. The website is also interconnected with Living Voices, another archive within the Under the Surface series, allowing visitors to seamlessly navigate between projects and explore different perspectives of Brazilian culture.</p>
+          <h3>Content</h3>
+          <p>The archive brings together a curated collection of visuals that reflect the lighter, more playful side of contemporary Brazilian culture. From nostalgic internet references and everyday humour to recognizable aesthetics and shared digital experiences, the collection transforms seemingly ordinary images into a living visual catalogue. Together, these constantly shifting classifications document the digital fingerprints of a culture that is continuously evolving online.</p>"
+          data-images="livingvoices/screenshot2.png,livingvoices/screenshot3.png,livingvoices/screenshot4.png,livingvoices/livingvoicesmockup2.jpg">
+          <img src="livingvoices/livingvoicesmockup1.jpg" alt="Living Voices">
+          <p class="label">Website</p>
+          <h2>Cultural Fingerprints</h2>
         </div>
 
         <div class="project" data-category="branding"
@@ -545,8 +583,7 @@
           <img src="osritmosdobrasil/osritmosdobrasilmockup.jpg" alt="Os Ritmos do Brasil">
           <p class="label">Website</p>
           <h2>Os Ritmos do Brasil</h2>
-        </div>
-
+      </div>
         <div class="project" data-category="posters"
           data-description="<h3>About</h3>
           <p>As part of the second course of Graphic Design at OCAD University, we were challenged to create a poster without using Adobe Cloud or any other design focused tools. The assignment was meant to build our skills beyond the conventional practices and incentivise us to be resourceful when faced with limitations within our usual tools.</p>
@@ -571,6 +608,7 @@
       <div class="modal-text">
         <h2 id="modalTitle">Title</h2>
         <div id="modalDesc"></div>
+        <a id="projectLink" class="project-link" href="#" target="_blank" rel="noopener">Visit Website</a>
       </div>
     </div>
   </div>
@@ -583,6 +621,7 @@
       const modal = document.getElementById('projectModal');
       const modalTitle = document.getElementById('modalTitle');
       const modalDesc = document.getElementById('modalDesc');
+      const projectLink = document.getElementById('projectLink');
       const closeBtn = modal.querySelector('.modal-close');
       const galleryMount = document.getElementById('galleryMount');
 
@@ -676,6 +715,15 @@
 
         modalTitle.textContent = title;
         modalDesc.innerHTML = descriptionHTML;
+
+        if (project.dataset.link) {
+          projectLink.href = project.dataset.link;
+          projectLink.textContent = project.dataset.linkLabel || 'Visit Website';
+          projectLink.style.display = 'inline-block';
+        } else {
+          projectLink.removeAttribute('href');
+          projectLink.style.display = 'none';
+        }
 
         buildGallery(imageList, title);
 
