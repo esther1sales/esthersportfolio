@@ -316,15 +316,20 @@
     }
 
   .gallery-item{
-  display:none;
+  position:absolute;
+  inset:0;
   width:100%;
   height:100%;
-}
-
-.gallery-item.active{
   display:flex;
   align-items:center;
   justify-content:center;
+  opacity:0;
+  transition:opacity .6s ease;
+  pointer-events:none;
+}
+
+.gallery-item.active{
+  opacity:1;
 }
 
    .gallery-item img{
