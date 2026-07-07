@@ -6,24 +6,26 @@
   <title>Cultural Fingerprints</title>
 
   <style>
-    @font-face {
-      font-family: 'ABCDiatype';
-      src: url('ABCDiatypeSemi-Mono-Light.woff') format('woff');
-      font-weight: 300;
-      font-style: normal;
-    }
-    @font-face {
-      font-family: 'ABCDiatype';
-      src: url('ABCDiatypeSemi-Mono-Regular.woff') format('woff');
-      font-weight: 400;
-      font-style: normal;
-    }
-    @font-face {
-      font-family: 'ABCDiatype';
-      src: url('ABCDiatypeSemi-Mono-Bold.woff') format('woff');
-      font-weight: 800;
-      font-style: normal;
-    }
+   @font-face {
+  font-family: 'ABCDiatype';
+  src: url('culturalfingerprints/ABCDiatypeSemi-Mono-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ABCDiatype';
+  src: url('culturalfingerprints/ABCDiatypeSemi-Mono-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ABCDiatype';
+  src: url('culturalfingerprints/ABCDiatypeSemi-Mono-Bold.woff') format('woff');
+  font-weight: 800;
+  font-style: normal;
+}
     
     html {
       font-size: calc(100vw / 1920 * 16); /* 16px on 1920px screen, scales proportionally */
@@ -245,13 +247,19 @@
     let y = 100;
     let dx = 3;
     let dy = 2.2;
-    const width = 300;
-    const height = 180;
+    function getSquareSize() {
+  const rect = square.getBoundingClientRect();
+  return {
+    width: rect.width,
+    height: rect.height
+  };
+}
 
-    function getTagFromImage(imagePath) {
-      const parts = imagePath.split('/');
-      return parts.length >= 2 ? parts[1] : "unknown";
-    }
+  function getTagFromImage(imagePath) {
+  const parts = imagePath.split('/');
+  const tag = parts.length >= 3 ? parts[2] : "unknown";
+  return tag.replace(/_/g, " ");
+}
 
  
     function changeImage() {
@@ -265,28 +273,47 @@
 
 
     function updatePosition() {
-      const windowWidth = window.innerWidth;
-      const windowHeight = window.innerHeight;
+  const windowWidth = window.innerWidth;
+  const windowHeight = window.innerHeight;
+  const { width, height } = getSquareSize();
 
-      x += dx;
-      y += dy;
+  x += dx;
+  y += dy;
 
-      if (x + width >= windowWidth || x <= 0) {
-        dx = -dx;
-        changeImage();
-      }
+  if (x + width >= windowWidth) {
+    x = windowWidth - width;
+    dx = -Math.abs(dx);
+    changeImage();
+  }
 
-      if (y + height >= windowHeight || y <= 0) {
-        dy = -dy;
-        changeImage();
-      }
+  if (x <= 0) {
+    x = 0;
+    dx = Math.abs(dx);
+    changeImage();
+  }
 
-      square.style.left = `${x}px`;
-      square.style.top = `${y}px`;
+  if (y + height >= windowHeight) {
+    y = windowHeight - height;
+    dy = -Math.abs(dy);
+    changeImage();
+  }
 
-      requestAnimationFrame(updatePosition);
-    }
+  if (y <= 0) {
+    y = 0;
+    dy = Math.abs(dy);
+    changeImage();
+  }
 
+  square.style.left = `${x}px`;
+  square.style.top = `${y}px`;
+
+  requestAnimationFrame(updatePosition);
+}
+window.addEventListener("resize", () => {
+  const { width, height } = getSquareSize();
+  x = Math.min(x, window.innerWidth - width);
+  y = Math.min(y, window.innerHeight - height);
+});
     preloadImages(images);
     const initialTag = getTagFromImage(images[imageIndex]);
     subtitle.innerHTML = `Cultural Fingerprints: <span class="tag-box">${initialTag}</span>`;

@@ -305,15 +305,10 @@
       .under-surface-title { font-size: 4rem; }
     }
   </style>
-
-  <!-- OPTIONAL CSP (only if your host uses a strict CSP and blocks YouTube)
-  <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self' https:; frame-src https://www.youtube.com https://www.youtube-nocookie.com; child-src https://www.youtube.com https://www.youtube-nocookie.com;">
-  -->
 </head>
 
 <body>
-  <a href="index.html" class="reset-link">Cultural Fingerprints</a>
+  <a href="culturalfingerprints.html" class="reset-link">Cultural Fingerprints</a>
 
   <div class="title-container">
     <h1>Living Voices</h1>
@@ -325,7 +320,6 @@
     <button class="scroll-btn left-scroll" onclick="scrollCarousel(-1)">&#9664;</button>
 
     <div class="content-stack" id="carousel">
-      <!-- Cards open the original YouTube videos directly in a new tab -->
       <div class="card general" style="background-color: #720039;" onclick="openVideoOnYouTube('0RSpnpm8X4I')">
         <h4>Brazil: History, Geography, Economy & Culture</h4>
         <p class="expanded-text">Brazil: History, Geography, Economy & Culture</p>
@@ -483,8 +477,6 @@
       cards.forEach(card => { card.style.display = "flex"; });
       carousel.style.minHeight = "";
     }
-    // Opens each video directly on YouTube in a new tab.
-    // This is more reliable than embedding because some videos, browsers, or hosts block iframes.
     function openVideoOnYouTube(videoId) {
       const url = `https://www.youtube.com/watch?v=${videoId}`;
       window.open(url, '_blank', 'noopener,noreferrer');
