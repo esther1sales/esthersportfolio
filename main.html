@@ -295,17 +295,15 @@
       width:100%;
     }
 
-    .gallery-scroll{
-      height: clamp(280px, 55vh, 620px);
-      overflow-y: scroll;
-      overflow-x: hidden;
-      border-radius:12px;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-gutter: stable;
-      scrollbar-width: thin;
-      scrollbar-color: var(--red) var(--cream);
-      padding-right:10px;
-    }
+   .gallery-scroll{
+  height: clamp(320px, 60vh, 680px);
+  overflow:hidden;
+  border-radius:12px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
     .gallery-scroll::-webkit-scrollbar{ width:12px; }
     .gallery-scroll::-webkit-scrollbar-track{
       background: var(--cream);
@@ -368,27 +366,27 @@
       line-height:1.15;
     }
 
-    .project-link{
-      display:none;
-      width:fit-content;
-      margin-top:24px;
-      padding:10px 22px;
-      border:1px solid var(--red);
-      border-radius:30px;
-      color:var(--red);
-      background:transparent;
-      text-decoration:none;
-      font-size:12px;
-      font-weight:bold;
-      transition:all 0.25s ease;
-    }
+.modal-title-row{
+    margin-bottom:20px;
+}
 
-    .project-link:hover,
-    .project-link:focus{
-      background:var(--red);
-      color:var(--cream);
-      outline:none;
-    }
+.project-title-link{
+    display:inline;
+    color:inherit;
+    text-decoration:underline;
+    text-decoration-thickness:1px;
+    text-underline-offset:5px;
+    transition:opacity .2s ease;
+}
+
+.project-title-link:hover{
+    opacity:.7;
+}
+
+.project-title-link h2{
+    margin:0;
+}
+
   </style>
 </head>
 
@@ -602,14 +600,15 @@
   <div class="modal" id="projectModal" aria-hidden="true">
     <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <button class="modal-close" type="button" aria-label="Close modal">×</button>
+<div id="galleryMount"></div>
 
-      <div id="galleryMount"></div>
+<div class="modal-text">
+    <div class="modal-title-row">
+    <div id="modalTitleContainer"></div>
+</div>
 
-      <div class="modal-text">
-        <h2 id="modalTitle">Title</h2>
-        <div id="modalDesc"></div>
-        <a id="projectLink" class="project-link" href="#" target="_blank" rel="noopener">Visit Website</a>
-      </div>
+    <div id="modalDesc"></div>
+</div>
     </div>
   </div>
 
@@ -619,9 +618,7 @@
       const projects = document.querySelectorAll('.project');
 
       const modal = document.getElementById('projectModal');
-      const modalTitle = document.getElementById('modalTitle');
       const modalDesc = document.getElementById('modalDesc');
-      const projectLink = document.getElementById('projectLink');
       const closeBtn = modal.querySelector('.modal-close');
       const galleryMount = document.getElementById('galleryMount');
 
@@ -713,17 +710,25 @@
           ? project.dataset.images.split(',').map(s => s.trim()).filter(Boolean)
           : [];
 
-        modalTitle.textContent = title;
-        modalDesc.innerHTML = descriptionHTML;
+        const modalTitleContainer = document.getElementById("modalTitleContainer");
 
-        if (project.dataset.link) {
-          projectLink.href = project.dataset.link;
-          projectLink.textContent = project.dataset.linkLabel || 'Visit Website';
-          projectLink.style.display = 'inline-block';
-        } else {
-          projectLink.removeAttribute('href');
-          projectLink.style.display = 'none';
-        }
+if (project.dataset.link) {
+modalTitleContainer.innerHTML = `
+    <h2>
+        <a href="${project.dataset.link}"
+           class="project-title-link"
+           target="_blank"
+           rel="noopener">
+            ${title}
+        </a>
+    </h2>
+`;
+} else {
+    modalTitleContainer.innerHTML = `
+        <h2>${title}</h2>
+    `;
+}
+        modalDesc.innerHTML = descriptionHTML;
 
         buildGallery(imageList, title);
 
