@@ -19,443 +19,492 @@
   <link rel="stylesheet" href="https://use.typekit.net/zbf7fls.css">
 
   <style>
-    :root{
-      --cream:#fdf1dd;
-      --red:#c61e3b;
-      --black:#000;
-      --overlay: rgba(0,0,0,0.5);
-
-      /* Work cards */
-      --cardW: clamp(240px, 30vw, 300px);
+    :root {
+      --cream: #fdf1dd;
+      --red: #c61e3b;
+      --black: #000;
+      --overlay: rgba(0, 0, 0, 0.5);
+      --card-width: clamp(240px, 30vw, 300px);
+      --page-max-width: 1400px;
+      --header-height: 160px;
     }
 
-    *{ box-sizing:border-box; margin:0; padding:0; }
-
-    body{
-      cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 32 32"><polygon points="0,0 32,16 0,32" fill="%23c61e3b"/></svg>') 0 0, auto;
-    }
-    body.night-mode{
-      cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 32 32"><polygon points="0,0 32,16 0,32" fill="%23fdf1dd"/></svg>') 0 0, auto;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    html, body{
-      background-color:var(--cream);
-      color:var(--red);
-      font-family:axia, sans-serif;
-      font-weight:400;
-      font-size:15px;
-      font-style:normal;
-      scroll-behavior:smooth;
+    html,
+    body {
+      background-color: var(--cream);
+      color: var(--red);
+      font-family: axia, sans-serif;
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 400;
+      scroll-behavior: smooth;
     }
 
-    body{ padding-top:160px; }
-
-    body.modal-open{
-      overflow:hidden;
-      touch-action:none;
+    body {
+      padding-top: var(--header-height);
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 32 32"><polygon points="0,0 32,16 0,32" fill="%23c61e3b"/></svg>') 0 0, auto;
     }
 
-    /* ===== Night mode ===== */
-    body.night-mode{
-      --cream:#c61e3b;
-      --red:#fdf1dd;
-      --overlay: rgba(0,0,0,0.6);
+    body.night-mode {
+      --cream: #c61e3b;
+      --red: #fdf1dd;
+      --overlay: rgba(0, 0, 0, 0.6);
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 32 32"><polygon points="0,0 32,16 0,32" fill="%23fdf1dd"/></svg>') 0 0, auto;
     }
 
-    /* ===== Fixed header ===== */
-    .logo-fixed{
-      position:fixed;
-      top:0;
-      left:50%;
-      transform:translateX(-50%);
-      z-index:1000;
-      text-align:center;
-      background-color:var(--cream);
-      padding:20px 0;
-      width:100%;
+    body.modal-open {
+      overflow: hidden;
+      touch-action: none;
     }
 
-    .logo-fixed img{ width:80px; }
-
-    .logo-fixed .line{
-      margin-top:10px;
-      width:100vw;
-      height:2px;
-      background-color:var(--red);
+    button,
+    a,
+    .project {
+      cursor: inherit;
     }
 
-    /* ===== Theme toggle ===== */
-    .theme-toggle{
-      position:absolute;
-      top:18px;
-      right:18px;
-      display:flex;
-      align-items:center;
-      gap:8px;
-      padding:6px;
-      border:none;
-      background:transparent;
-      cursor:pointer;
-      border-radius:999px;
-      z-index:1100;
+    /* Header */
+    .logo-fixed {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      z-index: 1000;
+      width: 100%;
+      padding: 20px 0;
+      background-color: var(--cream);
+      text-align: center;
+      transform: translateX(-50%);
     }
 
-    .theme-dot{
-      width:18px;
-      height:18px;
-      border-radius:50%;
-      border:1.5px solid var(--black);
+    .logo-fixed img {
+      width: 80px;
     }
 
-    .theme-dot.pink{ background:var(--red); }
-    .theme-dot.beige{ background:var(--cream); }
-
-    /* ===== Layout ===== */
-    .page{
-      max-width:1400px;
-      margin:0 auto;
-      padding:clamp(16px, 3vw, 40px);
-      display:flex;
-      gap:clamp(16px, 3vw, 40px);
-      flex-wrap:wrap;
-      align-items:flex-start;
+    .logo-fixed .line {
+      width: 100vw;
+      height: 2px;
+      margin-top: 10px;
+      background-color: var(--red);
     }
 
-    #resume{
-      flex:1 1 380px;
-      max-width:520px;
-      padding-left:clamp(16px, 4vw, 40px);
-      padding-right:clamp(16px, 4vw, 40px);
+    .theme-toggle {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      z-index: 1100;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
     }
 
-    #work{
-      flex:2 1 520px;
-      min-width:360px;
+    .theme-dot {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--black);
+      border-radius: 50%;
     }
 
-    @media (max-width:1050px){
-      .page{ justify-content:center; }
-      #resume{
-        flex:0 0 100%;
-        max-width:780px;
-        margin-left:auto;
-        margin-right:auto;
+    .theme-dot.pink {
+      background: var(--red);
+    }
+
+    .theme-dot.beige {
+      background: var(--cream);
+    }
+
+    /* Main layout */
+    .page {
+      display: flex;
+      flex-flow: row wrap;
+      align-items: flex-start;
+      gap: clamp(16px, 3vw, 40px);
+      max-width: var(--page-max-width);
+      margin: 0 auto;
+      padding: clamp(16px, 3vw, 40px);
+    }
+
+    #resume {
+      flex: 1 1 380px;
+      max-width: 520px;
+      padding: 0 clamp(16px, 4vw, 40px);
+    }
+
+    #work {
+      flex: 2 1 520px;
+      min-width: 360px;
+    }
+
+    @media (max-width: 1050px) {
+      .page {
+        justify-content: center;
       }
-      #work{ flex:0 0 100%; }
+
+      #resume,
+      #work {
+        flex: 0 0 100%;
+      }
+
+      #resume {
+        max-width: 780px;
+        margin-inline: auto;
+      }
     }
 
-    /* ===== Typography ===== */
-    .section-title{
-      font-family:"ivyora-display", serif;
-      font-weight:700;
-      font-size:clamp(40px, 5vw, 64px);
-      margin-bottom:30px;
-      text-align:center;
+    /* Typography */
+    .section-title {
+      margin-bottom: 30px;
+      font-family: "ivyora-display", serif;
+      font-size: clamp(40px, 5vw, 64px);
+      font-weight: 800;
+      text-align: center;
     }
 
-    .title-resume{
-      font-family:"ivyora-display", serif;
-      font-weight:700;
-      font-size:20px;
-      margin:20px 0 14px;
-      text-align:left;
+    .title-resume {
+      margin: 20px 0 14px;
+      font-family: "ivyora-display", serif;
+      font-size: 20px;
+      font-weight: 700;
+      text-align: left;
     }
 
-    .yearsref{
-      font-family:"ivyora-display", serif;
-      font-size:13pt;
-      font-weight:700;
-      margin-top:10px;
-      list-style:none;
+    .resume-body {
+      font-size: 15px;
+      text-align: justify;
     }
 
-    .moreinfo{
-      text-align:justify;
-      margin-top:5px;
+    .resume-list {
+      padding-left: 0;
+      list-style: none;
     }
 
-    /* ===== Filters ===== */
-    .filters{
-      text-align:center;
-      margin-bottom:40px;
+    .yearsref {
+      margin-top: 10px;
+      font-family: "ivyora-display", serif;
+      font-size: 13pt;
+      font-weight: 700;
+      list-style: none;
     }
 
-    .filters button{
-      border:1px solid var(--red);
-      background:transparent;
-      color:var(--red);
-      padding:8px 16px;
-      border-radius:30px;
-      font-size:12px;
-      font-weight:bold;
-      margin:5px;
-      cursor:pointer;
+    .resume-detail {
+      margin-top: 5px;
+      text-align: left;
+    }
+
+    .resume-detail.justified,
+    .moreinfo {
+      margin-top: 5px;
+      text-align: justify;
+    }
+
+    .resume-role {
+      margin-top: 5px;
+      font-weight: 700;
+      text-align: left;
+    }
+
+    /* Filters */
+    .filters {
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .filters button {
+      margin: 5px;
+      padding: 8px 16px;
+      border: 1px solid var(--red);
+      border-radius: 30px;
+      background: transparent;
+      color: var(--red);
+      font-size: 12px;
+      font-weight: 700;
     }
 
     .filters button:hover,
-    .filters button.active{
-      background-color:var(--red);
-      color:var(--cream);
+    .filters button.active {
+      background-color: var(--red);
+      color: var(--cream);
     }
 
-    /* ===== Projects ===== */
-    .project-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fill, minmax(var(--cardW), var(--cardW)));
-      justify-content:center;
-      gap:clamp(18px, 3vw, 40px);
-      padding:20px 0 80px;
+    /* Project cards */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(var(--card-width), var(--card-width)));
+      justify-content: center;
+      gap: clamp(18px, 3vw, 40px);
+      padding: 20px 0 80px;
     }
 
-    .project{
-      text-align:center;
-      border:2px solid var(--red);
-      padding:16px;
-      border-radius:12px;
-      cursor:pointer;
-      display:flex;
-      flex-direction:column;
-      background:transparent;
+    .project {
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+      border: 2px solid var(--red);
+      border-radius: 12px;
+      background: transparent;
+      text-align: center;
+      transition: transform 0.2s ease;
     }
 
-    .project:hover{ transform:scale(1.02); }
-    .project.hidden{ display:none !important; }
-
-    .project img{
-      width:100%;
-      height:auto;
-      aspect-ratio:4 / 3;
-      object-fit:cover;
-      border-radius:8px;
-      display:block;
+    .project:hover {
+      transform: scale(1.02);
     }
 
-    .project .label{
-      font-size:10px;
-      text-transform:uppercase;
-      margin-top:15px;
+    .project.hidden {
+      display: none !important;
     }
 
-    .project h2{
-      font-family:"ivyora-display", serif;
-      font-weight:700;
-      font-size:20px;
-      margin-top:8px;
+    .project img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 4 / 3;
+      border-radius: 8px;
+      object-fit: cover;
     }
 
-    /* ===== Modal ===== */
-    .modal{
-      display:none;
-      position:fixed;
-      z-index:2000;
-      inset:0;
-      background-color:var(--overlay);
-      justify-content:center;
-      align-items:center;
+    .project .label {
+      margin-top: 15px;
+      font-size: 10px;
+      text-transform: uppercase;
     }
 
-    .modal.open{ display:flex; }
-
-    .modal-content{
-      background:var(--cream);
-      width:90%;
-      max-width:1000px;
-      padding:56px 28px 28px;
-      border-radius:8px;
-      position:relative;
-
-      max-height:90vh;
-      overflow:auto;   /* ✅ single scroll for the entire modal content */
-      display:flex;
-      flex-direction:column;
-      gap:26px;
+    .project h2 {
+      margin-top: 8px;
+      font-family: "ivyora-display", serif;
+      font-size: 20px;
+      font-weight: 700;
     }
 
-    .modal-close{
-      position:absolute;
-      top:14px;
-      right:16px;
-      border:1px solid var(--red);
-      background:var(--cream);
-      color:var(--red);
-      width:34px;
-      height:34px;
-      border-radius:50%;
-      cursor:pointer;
-      z-index:10;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:18px;
-      line-height:1;
+    /* Modal */
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--overlay);
     }
 
-    /* ===== Scrollable gallery inside modal ===== */
-    #galleryMount{
-      width:100%;
+    .modal.open {
+      display: flex;
     }
 
-   .gallery-scroll{
-  height: clamp(320px, 60vh, 680px);
-  overflow:hidden;
-  border-radius:12px;
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-    .gallery-scroll::-webkit-scrollbar{ width:12px; }
-    .gallery-scroll::-webkit-scrollbar-track{
+    .modal-content {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+      width: 90%;
+      max-width: 1000px;
+      max-height: 90vh;
+      padding: 56px 28px 28px;
+      overflow: auto;
+      border-radius: 8px;
       background: var(--cream);
-      border-left: 1px solid var(--red);
     }
-    .gallery-scroll::-webkit-scrollbar-thumb{
-      background: var(--red);
+
+    .modal-close {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--red);
+      border-radius: 50%;
+      background: var(--cream);
+      color: var(--red);
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .modal-title-row {
+      margin-bottom: 20px;
+    }
+
+    .modal-text {
+      max-width: 70ch;
+    }
+
+    .modal-text h2 {
+      margin: 6px 0 20px;
+      font-family: "ivyora-display", serif;
+      font-size: clamp(28px, 3.2vw, 40px);
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .modal-text h3 {
+      margin: 26px 0 10px;
+      font-family: "ivyora-display", serif;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 1.15;
+    }
+
+    .modal-text p {
+      margin: 10px 0;
+      font-family: axia, sans-serif;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1.6;
+      text-align: justify;
+    }
+
+    .project-title-link {
+      display: inline;
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 5px;
+      transition: opacity 0.2s ease;
+    }
+
+    .project-title-link:hover {
+      opacity: 0.7;
+    }
+
+    .project-link-arrow {
+      display: inline-block;
+      margin-left: 0.2em;
+      font-size: 0.7em;
+      line-height: 1;
+      transition: transform 0.2s ease;
+    }
+
+    .project-title-link:hover .project-link-arrow {
+      transform: translate(2px, -2px);
+    }
+
+    /* Modal gallery */
+    #galleryMount {
+      width: 100%;
+    }
+
+    .gallery-scroll {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: clamp(320px, 60vh, 680px);
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
+    .gallery-item {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s ease;
+    }
+
+    .gallery-item.active {
+      opacity: 1;
+    }
+
+    .gallery-item img {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 12px;
+      background: transparent;
+      object-fit: contain;
+    }
+
+    .gallery-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin-top: 12px;
+    }
+
+    .gallery-nav button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--red);
       border-radius: 999px;
-      border: 3px solid var(--cream);
+      background: transparent;
+      color: var(--red);
+      font-size: 18px;
+      line-height: 1;
     }
 
-  .gallery-item{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  opacity:0;
-  transition:opacity .6s ease;
-  pointer-events:none;
-}
-
-.gallery-item.active{
-  opacity:1;
-}
-
-   .gallery-item img{
-  max-width:100%;
-  max-height:100%;
-  width:auto;
-  height:auto;
-  object-fit:contain;
-  display:block;
-  border-radius:12px;
-  background:transparent;
-}
-.gallery-nav{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:18px;
-  margin-top:12px;
-}
-
-.gallery-nav button{
-  border:1px solid var(--red);
-  background:transparent;
-  color:var(--red);
-  border-radius:999px;
-  width:34px;
-  height:34px;
-  cursor:pointer;
-  font-size:18px;
-  line-height:1;
-}
-
-.gallery-nav button:hover{
-  background:var(--red);
-  color:var(--cream);
-}
-.gallery-dots{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:10px;
-    min-width:60px;
-}
-
-.gallery-dot{
-    width:6px;
-    height:6px;
-    border-radius:50%;
-    background:transparent;
-    border:1.5px solid var(--red);
-    transition:all .25s ease;
-}
-
-.gallery-dot.active{
-    background:var(--red);
-    transform:scale(1.15);
-}
-    .gallery-empty{
-      padding:18px;
-      text-align:center;
-      font-size:14px;
+    .gallery-nav button:hover {
+      background: var(--red);
+      color: var(--cream);
     }
 
-    .modal-text{
-      max-width:70ch;
+    .gallery-nav svg {
+      display: block;
     }
 
-    .modal-text h2{
-      font-family:"ivyora-display", serif;
-      font-weight:700;
-      font-size:clamp(28px, 3.2vw, 40px);
-      line-height:1.1;
-      margin-top:6px;
-      margin-bottom:20px;
+    .gallery-dots {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-width: 60px;
     }
 
-    .modal-text p{
-      font-family:axia, sans-serif;
-      font-weight:400;
-      font-style:normal;
-      font-size:14px;
-      line-height:1.6;
-      text-align:justify;
-      margin:10px 0;
+    .gallery-dot {
+      width: 6px;
+      height: 6px;
+      border: 1.5px solid var(--red);
+      border-radius: 50%;
+      background: transparent;
+      transition: all 0.25s ease;
     }
 
-    .modal-text h3{
-      font-family:"ivyora-display", serif;
-      font-weight:700;
-      font-style:normal;
-      font-size:20px;
-      margin:26px 0 10px;
-      line-height:1.15;
+    .gallery-dot.active {
+      background: var(--red);
+      transform: scale(1.15);
     }
 
-.modal-title-row{
-    margin-bottom:20px;
-}
+    .gallery-empty {
+      padding: 18px;
+      font-size: 14px;
+      text-align: center;
+    }
+   .site-credit{
+      margin: 80px 0 40px;
+      width: 100%;
+      text-align: center;
 
-.project-title-link{
-    display:inline;
-    color:inherit;
-    text-decoration:underline;
-    text-decoration-thickness:1px;
-    text-underline-offset:5px;
-    transition:opacity .2s ease;
-}
-
-.project-title-link:hover{
-    opacity:.7;
-}
-.project-link-arrow{
-    display:inline-block;
-    margin-left:0.2em;
-    font-size:0.7em;
-    line-height:1;
-    transition:transform .2s ease;
-}
-
-.project-title-link:hover .project-link-arrow{
-    transform:translate(2px,-2px);
-}
-.project-title-link h2{
-    margin:0;
-}
-
+      font-family: "ivyora-display", serif;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      color: var(--red);
+      opacity: .65;
+    }
   </style>
 </head>
 
@@ -476,53 +525,53 @@
     <div class="line"></div>
   </div>
 
-  <div class="page" style="display:flex; flex-direction:row; gap:40px;">
-    <section id="resume" style="flex:1; max-width:500px;">
+  <div class="page">
+    <section id="resume">
       <header>
-        <h1 class="section-title" style="font-weight:800;">RESUMÉ.</h1>
+        <h1 class="section-title">RESUMÉ.</h1>
 
         <h2 class="title-resume">About</h2>
-        <p style="font-size:15px; text-align:justify;">
+        <p class="resume-body">
         Graphic Designer with 5+ years of experience creating branding, digital marketing, and user-centered visual experiences across print and digital platforms. Combining backgrounds in Graphic Design, Digital Marketing, and Psychology, I approach every project with a balance of creativity, strategic thinking, and empathy. Passionate about visual storytelling, thoughtful problem-solving, and designing work that strengthens brands while creating meaningful connections with audiences.
         </p>
 
         <h2 class="title-resume">Education</h2>
-        <ul style="list-style:none; padding-left:0;">
+        <ul class="resume-list">
           <li class="yearsref">2018-2020</li>
-          <li style="text-align:left; margin-top:5px;">Bachelor in Psychology at the Pernambucan University of Health (FPS), Recife, Brazil;</li>
+          <li class="resume-detail">Bachelor in Psychology at the Pernambucan University of Health (FPS), Recife, Brazil;</li>
 
           <li class="yearsref">2020-2022</li>
-          <li style="text-align:left; margin-top:5px;">Bachelor in Digital Marketing at the University of Boa Viagem (FBV), Recife, Brazil;</li>
+          <li class="resume-detail">Bachelor in Digital Marketing at the University of Boa Viagem (FBV), Recife, Brazil;</li>
 
           <li class="yearsref">2021-2025</li>
-          <li style="text-align:left; margin-top:5px;">Bachelor in Graphic Design, OCAD University.</li>
+          <li class="resume-detail">Bachelor in Graphic Design, OCAD University.</li>
         </ul>
 
         <h2 class="title-resume">Experience</h2>
-        <ul style="list-style:none; padding-left:0;">
+        <ul class="resume-list">
                     <li class="yearsref">2021-Present</li>
-          <li style="font-weight:bold; text-align:left; margin-top:5px;">Self-Employed Graphic Designer</li>
+          <li class="resume-role">Self-Employed Graphic Designer</li>
           <li class="moreinfo"> – Developed brand identities and visual systems for clients across multiple industries, creating cohesive designs that strengthened brand recognition.</li>
           <li class="moreinfo">– Designed websites, digital marketing campaigns, social media content, presentations, and marketing assets that strengthened brand consistency across customer touchpoints.</li>
           <li class="moreinfo">– Managed multiple client projects simultaneously while maintaining strong organization, collaboration, and attention to detail.</li>
           <li class="yearsref">2024-2025</li>
-          <li style="font-weight:bold; text-align:left; margin-top:5px;">Research Assistant at OCAD University</li>
+          <li class="resume-role">Research Assistant at OCAD University</li>
           <li class="moreinfo"> – Wrote descriptive alt text for images in a publication to support accessibility and inclusive design standards.</li>
           <li class="moreinfo">– Collaborated with a faculty researcher to ensure visual content was accessible to a broader audience while maintaining contextual accuracy.</li>
           <li class="yearsref">2020-2022</li>
-          <li style="font-weight:bold; text-align:left; margin-top:5px;">Graphic Design & Digital Marketing Intern at Company Coco do Vale</li>
+          <li class="resume-role">Graphic Design & Digital Marketing Intern at Company Coco do Vale</li>
           <li class="moreinfo"> - Worked with a digital marketing studio to create content for the company's social;</li>
           <li class="moreinfo"> - Supervised a year-long process of rebranding which included approving and reviewing over a dozen different packaging designs and colour palettes;</li>
           <li class="moreinfo"> - Organized data from socials and hosted meetings to improve and adapt produced content.</li>
           <li class="yearsref">2018-2019</li>
-          <li style="font-weight:bold; text-align:left; margin-top:5px;">Art Therapy Intern at the Pernambucan University of Health (FPS)</li>
-          <li style="text-align:justify; margin-top:5px;"> - Worked at a children's hospital IMIP, focusing in art therapy;</li>
-          <li style="text-align:justify; margin-top:5px;"> - Wrote a children's book about navigating the challenges of growing up chronically ill;</li>
-          <li style="text-align:justify; margin-top:5px;"> - Assisted professionals with craft workshops for addicts during a rotation at a rehab center.</li>
+          <li class="resume-role">Art Therapy Intern at the Pernambucan University of Health (FPS)</li>
+          <li class="resume-detail justified"> - Worked at a children's hospital IMIP, focusing in art therapy;</li>
+          <li class="resume-detail justified"> - Wrote a children's book about navigating the challenges of growing up chronically ill;</li>
+          <li class="resume-detail justified"> - Assisted professionals with craft workshops for addicts during a rotation at a rehab center.</li>
         </ul>
 
         <h2 class="title-resume">Languages</h2>
-        <ul style="list-style:none; padding-left:0;">
+        <ul class="resume-list">
           <li class="yearsref">English</li>
           <li class="yearsref">Portuguese</li>
           <li class="yearsref">Spanish</li>
@@ -530,9 +579,9 @@
       </header>
     </section>
 
-    <section id="work" style="flex:2;">
+    <section id="work">
       <header>
-        <h1 class="section-title" style="font-weight:800;">WORK.</h1>
+        <h1 class="section-title">WORK.</h1>
         <div class="filters">
           <button type="button" data-filter="all" class="active">All</button>
           <button type="button" data-filter="branding">Branding</button>
@@ -560,6 +609,7 @@
           <h2>Poetry Films Inc.</h2>
         </div>
          <div class="project" data-category="branding"
+          data-title="Poetry Films Inc. (Brand Launch)"
           data-description="<h3>About</h3>
           <p>This project was proposed in a course called Strategic Branding during my bachelor's at OCAD University. This section was the final slideshow document for the proposal to implement the designed branding. Refer to the images for more details.</p>
           <h3>Positioning & Attributes</h3>
@@ -568,7 +618,7 @@
           <h3>Logo Design Concept</h3>
           <p>This logo emphasizes the Key Attribute of being Classic, while also incorporating two Valued Attributes: Smart and Sophisticated. The icon at the center represents a camera lens, and the two smaller elements are stylized quotation marks. These marks were derived from the classic calligraphic typeface Parfumerie Script, referencing the iconic “The End” often seen in vintage films. The chosen color palette—featuring red/orange and blue/green—pays homage to Kinemacolor, one of the earliest color processes used in cinema.</p>"
           data-images="sales_brandlaunchfinal/sales_brandlaunchfinal-01.png,sales_brandlaunchfinal/sales_brandlaunchfinal-02.png,sales_brandlaunchfinal/sales_brandlaunchfinal-03.png,sales_brandlaunchfinal/sales_brandlaunchfinal-04.png,sales_brandlaunchfinal/sales_brandlaunchfinal-05.png,sales_brandlaunchfinal/sales_brandlaunchfinal-06.png,sales_brandlaunchfinal/sales_brandlaunchfinal-07.png,sales_brandlaunchfinal/sales_brandlaunchfinal-08.png,sales_brandlaunchfinal/sales_brandlaunchfinal-09.png,sales_brandlaunchfinal/sales_brandlaunchfinal-10.png,sales_brandlaunchfinal/sales_brandlaunchfinal-11.png,sales_brandlaunchfinal/sales_brandlaunchfinal-12.png,sales_brandlaunchfinal/sales_brandlaunchfinal-13.png,sales_brandlaunchfinal/sales_brandlaunchfinal-14.png,sales_brandlaunchfinal/sales_brandlaunchfinal-15.png,sales_brandlaunchfinal/sales_brandlaunchfinal-16.png,sales_brandlaunchfinal/sales_brandlaunchfinal-17.png,sales_brandlaunchfinal/sales_brandlaunchfinal-18.png,sales_brandlaunchfinal/sales_brandlaunchfinal-19.png">
-          <img src="poetry/poetry4website-01.jpg" alt="Poetry Films Inc.">
+          <img src="sales_brandlaunchfinal/sales_brandlaunchfinal-06.png" alt="Poetry Films Inc.">
           <p class="label">Branding</p>
           <h2>Poetry Films Inc.</h2>
           <h2>(Brand Launch)</h2>
@@ -684,281 +734,304 @@
   <div class="modal" id="projectModal" aria-hidden="true">
     <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <button class="modal-close" type="button" aria-label="Close modal">×</button>
-<div id="galleryMount"></div>
 
-<div class="modal-text">
-    <div class="modal-title-row">
-    <div id="modalTitleContainer"></div>
-</div>
+      <div id="galleryMount"></div>
 
-    <div id="modalDesc"></div>
-</div>
+      <div class="modal-text">
+        <div class="modal-title-row">
+          <div id="modalTitleContainer"></div>
+        </div>
+
+        <div id="modalDesc"></div>
+      </div>
     </div>
   </div>
 
   <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      const buttons = document.querySelectorAll('.filters button');
-      const projects = document.querySelectorAll('.project');
+    window.addEventListener("DOMContentLoaded", () => {
+      const SLIDESHOW_DELAY = 3000;
 
-      const modal = document.getElementById('projectModal');
-      const modalDesc = document.getElementById('modalDesc');
-      const closeBtn = modal.querySelector('.modal-close');
-      const galleryMount = document.getElementById('galleryMount');
+      const ICONS = {
+        pause: `
+          <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+            <rect x="2" y="1" width="2.5" height="10" rx="1" fill="currentColor"></rect>
+            <rect x="7.5" y="1" width="2.5" height="10" rx="1" fill="currentColor"></rect>
+          </svg>
+        `,
+        play: `
+          <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+            <polygon points="2,1 10,6 2,11" fill="currentColor"></polygon>
+          </svg>
+        `
+      };
 
-      // Theme toggle + logo swap
-      const themeToggle = document.getElementById('themeToggle');
-      const siteLogo = document.getElementById('siteLogo');
+      const filterButtons = document.querySelectorAll(".filters button");
+      const projects = document.querySelectorAll(".project");
+
+      const modal = document.getElementById("projectModal");
+      const modalDesc = document.getElementById("modalDesc");
+      const modalTitleContainer = document.getElementById("modalTitleContainer");
+      const closeBtn = modal.querySelector(".modal-close");
+      const galleryMount = document.getElementById("galleryMount");
+
+      const themeToggle = document.getElementById("themeToggle");
+      const siteLogo = document.getElementById("siteLogo");
 
       let lastFocusedEl = null;
       let currentImages = [];
-      let slideshow;
+      let slideshow = null;
 
-      function applyTheme(isNight){
-        document.body.classList.toggle('night-mode', isNight);
+      function setTheme(isNight) {
+        document.body.classList.toggle("night-mode", isNight);
 
-        if (siteLogo){
+        if (siteLogo) {
           siteLogo.src = isNight ? siteLogo.dataset.night : siteLogo.dataset.day;
         }
 
-        try { localStorage.setItem('theme', isNight ? 'night' : 'day'); } catch (e) {}
+        try {
+          localStorage.setItem("theme", isNight ? "night" : "day");
+        } catch (error) {
+          /* localStorage may be unavailable in some privacy modes */
+        }
       }
 
-      try {
-        const saved = localStorage.getItem('theme');
-        if (saved === 'night') applyTheme(true);
-        else applyTheme(false);
-      } catch (e) {
-        applyTheme(false);
+      function loadSavedTheme() {
+        try {
+          setTheme(localStorage.getItem("theme") === "night");
+        } catch (error) {
+          setTheme(false);
+        }
       }
 
-      if (themeToggle){
-        themeToggle.addEventListener('click', () => {
-          const isNight = document.body.classList.contains('night-mode');
-          applyTheme(!isNight);
-        });
+      function parseImageList(project) {
+        return (project.dataset.images || "")
+          .split(",")
+          .map((src) => src.trim())
+          .filter(Boolean);
       }
 
-      function buildGallery(images, title){
-  galleryMount.innerHTML = '';
-  currentImages = (images || []).filter(Boolean);
+      function createGalleryButton(label, content) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.innerHTML = content;
+        button.setAttribute("aria-label", label);
+        return button;
+      }
 
-  if (!currentImages.length){
-    const empty = document.createElement('div');
-    empty.className = 'gallery-empty';
-    empty.textContent = 'No images available.';
-    galleryMount.appendChild(empty);
-    return;
-  }
-
-  let currentIndex = 0;
-  let isPaused = false;
-
-  const scroller = document.createElement('div');
-  scroller.className = 'gallery-scroll';
-  scroller.setAttribute('aria-label', `${title} gallery`);
-
-  const items = currentImages.map((src, i) => {
-    const item = document.createElement('div');
-    item.className = i === 0 ? 'gallery-item active' : 'gallery-item';
-
-    const img = document.createElement('img');
-    img.loading = 'lazy';
-    img.src = src;
-    img.alt = `${title} — image ${i + 1}`;
-
-    item.appendChild(img);
-    scroller.appendChild(item);
-
-    return item;
-  });
-
-  const nav = document.createElement('div');
-  nav.className = 'gallery-nav';
-
-  const prevBtn = document.createElement('button');
-  prevBtn.type = 'button';
-  prevBtn.innerHTML = '‹';
-  prevBtn.setAttribute('aria-label', 'Previous image');
-
-  const counter = document.createElement('div');
-counter.className = 'gallery-dots';
-
-const dots = currentImages.map((_, i) => {
-    const dot = document.createElement('span');
-    dot.className = i === 0 ? 'gallery-dot active' : 'gallery-dot';
-    counter.appendChild(dot);
-    return dot;
-});
-
-  const nextBtn = document.createElement('button');
-  nextBtn.type = 'button';
-  nextBtn.innerHTML = '›';
-  nextBtn.setAttribute('aria-label', 'Next image');
-  
-  const pauseBtn = document.createElement('button');
-  pauseBtn.type = 'button';
-  pauseBtn.innerHTML = `
-  <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
-  <rect x="2" y="1" width="2.5" height="10" rx="1" fill="currentColor"/>
-  <rect x="7.5" y="1" width="2.5" height="10" rx="1" fill="currentColor"/>
-  </svg>`;
-  pauseBtn.setAttribute('aria-label', 'Pause slideshow');
-
-  function showImage(index){
-    items[currentIndex].classList.remove('active');
-    currentIndex = (index + items.length) % items.length;
-    items[currentIndex].classList.add('active');
-    dots.forEach(dot => dot.classList.remove('active'));
-    dots[currentIndex].classList.add('active');
-  }
-
-  function restartSlideshow(){
-    clearInterval(slideshow);
-
-    if (!isPaused) {
-        slideshow = setInterval(() => {
-            showImage(currentIndex + 1);
-        }, 3000);
-    }
-}
-
-prevBtn.addEventListener('click', () => {
-    showImage(currentIndex - 1);
-    restartSlideshow();
-});
-
-nextBtn.addEventListener('click', () => {
-    showImage(currentIndex + 1);
-    restartSlideshow();
-});
-pauseBtn.addEventListener('click', () => {
-    isPaused = !isPaused;
-
-    if (isPaused) {
+      function stopSlideshow() {
         clearInterval(slideshow);
-        pauseBtn.innerHTML = `
-        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
-        <polygon points="2,1 10,6 2,11" fill="currentColor"/>
-        </svg>`;
-    } else {
-        pauseBtn.innerHTML = `
-<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
-  <rect x="2" y="1" width="2.5" height="10" rx="1" fill="currentColor"/>
-  <rect x="7.5" y="1" width="2.5" height="10" rx="1" fill="currentColor"/>
-</svg>`;
-        pauseBtn.setAttribute('aria-label', 'Pause slideshow');
-        restartSlideshow();
-    }
-});
-nav.appendChild(prevBtn);
-nav.appendChild(pauseBtn);
-nav.appendChild(counter);
-nav.appendChild(nextBtn);
+        slideshow = null;
+      }
 
-  galleryMount.appendChild(scroller);
-galleryMount.appendChild(nav);
+      function buildGallery(images, title) {
+        galleryMount.innerHTML = "";
+        currentImages = (images || []).filter(Boolean);
 
-restartSlideshow();
-  }
+        if (!currentImages.length) {
+          const empty = document.createElement("div");
+          empty.className = "gallery-empty";
+          empty.textContent = "No images available.";
+          galleryMount.appendChild(empty);
+          return;
+        }
 
-      function applyFilter(category){
-        projects.forEach(project => {
-          const matches = category === 'all' || project.dataset.category === category;
-          project.classList.toggle('hidden', !matches);
+        let currentIndex = 0;
+        let isPaused = false;
+
+        const scroller = document.createElement("div");
+        scroller.className = "gallery-scroll";
+        scroller.setAttribute("aria-label", `${title} gallery`);
+
+        const items = currentImages.map((src, index) => {
+          const item = document.createElement("div");
+          item.className = index === 0 ? "gallery-item active" : "gallery-item";
+
+          const img = document.createElement("img");
+          img.loading = "lazy";
+          img.src = src;
+          img.alt = `${title} — image ${index + 1}`;
+
+          item.appendChild(img);
+          scroller.appendChild(item);
+          return item;
+        });
+
+        const nav = document.createElement("div");
+        nav.className = "gallery-nav";
+
+        const prevBtn = createGalleryButton("Previous image", "‹");
+        const nextBtn = createGalleryButton("Next image", "›");
+        const pauseBtn = createGalleryButton("Pause slideshow", ICONS.pause);
+
+        const dotsContainer = document.createElement("div");
+        dotsContainer.className = "gallery-dots";
+
+        const dots = currentImages.map((_, index) => {
+          const dot = document.createElement("span");
+          dot.className = index === 0 ? "gallery-dot active" : "gallery-dot";
+          dotsContainer.appendChild(dot);
+          return dot;
+        });
+
+        function showImage(index) {
+          items[currentIndex].classList.remove("active");
+          dots[currentIndex].classList.remove("active");
+
+          currentIndex = (index + items.length) % items.length;
+
+          items[currentIndex].classList.add("active");
+          dots[currentIndex].classList.add("active");
+        }
+
+        function startSlideshow() {
+          stopSlideshow();
+
+          if (!isPaused) {
+            slideshow = setInterval(() => {
+              showImage(currentIndex + 1);
+            }, SLIDESHOW_DELAY);
+          }
+        }
+
+        prevBtn.addEventListener("click", () => {
+          showImage(currentIndex - 1);
+          startSlideshow();
+        });
+
+        nextBtn.addEventListener("click", () => {
+          showImage(currentIndex + 1);
+          startSlideshow();
+        });
+
+        pauseBtn.addEventListener("click", () => {
+          isPaused = !isPaused;
+
+          pauseBtn.innerHTML = isPaused ? ICONS.play : ICONS.pause;
+          pauseBtn.setAttribute(
+            "aria-label",
+            isPaused ? "Play slideshow" : "Pause slideshow"
+          );
+
+          if (isPaused) {
+            stopSlideshow();
+          } else {
+            startSlideshow();
+          }
+        });
+
+        nav.append(prevBtn, pauseBtn, dotsContainer, nextBtn);
+        galleryMount.append(scroller, nav);
+
+        startSlideshow();
+      }
+
+      function applyFilter(category) {
+        projects.forEach((project) => {
+          const matches = category === "all" || project.dataset.category === category;
+          project.classList.toggle("hidden", !matches);
         });
       }
 
-      buttons.forEach(button => {
-        button.addEventListener('click', () => {
-          buttons.forEach(b => b.classList.remove('active'));
-          button.classList.add('active');
-          applyFilter(button.dataset.filter);
-        });
-      });
+      function renderModalTitle(project, title) {
+        if (!project.dataset.link) {
+          modalTitleContainer.innerHTML = `<h2>${title}</h2>`;
+          return;
+        }
 
-      function openModalFromProject(project){
+        modalTitleContainer.innerHTML = `
+          <h2>
+            <a href="${project.dataset.link}" class="project-title-link" target="_blank" rel="noopener">
+              ${title}
+              <span class="project-link-arrow">↗</span>
+            </a>
+          </h2>
+        `;
+      }
+
+      function openModalFromProject(project) {
         lastFocusedEl = document.activeElement;
 
-        const title = project.querySelector('h2')?.textContent?.trim() || 'Project';
-        const descriptionHTML = project.dataset.description || '';
-        const imageList = project.dataset.images
-          ? project.dataset.images.split(',').map(s => s.trim()).filter(Boolean)
-          : [];
+        const title = project.dataset.title || project.querySelector("h2")?.textContent?.trim() || "Project";
+        const descriptionHTML = project.dataset.description || "";
+        const imageList = parseImageList(project);
 
-        const modalTitleContainer = document.getElementById("modalTitleContainer");
-
-if (project.dataset.link) {
-modalTitleContainer.innerHTML = `
-    <h2>
-        <a href="${project.dataset.link}"
-           class="project-title-link"
-           target="_blank"
-           rel="noopener">
-            ${title}
-            <span class="project-link-arrow">↗</span>
-        </a>
-    </h2>
-`;
-} else {
-    modalTitleContainer.innerHTML = `
-        <h2>${title}</h2>
-    `;
-}
+        renderModalTitle(project, title);
         modalDesc.innerHTML = descriptionHTML;
-
         buildGallery(imageList, title);
 
-        modal.classList.add('open');
-        modal.setAttribute('aria-hidden', 'false');
-        document.body.classList.add('modal-open');
+        modal.classList.add("open");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.classList.add("modal-open");
 
         requestAnimationFrame(() => closeBtn.focus());
       }
 
-      projects.forEach(project => {
-        project.setAttribute('tabindex', '0');
-        project.addEventListener('click', () => openModalFromProject(project));
-        project.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
+      function closeModal() {
+        stopSlideshow();
+
+        modal.classList.remove("open");
+        modal.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("modal-open");
+
+        galleryMount.innerHTML = "";
+        currentImages = [];
+
+        if (lastFocusedEl && typeof lastFocusedEl.focus === "function") {
+          lastFocusedEl.focus();
+        }
+      }
+
+      loadSavedTheme();
+
+      if (themeToggle) {
+        themeToggle.addEventListener("click", () => {
+          setTheme(!document.body.classList.contains("night-mode"));
+        });
+      }
+
+      filterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          filterButtons.forEach((item) => item.classList.remove("active"));
+          button.classList.add("active");
+          applyFilter(button.dataset.filter);
+        });
+      });
+
+      projects.forEach((project) => {
+        project.setAttribute("tabindex", "0");
+
+        project.addEventListener("click", () => openModalFromProject(project));
+
+        project.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
             openModalFromProject(project);
           }
         });
       });
 
-      function closeModal(){
-        clearInterval(slideshow);
-        modal.classList.remove('open');
-        modal.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('modal-open');
+      closeBtn.addEventListener("click", closeModal);
 
-        galleryMount.innerHTML = '';
-        currentImages = [];
-
-        if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') {
-          lastFocusedEl.focus();
-        }
-      }
-
-      closeBtn.addEventListener('click', closeModal);
-
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-      });
-
-      document.addEventListener('keydown', (e) => {
-        const isOpen = modal.classList.contains('open');
-        if (!isOpen) return;
-
-        if (e.key === 'Escape') {
-          e.preventDefault();
+      modal.addEventListener("click", (event) => {
+        if (event.target === modal) {
           closeModal();
         }
       });
 
-      applyFilter('all');
+      document.addEventListener("keydown", (event) => {
+        if (!modal.classList.contains("open")) return;
+
+        if (event.key === "Escape") {
+          event.preventDefault();
+          closeModal();
+        }
+      });
+
+      applyFilter("all");
     });
   </script>
+  <footer class="site-credit">
+    Designed, developed & coded by Esther Sales
+</footer>
 </body>
 </html>
