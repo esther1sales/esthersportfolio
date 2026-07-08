@@ -441,7 +441,17 @@
 .project-title-link:hover{
     opacity:.7;
 }
+.project-link-arrow{
+    display:inline-block;
+    margin-left:0.2em;
+    font-size:0.7em;
+    line-height:1;
+    transition:transform .2s ease;
+}
 
+.project-title-link:hover .project-link-arrow{
+    transform:translate(2px,-2px);
+}
 .project-title-link h2{
     margin:0;
 }
@@ -549,7 +559,20 @@
           <p class="label">Branding</p>
           <h2>Poetry Films Inc.</h2>
         </div>
-
+         <div class="project" data-category="branding"
+          data-description="<h3>About</h3>
+          <p>This project was proposed in a course called Strategic Branding during my bachelor's at OCAD University. This section was the final slideshow document for the proposal to implement the designed branding. Refer to the images for more details.</p>
+          <h3>Positioning & Attributes</h3>
+          <p>Entertaining art.
+            Our canvas is the screen, our palette is life. Poetry is committed to creating provocative, intelligent movies that entertain. We will partner with the brightest and most talented artists, writers, directors, actors and others to create movies that will be seen as iconic and classic movies of their era. </p>
+          <h3>Logo Design Concept</h3>
+          <p>This logo emphasizes the Key Attribute of being Classic, while also incorporating two Valued Attributes: Smart and Sophisticated. The icon at the center represents a camera lens, and the two smaller elements are stylized quotation marks. These marks were derived from the classic calligraphic typeface Parfumerie Script, referencing the iconic “The End” often seen in vintage films. The chosen color palette—featuring red/orange and blue/green—pays homage to Kinemacolor, one of the earliest color processes used in cinema.</p>"
+          data-images="sales_brandlaunchfinal/sales_brandlaunchfinal-01.png,sales_brandlaunchfinal/sales_brandlaunchfinal-02.png,sales_brandlaunchfinal/sales_brandlaunchfinal-03.png,sales_brandlaunchfinal/sales_brandlaunchfinal-04.png,sales_brandlaunchfinal/sales_brandlaunchfinal-05.png,sales_brandlaunchfinal/sales_brandlaunchfinal-06.png,sales_brandlaunchfinal/sales_brandlaunchfinal-07.png,sales_brandlaunchfinal/sales_brandlaunchfinal-08.png,sales_brandlaunchfinal/sales_brandlaunchfinal-09.png,sales_brandlaunchfinal/sales_brandlaunchfinal-10.png,sales_brandlaunchfinal/sales_brandlaunchfinal-11.png,sales_brandlaunchfinal/sales_brandlaunchfinal-12.png,sales_brandlaunchfinal/sales_brandlaunchfinal-13.png,sales_brandlaunchfinal/sales_brandlaunchfinal-14.png,sales_brandlaunchfinal/sales_brandlaunchfinal-15.png,sales_brandlaunchfinal/sales_brandlaunchfinal-16.png,sales_brandlaunchfinal/sales_brandlaunchfinal-17.png,sales_brandlaunchfinal/sales_brandlaunchfinal-18.png,sales_brandlaunchfinal/sales_brandlaunchfinal-19.png">
+          <img src="poetry/poetry4website-01.jpg" alt="Poetry Films Inc.">
+          <p class="label">Branding</p>
+          <h2>Poetry Films Inc.</h2>
+          <h2>(Brand Launch)</h2>
+        </div>
         <div class="project" data-category="branding"
           data-description="<h3>About</h3>
           <p>This project is part of a course at OCAD University called Packaging Design 1. We were given three options of products to design: beer, whiskey or maple syrup.</p>
@@ -560,7 +583,7 @@
           <p>Since the company wanted to launch a special edition of beer related to Canada, the design focuses on the different provinces in the country. A total of 13 different designs were made, one for each province.
             The designs consist of patterns made inspired by cartography drawings, gradients and the provinces logo, as well as initials, located on the top right corner of the label. Every design is unique to that province, but it is intended to be repeated, since the cans are supposed to be collectables.
           </p>"
-          data-images="N49/n49mockup1main.jpg,N49/n49mockup2.jpg,N49/n49mockup3.jpg">
+          data-images="N49/n49mockup1main.jpg,N49/n49mockup2.jpg,N49/n49mockup3.jpg,N49/n49sketches.png">
           <img src="N49/n49mockup1main.jpg" alt="Beer, N49">
           <p class="label">Packaging</p>
           <h2>Beer, N49</h2>
@@ -729,6 +752,7 @@
   }
 
   let currentIndex = 0;
+  let isPaused = false;
 
   const scroller = document.createElement('div');
   scroller.className = 'gallery-scroll';
@@ -771,6 +795,15 @@ const dots = currentImages.map((_, i) => {
   nextBtn.type = 'button';
   nextBtn.innerHTML = '›';
   nextBtn.setAttribute('aria-label', 'Next image');
+  
+  const pauseBtn = document.createElement('button');
+  pauseBtn.type = 'button';
+  pauseBtn.innerHTML = `
+  <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+  <rect x="2" y="1" width="2.5" height="10" rx="1" fill="currentColor"/>
+  <rect x="7.5" y="1" width="2.5" height="10" rx="1" fill="currentColor"/>
+  </svg>`;
+  pauseBtn.setAttribute('aria-label', 'Pause slideshow');
 
   function showImage(index){
     items[currentIndex].classList.remove('active');
@@ -782,10 +815,13 @@ const dots = currentImages.map((_, i) => {
 
   function restartSlideshow(){
     clearInterval(slideshow);
-    slideshow = setInterval(() => {
-        showImage(currentIndex + 1);
-    }, 3000); // change every 5 seconds
-  }
+
+    if (!isPaused) {
+        slideshow = setInterval(() => {
+            showImage(currentIndex + 1);
+        }, 3000);
+    }
+}
 
 prevBtn.addEventListener('click', () => {
     showImage(currentIndex - 1);
@@ -796,10 +832,29 @@ nextBtn.addEventListener('click', () => {
     showImage(currentIndex + 1);
     restartSlideshow();
 });
+pauseBtn.addEventListener('click', () => {
+    isPaused = !isPaused;
 
-  nav.appendChild(prevBtn);
-  nav.appendChild(counter);
-  nav.appendChild(nextBtn);
+    if (isPaused) {
+        clearInterval(slideshow);
+        pauseBtn.innerHTML = `
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+        <polygon points="2,1 10,6 2,11" fill="currentColor"/>
+        </svg>`;
+    } else {
+        pauseBtn.innerHTML = `
+<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+  <rect x="2" y="1" width="2.5" height="10" rx="1" fill="currentColor"/>
+  <rect x="7.5" y="1" width="2.5" height="10" rx="1" fill="currentColor"/>
+</svg>`;
+        pauseBtn.setAttribute('aria-label', 'Pause slideshow');
+        restartSlideshow();
+    }
+});
+nav.appendChild(prevBtn);
+nav.appendChild(pauseBtn);
+nav.appendChild(counter);
+nav.appendChild(nextBtn);
 
   galleryMount.appendChild(scroller);
 galleryMount.appendChild(nav);
@@ -841,6 +896,7 @@ modalTitleContainer.innerHTML = `
            target="_blank"
            rel="noopener">
             ${title}
+            <span class="project-link-arrow">↗</span>
         </a>
     </h2>
 `;
