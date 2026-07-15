@@ -435,6 +435,22 @@
       object-fit: contain;
     }
 
+    .gallery-item video {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 12px;
+      background: #000;
+      object-fit: contain;
+    }
+
+    .gallery-item.is-video {
+      pointer-events: auto;
+    }
+
+
     .gallery-nav {
       display: flex;
       align-items: center;
@@ -587,7 +603,7 @@
           <button type="button" data-filter="branding">Branding</button>
           <button type="button" data-filter="publications">Publications</button>
           <button type="button" data-filter="websites">Websites</button>
-          <button type="button" data-filter="posters">Posters</button>
+          <button type="button" data-filter="motion">Motion</button>
         </div>
       </header>
 
@@ -636,7 +652,18 @@
           <p class="label">Packaging</p>
           <h2>Beer, N49</h2>
         </div>
-
+        <div class="project" data-category="motion"
+          data-media-type="motion"
+          data-video="revolutionproject/revolutionproject.mp4"
+          data-description="<h3>About</h3>
+          <p>When I was given the word Revolution, my first instinct was to explore its political meaning. Rather than following the obvious interpretation, I became interested in its astronomical definition: the movement of a planet around the Sun. That shift in perspective led me to think about time—not just as a way we measure our lives, but as one of the few constants that exists independently of the systems humans have created.
+          Inspired by the final monologue from Lucy (2014), I created a motion typography piece that explores time as a universal force. The project combines kinetic type, abstract visuals, and layered compositions to translate philosophical ideas into an evolving visual narrative, using motion to reinforce the relationship between language, time, and existence.
+          Created entirely in Adobe After Effects, the piece challenged me to think beyond typography as static text and instead use movement, pacing, and composition as storytelling tools.</p>"
+          data-images="revolutionproject/revolutionproject1.jpg,revolutionproject/revolutionproject2.jpg,revolutionproject/revolutionproject3.jpg">
+          <img src="revolutionproject/revolutionproject1.jpg" alt="Revolution: A Motion Study">
+          <p class="label">Motion</p>
+          <h2>Revolution: A Motion Study</h2>
+        </div>
         <div class="project" data-category="publications"
           data-description="<h3>About</h3>
           <p>Neologisms are new words or expressions that have achieved popular or institutional recognition. 
@@ -819,14 +846,14 @@
         slideshow = null;
       }
 
-      function buildGallery(images, title) {
+      function buildGallery(mediaItems, title) {
         galleryMount.innerHTML = "";
-        currentImages = (images || []).filter(Boolean);
+        currentImages = mediaItems.filter((item) => item && item.src);
 
         if (!currentImages.length) {
           const empty = document.createElement("div");
           empty.className = "gallery-empty";
-          empty.textContent = "No images available.";
+          empty.textContent = "No media available.";
           galleryMount.appendChild(empty);
           return;
         }
@@ -838,16 +865,45 @@
         scroller.className = "gallery-scroll";
         scroller.setAttribute("aria-label", `${title} gallery`);
 
-        const items = currentImages.map((src, index) => {
+        const items = currentImages.map((media, index) => {
           const item = document.createElement("div");
           item.className = index === 0 ? "gallery-item active" : "gallery-item";
 
-          const img = document.createElement("img");
-          img.loading = "lazy";
-          img.src = src;
-          img.alt = `${title} — image ${index + 1}`;
+          if (media.type === "video") {
+            item.classList.add("is-video");
 
-          item.appendChild(img);
+            const video = document.createElement("video");
+            video.controls = true;
+            video.playsInline = true;
+            video.preload = "metadata";
+            video.src = media.src;
+            video.setAttribute("aria-label", `${title} video`);
+
+            video.addEventListener("play", () => {
+              stopSlideshow();
+            });
+
+            video.addEventListener("pause", () => {
+              if (currentIndex === index && !isPaused && !video.ended) {
+                startSlideshow();
+              }
+            });
+
+            video.addEventListener("ended", () => {
+              if (currentIndex === index && !isPaused) {
+                startSlideshow();
+              }
+            });
+
+            item.appendChild(video);
+          } else {
+            const img = document.createElement("img");
+            img.loading = "lazy";
+            img.src = media.src;
+            img.alt = `${title} — image ${index + 1}`;
+            item.appendChild(img);
+          }
+
           scroller.appendChild(item);
           return item;
         });
@@ -855,8 +911,8 @@
         const nav = document.createElement("div");
         nav.className = "gallery-nav";
 
-        const prevBtn = createGalleryButton("Previous image", "‹");
-        const nextBtn = createGalleryButton("Next image", "›");
+        const prevBtn = createGalleryButton("Previous item", "‹");
+        const nextBtn = createGalleryButton("Next item", "›");
         const pauseBtn = createGalleryButton("Pause slideshow", ICONS.pause);
 
         const dotsContainer = document.createElement("div");
@@ -869,34 +925,56 @@
           return dot;
         });
 
-        function showImage(index) {
+        function pauseAllVideos(exceptIndex = -1) {
+          items.forEach((item, index) => {
+            if (index === exceptIndex) return;
+            const video = item.querySelector("video");
+            if (video && !video.paused) video.pause();
+          });
+        }
+
+        function getActiveVideo() {
+          return items[currentIndex]?.querySelector("video") || null;
+        }
+
+        function activeVideoIsPlaying() {
+          const video = getActiveVideo();
+          return Boolean(video && !video.paused && !video.ended);
+        }
+
+        function showItem(index) {
           items[currentIndex].classList.remove("active");
           dots[currentIndex].classList.remove("active");
 
           currentIndex = (index + items.length) % items.length;
 
+          pauseAllVideos(currentIndex);
           items[currentIndex].classList.add("active");
           dots[currentIndex].classList.add("active");
+
+          if (activeVideoIsPlaying()) {
+            stopSlideshow();
+          } else if (!isPaused) {
+            startSlideshow();
+          }
         }
 
         function startSlideshow() {
           stopSlideshow();
 
-          if (!isPaused) {
+          if (!isPaused && !activeVideoIsPlaying()) {
             slideshow = setInterval(() => {
-              showImage(currentIndex + 1);
+              showItem(currentIndex + 1);
             }, SLIDESHOW_DELAY);
           }
         }
 
         prevBtn.addEventListener("click", () => {
-          showImage(currentIndex - 1);
-          startSlideshow();
+          showItem(currentIndex - 1);
         });
 
         nextBtn.addEventListener("click", () => {
-          showImage(currentIndex + 1);
-          startSlideshow();
+          showItem(currentIndex + 1);
         });
 
         pauseBtn.addEventListener("click", () => {
@@ -951,9 +1029,24 @@
         const descriptionHTML = project.dataset.description || "";
         const imageList = parseImageList(project);
 
+        const mediaItems = imageList.map((src) => ({
+          type: "image",
+          src
+        }));
+
+        if (
+          project.dataset.mediaType === "motion" &&
+          project.dataset.video
+        ) {
+          mediaItems.unshift({
+            type: "video",
+            src: project.dataset.video
+          });
+        }
+
         renderModalTitle(project, title);
         modalDesc.innerHTML = descriptionHTML;
-        buildGallery(imageList, title);
+        buildGallery(mediaItems, title);
 
         modal.classList.add("open");
         modal.setAttribute("aria-hidden", "false");
@@ -968,6 +1061,10 @@
         modal.classList.remove("open");
         modal.setAttribute("aria-hidden", "true");
         document.body.classList.remove("modal-open");
+
+        galleryMount.querySelectorAll("video").forEach((video) => {
+          video.pause();
+        });
 
         galleryMount.innerHTML = "";
         currentImages = [];
