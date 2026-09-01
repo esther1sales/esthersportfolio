@@ -23,6 +23,7 @@
     :root {
       --cream: #fdf1dd;
       --red: #c61e3b;
+      --body-text: #961f3b;
       --black: #000;
       --overlay: rgba(0, 0, 0, 0.5);
       --card-width: clamp(240px, 30vw, 300px);
@@ -55,6 +56,7 @@
     body.night-mode {
       --cream: #c61e3b;
       --red: #fdf1dd;
+      --body-text: #fdf1dd;
       --overlay: rgba(0, 0, 0, 0.6);
       cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 32 32"><polygon points="0,0 32,16 0,32" fill="%23fdf1dd"/></svg>') 0 0, auto;
     }
@@ -213,6 +215,17 @@
       text-align: left;
     }
 
+
+    /* Body copy colour */
+    .resume-body,
+    .resume-detail,
+    .moreinfo,
+    .project .label,
+    .modal-text p,
+    .gallery-empty {
+      color: var(--body-text);
+    }
+
     /* Filters */
     .filters {
       margin-bottom: 40px;
@@ -338,7 +351,7 @@
     }
 
     .modal-text {
-    width: 100%;
+      width: 100%;
       max-width: 70ch;
       margin-inline: auto;
     }
@@ -578,7 +591,7 @@
           <li class="moreinfo"> – Wrote descriptive alt text for images in a publication to support accessibility and inclusive design standards.</li>
           <li class="moreinfo">– Collaborated with a faculty researcher to ensure visual content was accessible to a broader audience while maintaining contextual accuracy.</li>
           <li class="yearsref">2020-2022</li>
-          <li class="resume-role">Graphic Design & Digital Marketing Intern at Company Coco do Vale</li>
+          <li class="resume-role">Design & Digital Marketing Intern at Company Coco do Vale</li>
           <li class="moreinfo"> - Worked with a digital marketing studio to create content for the company's social;</li>
           <li class="moreinfo"> - Supervised a year-long process of rebranding which included approving and reviewing over a dozen different packaging designs and colour palettes;</li>
           <li class="moreinfo"> - Organized data from socials and hosted meetings to improve and adapt produced content.</li>
