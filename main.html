@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Esther Sales — Main</title>
+  <title>Esther Sales</title>
 
   <meta property="og:title" content="Esther Sales — Graphic Designer" />
-  <meta property="og:description" content="Portfolio of Esther Sales, a Brazilian, Toronto-based graphic designer working with branding, publications, and web design." />
+  <meta property="og:description" content="Portfolio of Esther Sales, a Toronto-based multidisciplinary graphic designer working across branding, print, web, digital and motion design." />
   <meta property="og:image" content="https://esthersportfolio.com/preview.png" />
   <meta property="og:url" content="https://esthersportfolio.com/" />
   <meta property="og:type" content="website" />
@@ -15,7 +15,7 @@
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image">
 
-  <link rel="icon" type="image/png" href="loogos/peersonalloogolight-02.png">
+  <link rel="icon" type="image/png" href="logos/mylogored.png">
   <link rel="stylesheet" href="https://use.typekit.net/zbf7fls.css">
   <link rel="stylesheet" href="https://use.typekit.net/jmg0juy.css">
 
@@ -136,28 +136,28 @@
       padding: clamp(16px, 3vw, 40px);
     }
 
-    #resume {
-      flex: 1 1 380px;
-      max-width: 520px;
-      padding: 0 clamp(16px, 4vw, 40px);
+    #about {
+      flex: 0 1 390px;
+      max-width: 420px;
+      padding: 0 clamp(8px, 2vw, 24px);
     }
 
     #work {
-      flex: 2 1 520px;
-      min-width: 360px;
+      flex: 1 1 760px;
+      min-width: 0;
     }
 
-    @media (max-width: 1050px) {
+    @media (max-width: 1220px) {
       .page {
         justify-content: center;
       }
 
-      #resume,
+      #about,
       #work {
         flex: 0 0 100%;
       }
 
-      #resume {
+      #about {
         max-width: 780px;
         margin-inline: auto;
       }
@@ -170,6 +170,99 @@
       font-size: clamp(40px, 5vw, 64px);
       font-weight: 800;
       text-align: center;
+    }
+
+    #about .section-title {
+    text-align: center;
+    transform: translateX(-2px);
+    }
+    .about-copy {
+      width: 100%;
+      max-width: 38ch;
+      margin-inline: auto;
+    }
+
+    .about-lede {
+      width: 100%;
+      color: var(--body-text);
+      font-size: clamp(16px, 1.5vw, 19px);
+      line-height: 1.55;
+      text-align: justify;
+      text-align-last: left;
+    }
+
+    .about-copy > p + p {
+      margin-top: 18px;
+    }
+
+    .about-copy p {
+      color: var(--body-text);
+      line-height: 1.6;
+    }
+
+    .about-copy > p {
+      width: 100%;
+      text-align: justify;
+      text-align-last: left;
+    }
+
+    .about-meta {
+      display: grid;
+      gap: 8px;
+      margin-top: 26px;
+      padding-top: 18px;
+      border-top: 1px solid var(--red);
+    }
+
+    .about-meta p {
+      margin: 0;
+      text-align: left;
+    }
+
+    .about-meta strong {
+      display: inline-block;
+      min-width: 82px;
+      color: var(--red);
+    }
+
+    .about-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .about-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 14px;
+      border: 1px solid var(--red);
+      border-radius: 999px;
+      color: var(--red);
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .about-link:hover,
+    .about-link:focus-visible {
+      background: var(--red);
+      color: var(--cream);
+      outline: none;
+    }
+
+    @media (max-width: 1220px) {
+      #about .section-title {
+        text-align: center;
+      }
+
+      .about-copy {
+        max-width: 64ch;
+        margin-inline: auto;
+      }
     }
 
     .title-resume {
@@ -383,6 +476,45 @@
       text-align: justify;
     }
 
+    .project-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 18px;
+      margin: 0 0 26px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--red);
+    }
+
+    .project-meta p {
+      margin: 0;
+      text-align: left;
+    }
+
+    .project-meta p:last-child {
+      justify-self: end;
+      text-align: right;
+    }
+
+    .project-meta strong {
+      display: block;
+      margin-bottom: 2px;
+      color: var(--red);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    @media (max-width: 640px) {
+      .project-meta {
+        grid-template-columns: 1fr;
+      }
+
+      .project-meta p:last-child {
+        justify-self: start;
+        text-align: left;
+      }
+    }
+
     .project-title-link {
       display: inline;
       color: inherit;
@@ -549,65 +681,38 @@
 
     <img
       id="siteLogo"
-      src="loogos/peersonalloogolight-02.png"
-      data-day="loogos/peersonalloogolight-02.png"
-      data-night="loogos/mylogocream.png"
+      src="logos/mylogored.png"
+      data-day="logos/mylogored.png"
+      data-night="logos/mylogocream.png"
       alt="Esther Sales Logo"
     >
     <div class="line"></div>
   </div>
 
   <div class="page">
-    <section id="resume">
+    <section id="about">
       <header>
-        <h1 class="section-title">RESUMÉ.</h1>
+        <div class="about-copy">
+          <h1 class="section-title">ABOUT.</h1>
 
-        <h2 class="title-resume">About</h2>
-        <p class="resume-body">
-        Multidisciplinary Graphic Designer with 5+ years of experience across branding, publications, digital marketing and presentations. Skilled in Adobe Creative Suite, Microsoft PowerPoint, Figma, and Canva, with experience creating visual materials across both digital and physical formats. Strong foundation in typography, layout, accessibility and brand consistency. 
-        </p>
+          <p class="about-lede">
+            I’m a multidisciplinary graphic designer interested in how visual communication can make information clearer, more engaging and easier to understand. My work moves across branding, digital experiences, publications and motion, with a strong focus on typography, structure and visual systems.
+          </p>
 
-        <h2 class="title-resume">Education</h2>
-        <ul class="resume-list">
-          <li class="yearsref">2018-2020</li>
-          <li class="resume-detail">Bachelor's Degree in Psychology at the Pernambucan University of Health (FPS), Recife, Brazil;</li>
+          <p>
+            My approach to design starts with understanding what needs to be communicated and who it needs to reach. My background in psychology and digital marketing has shaped the way I think about audience, behaviour and context, while my design practice has taught me how to translate those ideas into visual form. I’m most drawn to projects where I can identify communication gaps, organize complex information and build a visual language that feels intentional and accessible.
+          </p>
 
-          <li class="yearsref">2020-2022</li>
-          <li class="resume-detail">Bachelor's Degree in Digital Marketing at the University of Boa Viagem (FBV), Recife, Brazil;</li>
+          <div class="about-meta">
+            <p><strong>Based in</strong> Toronto, ON</p>
+            <p><strong>Languages</strong> English · Portuguese · Spanish</p>
+          </div>
 
-          <li class="yearsref">2021-2025</li>
-          <li class="resume-detail">Bachelor's Degree in Graphic Design (with Distinction), OCAD University, Toronto, Ontario.</li>
-        </ul>
-
-        <h2 class="title-resume">Experience</h2>
-        <ul class="resume-list">
-                    <li class="yearsref">2021-Present</li>
-          <li class="resume-role">Self-Employed Graphic Designer</li>
-          <li class="moreinfo"> – Developed brand identities and visual systems for clients across multiple industries, creating cohesive designs that strengthened brand recognition.</li>
-          <li class="moreinfo">– Designed websites, digital marketing campaigns, social media content, presentations, and marketing assets that strengthened brand consistency across customer touchpoints.</li>
-          <li class="moreinfo">– Managed multiple client projects simultaneously while maintaining strong organization, collaboration, and attention to detail.</li>
-          <li class="yearsref">2024-2025</li>
-          <li class="resume-role">Research Assistant at OCAD University</li>
-          <li class="moreinfo"> – Wrote descriptive alt text for images in a publication to support accessibility and inclusive design standards.</li>
-          <li class="moreinfo">– Collaborated with a faculty researcher to ensure visual content was accessible to a broader audience while maintaining contextual accuracy.</li>
-          <li class="yearsref">2020-2022</li>
-          <li class="resume-role">Design & Digital Marketing Intern at Company Coco do Vale</li>
-          <li class="moreinfo"> - Worked with a digital marketing studio to create content for the company's social;</li>
-          <li class="moreinfo"> - Supervised a year-long process of rebranding which included approving and reviewing over a dozen different packaging designs and colour palettes;</li>
-          <li class="moreinfo"> - Organized data from socials and hosted meetings to improve and adapt produced content.</li>
-          <li class="yearsref">2018-2019</li>
-          <li class="resume-role">Art Therapy Intern at the Pernambucan University of Health (FPS)</li>
-          <li class="resume-detail justified"> - Worked at a children's hospital IMIP, focusing in art therapy;</li>
-          <li class="resume-detail justified"> - Wrote a children's book about navigating the challenges of growing up chronically ill;</li>
-          <li class="resume-detail justified"> - Assisted professionals with craft workshops for addicts during a rotation at a rehab center.</li>
-        </ul>
-
-        <h2 class="title-resume">Languages</h2>
-        <ul class="resume-list">
-          <li class="yearsref">English</li>
-          <li class="yearsref">Portuguese</li>
-          <li class="yearsref">Spanish</li>
-        </ul>
+          <div class="about-actions">
+            <a class="about-link" href="resumemaster.pdf" target="_blank" rel="noopener">View résumé ↗</a>
+            <a class="about-link" href="mailto:esther1sales@gmail.com">Email me ↗</a>
+          </div>
+        </div>
       </header>
     </section>
 
@@ -625,168 +730,155 @@
 
       <section class="project-grid">
         <div class="project" data-category="branding"
-          data-description="<h3>About</h3>
-          <p>This project was proposed in a course called Strategic Branding during my bachelor's at OCAD University.</p>
-          <h3>Challenge</h3>
-          <p>Establish a visual identity for a startup film company.</p>
-          <h3>Positioning & Attributes</h3>
-          <p>Entertaining art.
-            Our canvas is the screen, our palette is life. Poetry is committed to creating provocative, intelligent movies that entertain. We will partner with the brightest and most talented artists, writers, directors, actors and others to create movies that will be seen as iconic and classic movies of their era. </p>
-          <h3>Logo Design Concept</h3>
-          <p>This logo emphasizes the Key Attribute of being Classic, while also incorporating two Valued Attributes: Smart and Sophisticated. The icon at the center represents a camera lens, and the two smaller elements are stylized quotation marks. These marks were derived from the classic calligraphic typeface Parfumerie Script, referencing the iconic “The End” often seen in vintage films. The chosen color palette—featuring red/orange and blue/green—pays homage to Kinemacolor, one of the earliest color processes used in cinema.</p>"
+          data-title="Poetry Films — Brand Identity"
+          data-description="<div class='project-meta'>
+          <p><strong>Context</strong>OCAD Strategic Branding</p>
+          <p><strong>Deliverable</strong>Visual identity for a startup film company</p>
+          </div>
+          <h3>Brief</h3>
+          <p>The project asked for a visual identity for Poetry Films, a startup film company positioned around intelligent, provocative and entertaining cinema.</p>
+          <h3>Concept</h3>
+          <p>The identity was built around the attributes Classic, Smart and Sophisticated. The central mark references a camera lens while two smaller forms act as stylized quotation marks derived from Parfumerie Script and the visual language of vintage film endings. The red-orange and blue-green palette references Kinemacolor, an early colour process used in cinema.</p>"
           data-images="poetry/poetry4website-01.jpg,poetry/poetry4website-02.jpg,poetry/poetry4website-03.jpg,poetry/poetry4website-04.jpg,poetry/poetry4website-05.jpg,poetry/poetry4website-06.jpg,poetry/poetry4website-07.jpg,poetry/poetry4website-08.jpg,poetry/poetry4website-09.jpg,poetry/poetry4website-10.jpg,poetry/poetry4website-11.jpg">
-          <img src="poetry/poetry4website-01.jpg" alt="Poetry Films Inc.">
+          <img src="poetry/poetry4website-01.jpg" alt="Poetry Films brand identity">
           <p class="label">Branding</p>
-          <h2>Poetry Films Inc.</h2>
+          <h2>Poetry Films — Brand Identity</h2>
         </div>
-           <div class="project" data-category="branding"
-          data-title="Poetry Films Inc. (Brand Launch)"
-          data-description="<h3>About</h3>
-          <p>This project was completed in a group of five as part of a larger brand audit assignment, with each group assigned a different bank to research. Our group was given BMO, and we began by looking at how the brand presented itself across both physical and digital materials. We visited different BMO locations to collect stationery, brochures, and other printed materials, while also conducting extensive online research into the bank’s visual identity, messaging, values, digital presence, and marketing.
-          Using that research, we evaluated how consistently BMO’s identity was being communicated across different formats and identified areas that were working well as well as opportunities for improvement. Our findings were organized into a detailed brand audit document covering the research, observations, and recommendations.
-          Alongside the audit, we were required to create a shorter introductory presentation that summarized key parts of the research. Both deliverables had to feel consistent with BMO’s existing brand, so the visual direction was developed using its recognizable colour palette, typography, imagery, and graphic language rather than introducing an entirely new identity.</p>"
-          data-images="BMObrandaudit/presentationbrandingBMO.jpg, BMObrandaudit/presentationbrandingBMO2.jpg,BMObrandaudit/presentationbrandingBMO3.jpg,BMObrandaudit/presentationbrandingBMO4.jpg,BMObrandaudit/presentationbrandingBMO5.jpg,BMObrandaudit/presentationbrandingBMO6.jpg">
-          <img src="BMObrandaudit/presentationbrandingBMO.jpg" alt="Poetry Films Inc.">
+        <div class="project" data-category="branding"
+          data-title="BMO: Brand Audit"
+          data-description="<div class='project-meta'>
+          <p><strong>Context</strong>Academic group project · team of five</p>
+          <p><strong>Deliverables</strong>Brand audit + introductory presentation</p>
+          </div>
+          <h3>Brief</h3>
+          <p>Our group was assigned BMO and asked to research how the brand presented itself across physical and digital touchpoints. We visited multiple locations to collect stationery, brochures and other printed materials, then expanded that research online to examine the bank’s visual identity, messaging, values, digital presence and marketing.</p>
+          <h3>Approach</h3>
+          <p>We organized the research into a detailed brand audit and a shorter introductory presentation. Both deliverables were designed to remain consistent with BMO’s existing visual language, using its established colour palette, typography, imagery and graphic system rather than introducing a new identity.</p>"
+          data-images="BMObrandaudit/presentationbrandingBMO.jpg,BMObrandaudit/presentationbrandingBMO2.jpg,BMObrandaudit/presentationbrandingBMO3.jpg,BMObrandaudit/presentationbrandingBMO4.jpg,BMObrandaudit/presentationbrandingBMO5.jpg,BMObrandaudit/presentationbrandingBMO6.jpg">
+          <img src="BMObrandaudit/presentationbrandingBMO.jpg" alt="BMO brand audit presentation">
           <p class="label">Branding</p>
           <h2>BMO: Brand Audit</h2>
+        </div>
+        <div class="project" data-category="branding"
+          data-title="Poetry Films — Brand Launch"
+          data-description="<div class='project-meta'>
+          <p><strong>Context</strong>OCAD Strategic Branding</p>
+          <p><strong>Deliverable</strong>Brand launch proposal</p>
           </div>
-         <div class="project" data-category="branding"
-          data-title="Poetry Films Inc. (Brand Launch)"
-          data-description="<h3>About</h3>
-          <p>This project was proposed in a course called Strategic Branding during my bachelor's at OCAD University. This section was the final slideshow document for the proposal to implement the designed branding. Refer to the images for more details.</p>
-          <h3>Positioning & Attributes</h3>
-          <p>Entertaining art.
-            Our canvas is the screen, our palette is life. Poetry is committed to creating provocative, intelligent movies that entertain. We will partner with the brightest and most talented artists, writers, directors, actors and others to create movies that will be seen as iconic and classic movies of their era. </p>
-          <h3>Logo Design Concept</h3>
-          <p>This logo emphasizes the Key Attribute of being Classic, while also incorporating two Valued Attributes: Smart and Sophisticated. The icon at the center represents a camera lens, and the two smaller elements are stylized quotation marks. These marks were derived from the classic calligraphic typeface Parfumerie Script, referencing the iconic “The End” often seen in vintage films. The chosen color palette—featuring red/orange and blue/green—pays homage to Kinemacolor, one of the earliest color processes used in cinema.</p>"
+          <h3>Overview</h3>
+          <p>This project extends the Poetry Films visual identity into a final launch proposal. The presentation demonstrates how the identity could be implemented consistently while preserving the brand’s Classic, Smart and Sophisticated positioning.</p>
+          <h3>System</h3>
+          <p>The launch builds on the same camera-lens and quotation-mark identity, Parfumerie Script reference and Kinemacolor-inspired palette developed for the original brand system, translating those elements into a broader set of branded applications.</p>"
           data-images="sales_brandlaunchfinal/sales_brandlaunchfinal-01.png,sales_brandlaunchfinal/sales_brandlaunchfinal-02.png,sales_brandlaunchfinal/sales_brandlaunchfinal-03.png,sales_brandlaunchfinal/sales_brandlaunchfinal-04.png,sales_brandlaunchfinal/sales_brandlaunchfinal-05.png,sales_brandlaunchfinal/sales_brandlaunchfinal-06.png,sales_brandlaunchfinal/sales_brandlaunchfinal-07.png,sales_brandlaunchfinal/sales_brandlaunchfinal-08.png,sales_brandlaunchfinal/sales_brandlaunchfinal-09.png,sales_brandlaunchfinal/sales_brandlaunchfinal-10.png,sales_brandlaunchfinal/sales_brandlaunchfinal-11.png,sales_brandlaunchfinal/sales_brandlaunchfinal-12.png,sales_brandlaunchfinal/sales_brandlaunchfinal-13.png,sales_brandlaunchfinal/sales_brandlaunchfinal-14.png,sales_brandlaunchfinal/sales_brandlaunchfinal-15.png,sales_brandlaunchfinal/sales_brandlaunchfinal-16.png,sales_brandlaunchfinal/sales_brandlaunchfinal-17.png,sales_brandlaunchfinal/sales_brandlaunchfinal-18.png,sales_brandlaunchfinal/sales_brandlaunchfinal-19.png">
-          <img src="sales_brandlaunchfinal/sales_brandlaunchfinal-01.png" alt="Poetry Films Inc.">
+          <img src="sales_brandlaunchfinal/sales_brandlaunchfinal-01.png" alt="Poetry Films brand launch presentation">
           <p class="label">Branding</p>
-          <h2>Poetry Films Inc.</h2>
-          </div>
+          <h2>Poetry Films — Brand Launch</h2>
+        </div>
         <div class="project" data-category="websites"
           data-link="livingvoices.html"
           data-link-label="Visit Website"
-          data-description="<h3>About</h3>
-          <p>Living Voices is an online archive of videos that speak about Brazilian culture, narratives, history, and other topics. There weren’t many changes to the website in general since I had a pretty clear idea of what I wanted it to look like.</p>
-          <h3>Functionality</h3>
-          <p>The website was designed and coded with accessibility in mind. Since the vertically oriented titles might be too hard to read, a hover function was added, making the title of the videos horizontal and larger to facilitate legibility.
-            The legend for the colour coding system also functions as a filter for the different subjects on the website, making it easier to find similar videos.
-          </p>
+          data-description="<div class='project-meta'>
+          <p><strong>Project</strong>Under the Surface series</p>
+          <p><strong>Deliverable</strong>Interactive coded video archive</p>
+          </div>
+          <h3>Overview</h3>
+          <p>Living Voices is an online archive of videos about Brazilian culture, narratives, history and everyday experience. The project was designed and coded as part of Under the Surface, with an emphasis on keeping the content accessible and easy to explore.</p>
+          <h3>Interaction</h3>
+          <p>Video titles expand from vertical labels into larger horizontal text on hover to improve legibility. The colour-coded legend also works as a filter, allowing visitors to browse General, Narratives, Culture and History without leaving the page.</p>
           <h3>Content</h3>
-          <p>I wanted to keep the content free and easy to access, which is why it was a priority to source the videos directly from YouTube and add them to the website so that people could view them without opening other tabs. It was also a necessity for the content itself not to be reduced to political and historical facts. I want the entire project to include more details about the Brazilian experience and our people.
-            I included the “General” category because there are many videos that speak on racism in Brazil and on the cultural aspects that influenced the way Black people suffer discrimination in the country, even though racism is illegal. Since the project’s goal is also to bring awareness to the issue, I included much content on the subject throughout the experience and all the projects. </p>"
+          <p>The archive draws from openly available YouTube videos and intentionally goes beyond political or historical facts. It includes material about humour, identity, racism, language and cultural experience to present a broader view of Brazil and its people.</p>"
           data-images="livingvoices/screenshot2.png,livingvoices/screenshot3.png,livingvoices/screenshot4.png,livingvoices/livingvoicesmockup2.jpg">
-          <img src="livingvoices/livingvoicesmockup1.jpg" alt="Living Voices">
+          <img src="livingvoices/livingvoicesmockup1.jpg" alt="Living Voices interactive video archive">
           <p class="label">Website</p>
           <h2>Living Voices</h2>
         </div>
         <div class="project" data-category="branding"
-          data-description="<h3>About</h3>
-          <p>This project is part of a course at OCAD University called Packaging Design 1. We were given three options of products to design: beer, whiskey or maple syrup.</p>
+          data-title="Beer, N49"
+          data-description="<div class='project-meta'>
+          <p><strong>Context</strong>OCAD Packaging Design 1</p>
+          <p><strong>Deliverable</strong>Collectible beer packaging system</p>
+          </div>
           <h3>Brief</h3>
-          <p>Molson is launching a new special edition beer into the Canadian Marketplace. This will be a celebration of all things Canadian - This beer is aimed at a younger audience – It will celebrate winter, winter sports, gatherings with friends, Canadian inventions?, Canadian heroes? Provinces? Landmarks? Nature? (LDA – 35yrs).
-            To be consumed – while hanging with friends. It will be a limited series, launched in Winter 2023/24, celebrating our friendships, what makes us proud, and Canada as a country.</p>
+          <p>The assignment proposed a limited-edition Canadian beer aimed at a younger legal-drinking-age audience and built around winter, friendship and Canadian identity.</p>
           <h3>Concept</h3>
-          <p>Since the company wanted to launch a special edition of beer related to Canada, the design focuses on the different provinces in the country. A total of 13 different designs were made, one for each province.
-            The designs consist of patterns made inspired by cartography drawings, gradients and the provinces logo, as well as initials, located on the top right corner of the label. Every design is unique to that province, but it is intended to be repeated, since the cans are supposed to be collectables.
-          </p>"
+          <p>I developed a system of 13 designs, one for each province and territory. Each can combines cartography-inspired patterning, gradients and regional initials so every variation feels distinct while still belonging to one collectible family.</p>"
           data-images="N49/n49mockup1main.jpg,N49/n49mockup2.jpg,N49/n49mockup3.jpg,N49/n49sketches.png">
-          <img src="N49/n49mockup1main.jpg" alt="Beer, N49">
+          <img src="N49/n49mockup1main.jpg" alt="N49 Canadian beer packaging">
           <p class="label">Packaging</p>
           <h2>Beer, N49</h2>
         </div>
         <div class="project" data-category="motion"
           data-media-type="motion"
           data-video="revolutionproject/revolutionproject.mp4"
-          data-description="<h3>About</h3>
-          <p>When the word ‘Revolution’ was presented, I instantly thought of political revolutions. Still, I didn’t want to go through the obvious path, so I decided to join my love for quantum physics and astronomy and go with the astronomical definition of Revolution: The movement of a planet around the Sun. All of the planets in our solar system revolve around the sun. The path of the Earth around the sun, which is one complete cycle of an orbit, is approximately 365.2425 days in length.
-          Since this year is a leap year—meaning the .2425 days become one extra day—I thought it would be interesting to explore the concept further and focus on our way of measuring time.
-          After creating a vision board of what I wanted the video to look like – I wanted something like the movie Mr Nobody (2009). With two different aesthetics that merge without a consistent timeline but include many concepts. I noticed it would be way too intricate for a video with min 20s, so I started exploring other options.
-          When rewatching one of my favourite movies that involve these subjects, Lucy (2014), I realized that the final monologue the main character makes is about the concept of time and how time is the only genuine unit of measurement because, even though it is unfathomable without the numbers we created, it still serves as proof of the existence of matter, when other human-made systems fall flat if the very base of our theories was manufactured.
-          </p>
-          <h3>Revolution: A Motion Study</h3>
-          <p>This booklet is the re-edition of the starting point of the project: a publication that describes and illustrates the Hair Chart.</p>
-          <h3>In Other Words</h3>
-          <p>The first publication to be written and conceptualized, In Other Words, is an archive of terms that are considered racist in Brazil due to its history of slavery. The words generally refer to Brazilian-African traits negatively or as a way to fetishize said traits.</p>
-          <h3>Syncretism</h3>
-          <p>Publication focused on religious and cultural syncretism, going beyond translation (In Other Words being the responsible for that area) and explaining the historic background of objects, deities and practices that came from colonization.</p>
-          <h3>Untranslatable Affections</h3>
-          <p>Publication that explored Brazilian expressions that do not exist in English. The expressions are explained, but not adapted, as the idea is to give them context, not other words.</p>"
+          data-video-poster="revolutionproject/revolutionpreview.png"
+          data-description="<div class='project-meta'>
+          <p><strong>Format</strong>Motion design study</p>
+          <p><strong>Focus</strong>Experimental typography + time</p>
+          </div>
+          <h3>Concept</h3>
+          <p>The prompt was “Revolution.” Rather than approach it politically, I used the astronomical definition: the movement of a planet around the Sun. That shift led the project toward the way we measure time, including the Earth’s 365.2425-day orbit and the extra day created by a leap year.</p>
+          <h3>Development</h3>
+          <p>An early moodboard drew from the fragmented timeline and visual atmosphere of <em>Mr. Nobody</em>. As the concept developed, I narrowed the direction to fit the short format and used the final monologue from <em>Lucy</em> as a conceptual reference for the relationship between time, matter and human-made systems of measurement.</p>"
           data-images="revolutionproject/revolutionproject1.jpg,revolutionproject/revolutionproject2.jpg,revolutionproject/revolutionproject3.jpg">
-          <img src="revolutionproject/revolutionpreview.png" alt="Revolution: A Motion Study">
+          <img src="revolutionproject/revolutionpreview.png" alt="Revolution motion design study">
           <p class="label">Motion</p>
           <h2>Revolution: A Motion Study</h2>
         </div>
         <div class="project" data-category="publications"
-          data-description="<h3>About</h3>
-          <p>Neologisms are new words or expressions that have achieved popular or institutional recognition. 
-            This portion of the project explores the words in Brazilian Portuguese that came from cultural syncretism and/or are untranslatable to English. It also explains expressions that have a racist connotation today, due to their roots in colonization and oppression of Indigenous Brazilians and Afro-Brazilian peoples.
-            At first, Neologisms was my entire thesis. It started as a publication inspired by Literaturas de Cordel, a traditional publication style from the northeast region of Brazil, which consists of hand-stamped illustrations made with linotype. The name of this style of publication can be translated to string books since they are put to dry and sold by being hung from strings.</p>
+          data-title="Neologisms"
+          data-description="<div class='project-meta'>
+          <p><strong>Project</strong>Under the Surface series</p>
+          <p><strong>Format</strong>Publication system</p>
+          </div>
+          <h3>Overview</h3>
+          <p>Neologisms explores Brazilian Portuguese words and expressions shaped by cultural syncretism, untranslatable language and the legacy of colonization. The project began as a publication inspired by <em>Literaturas de Cordel</em>, a traditional publication form from northeastern Brazil.</p>
           <h3>Taxonomy of Textures</h3>
-          <p>This booklet is the re-edition of the starting point of the project: a publication that describes and illustrates the Hair Chart.</p>
+          <p>A publication describing and illustrating the Hair Chart.</p>
           <h3>In Other Words</h3>
-          <p>The first publication to be written and conceptualized, In Other Words, is an archive of terms that are considered racist in Brazil due to its history of slavery. The words generally refer to Brazilian-African traits negatively or as a way to fetishize said traits.</p>
+          <p>An archive of terms with racist histories in Brazil, particularly language connected to slavery and the stereotyping or fetishization of Afro-Brazilian traits.</p>
           <h3>Syncretism</h3>
-          <p>Publication focused on religious and cultural syncretism, going beyond translation (In Other Words being the responsible for that area) and explaining the historic background of objects, deities and practices that came from colonization.</p>
+          <p>A publication tracing the historical context of objects, deities and practices shaped by religious and cultural syncretism.</p>
           <h3>Untranslatable Affections</h3>
-          <p>Publication that explored Brazilian expressions that do not exist in English. The expressions are explained, but not adapted, as the idea is to give them context, not other words.</p>"
+          <p>A publication about Brazilian expressions without direct English equivalents, giving each phrase cultural context rather than forcing a literal translation.</p>"
           data-images="neologisms/taxonomyoftexture.jpg,neologisms/inotherwords.jpg,neologisms/syncretism.jpg,neologisms/untranslatableaffections.jpg">
-          <img src="neologisms/neologismspreview.jpg" alt="Neologisms">
+          <img src="neologisms/neologismspreview.jpg" alt="Neologisms publication series">
           <p class="label">Under the Surface: The Series</p>
           <h2>Neologisms</h2>
         </div>
-              <div class="project" data-category="websites"
+        <div class="project" data-category="websites"
           data-link="culturalfingerprints.html"
           data-link-label="Visit Website"
-          data-description="<h3>About</h3>
-          <p>Digital Fingerprints is one chapter of Under the Surface, a multimedia taxonomy of Brazilian culture that documents the many ways identity is expressed through language, memory, media, and everyday experiences. While each project explores a different cultural lens, Digital Fingerprints investigates Brazil's online identity, celebrating the humour, spontaneity, and visual language that have become defining characteristics of Brazilian internet culture.</p>
-          <h3>Functionality</h3>
-          <p>Designed as an interactive screensaver, the website presents a continuous stream of images associated with the Brazil Aesthetic as they bounce across the screen, evoking the nostalgic movement of classic DVD screensavers. As part of the taxonomy, each image has been catalogued using descriptive tags that appear and change whenever an image collides with the edge of the screen, revealing recurring themes, visual patterns, and cultural references. The website is also interconnected with Living Voices, another archive within the Under the Surface series, allowing visitors to seamlessly navigate between projects and explore different perspectives of Brazilian culture.</p>
-          <h3>Content</h3>
-          <p>The archive brings together a curated collection of visuals that reflect the lighter, more playful side of contemporary Brazilian culture. From nostalgic internet references and everyday humour to recognizable aesthetics and shared digital experiences, the collection transforms seemingly ordinary images into a living visual catalogue. Together, these constantly shifting classifications document the digital fingerprints of a culture that is continuously evolving online.</p>"
+          data-title="Cultural Fingerprints"
+          data-description="<div class='project-meta'>
+          <p><strong>Project</strong>Under the Surface series</p>
+          <p><strong>Deliverable</strong>Interactive coded image archive</p>
+          </div>
+          <h3>Overview</h3>
+          <p>Cultural Fingerprints is a chapter of Under the Surface that documents Brazil’s online identity through humour, nostalgia, visual language and everyday digital culture.</p>
+          <h3>Interaction</h3>
+          <p>The website behaves like an interactive screensaver: archived images bounce across the screen and receive descriptive tags whenever they collide with an edge. The changing classifications reveal recurring cultural themes while keeping the archive playful and continuously in motion.</p>
+          <h3>Connection</h3>
+          <p>The project links directly to Living Voices, allowing visitors to move between two different archives and explore Brazilian culture through both visual references and video narratives.</p>"
           data-images="culturalfingerprints/cp1.png,culturalfingerprints/cp2.png,culturalfingerprints/cp3.png">
-          <img src="culturalfingerprints/previewcf.png" alt="Cultural Fingerprints">
+          <img src="culturalfingerprints/previewcf.png" alt="Cultural Fingerprints interactive archive">
           <p class="label">Website</p>
           <h2>Cultural Fingerprints</h2>
         </div>
-
         <div class="project" data-category="branding"
-          data-description="<h3>About</h3>
-          <p>This project started with a brief generated on goodbrief.io</p>
+          data-title="Keeper"
+          data-description="<div class='project-meta'>
+          <p><strong>Source</strong>Self-directed brief from goodbrief.io</p>
+          <p><strong>Deliverable</strong>Jewelry brand identity</p>
+          </div>
           <h3>Brief</h3>
-          <p>Keeper is a cozy corner shop that sells jewelry. Their main product, known for its affordability and authenticity, is designed to bring comfort and a touch of modernity to their customers, particularly those who live alone.
-            The company had a couple of requirements-the brief requested red in the colour palette and a unique pictorial mark for uniforms and packaging.</p>
+          <p>Keeper is a cozy jewelry shop positioned around affordability, authenticity and comfort. The brief required red in the colour palette and a distinctive pictorial mark that could extend to uniforms and packaging.</p>
           <h3>Concept</h3>
-          <p>In the brief, the company mentions bringing comfort to customers, being a cozy shop and affordability. They also requested a unique pictorial mark and to have red in the palette.
-            With that in mind, the logomark designed represents the name and values of the brand by using two hands to illustrate comfort and authenticity, and the diamond to symbolise modernity and preciousness. The heart part of the design was a coincidence that ended up positively influencing the course of the design.
-            The company also requested the colour red, but I did not want it to be an intimidating shade of red, so I slowly added pink to it, which is also present in the other tone of the palette.</p>"
+          <p>The mark combines two hands with a diamond to communicate comfort, care and preciousness. A softer red-pink palette keeps the required red from feeling intimidating while supporting the warm, approachable character of the brand.</p>"
           data-images="KEEPER PROJECT/keeperimg-14.png,KEEPER PROJECT/keeperimg-15.png,KEEPER PROJECT/keeperimg-16.png,KEEPER PROJECT/keeperimg-17.png,KEEPER PROJECT/keeperimg-18.png">
-          <img src="KEEPER PROJECT/keepermain.jpg" alt="Keeper">
+          <img src="KEEPER PROJECT/keepermain.jpg" alt="Keeper jewelry brand identity">
           <p class="label">Branding</p>
           <h2>Keeper</h2>
         </div>
-
-        <!-- <div class="project" data-category="websites"
-          data-description="<h3>About</h3>
-          <p>As part of the second course of Graphic Design at OCAD University, we were challenged to create a poster without using Adobe Cloud or any other design focused tools. The assignment was meant to build our skills beyond the conventional practices and incentivise us to be resourceful when faced with limitations within our usual tools.</p>
-          <h3>Concept</h3>
-          <p>This website was created as part of a project about Brazilian music. Brazil is mainly known internationally for its soccer, samba, and funk, but it has many other beautiful cultural expressions, primarily music-related. ‘Os Ritmos do Brasil’ (The Rhythms of Brazil) is an archive of the most famous Brazilian genres, their history, and their prominent representatives.</p>"
-          data-images="osritmosdobrasil/osritmosdobrasilprints1.png,osritmosdobrasil/osritmosdobrasilprints5.png,osritmosdobrasil/osritmosdobrasilprints2.png,osritmosdobrasil/osritmosdobrasilprints3.png,osritmosdobrasil/osritmosdobrasilprints4.png">
-          <img src="os_ritmos_do_brasil/osritmosdobrasilmockup.jpg" alt="Os Ritmos do Brasil">
-          <p class="label">Website</p>
-          <h2>Os Ritmos do Brasil</h2>
-      </div> -->
-        <!-- <div class="project" data-category="posters"
-          data-description="<h3>About</h3>
-          <p>As part of the second course of Graphic Design at OCAD University, we were challenged to create a poster without using Adobe Cloud or any other design focused tools. The assignment was meant to build our skills beyond the conventional practices and incentivise us to be resourceful when faced with limitations within our usual tools.</p>
-          <h3>Concept</h3>
-          <p>Using a barcode generator and PowerPoint, I assembled various posters made with the barcodes, which were created by removing words from the essay The Carrier Bag Theory of Fiction by Ursula K. Le Guin, as a metaphor to functionality or weapons in modern days.</p>"
-          data-images="howmuchistoomuch/hmitm-03.jpg,howmuchistoomuch/hmitm-01.jpg,howmuchistoomuch/hmitm-02.jpg,howmuchistoomuch/howmuchistoomuchfinal.jpg">
-          <img src="howmuchistoomuch/howmuchistoomuchmockup.jpg" alt="How Much Is Too Much">
-          <p class="label">Poster</p>
-          <h2>How Much Is Too Much?</h2>
-        </div> -->
       </section>
     </section>
   </div>
@@ -826,6 +918,33 @@
       };
 
       const filterButtons = document.querySelectorAll(".filters button");
+      const projectGrid = document.querySelector(".project-grid");
+
+      const preferredProjectOrder = [
+        "BMO: Brand Audit",
+        "Living Voices",
+        "Revolution: A Motion Study",
+        "Poetry Films — Brand Identity",
+        "Cultural Fingerprints",
+        "Beer, N49",
+        "Poetry Films — Brand Launch",
+        "Neologisms",
+        "Keeper"
+      ];
+
+      if (projectGrid) {
+        const projectCards = Array.from(projectGrid.querySelectorAll(".project"));
+        projectCards
+          .sort((a, b) => {
+            const aTitle = a.querySelector("h2")?.textContent?.trim() || "";
+            const bTitle = b.querySelector("h2")?.textContent?.trim() || "";
+            const aIndex = preferredProjectOrder.indexOf(aTitle);
+            const bIndex = preferredProjectOrder.indexOf(bTitle);
+            return (aIndex === -1 ? 999 : aIndex) - (bIndex === -1 ? 999 : bIndex);
+          })
+          .forEach((card) => projectGrid.appendChild(card));
+      }
+
       const projects = document.querySelectorAll(".project");
 
       const modal = document.getElementById("projectModal");
@@ -846,6 +965,13 @@
 
         if (siteLogo) {
           siteLogo.src = isNight ? siteLogo.dataset.night : siteLogo.dataset.day;
+        }
+
+        if (themeToggle) {
+          themeToggle.setAttribute(
+            "aria-label",
+            isNight ? "Switch to light theme" : "Switch to red theme"
+          );
         }
 
         try {
@@ -913,6 +1039,9 @@
             video.playsInline = true;
             video.preload = "metadata";
             video.src = media.src;
+            if (media.poster) {
+              video.poster = media.poster;
+            }
             video.setAttribute("aria-label", `${title} video`);
 
             video.addEventListener("play", () => {
@@ -1076,7 +1205,8 @@
         ) {
           mediaItems.unshift({
             type: "video",
-            src: project.dataset.video
+            src: project.dataset.video,
+            poster: project.dataset.videoPoster || ""
           });
         }
 
@@ -1127,7 +1257,10 @@
       });
 
       projects.forEach((project) => {
+        const projectTitle = project.querySelector("h2")?.textContent?.trim() || "project";
         project.setAttribute("tabindex", "0");
+        project.setAttribute("role", "button");
+        project.setAttribute("aria-label", `Open ${projectTitle} case study`);
 
         project.addEventListener("click", () => openModalFromProject(project));
 
@@ -1153,6 +1286,28 @@
         if (event.key === "Escape") {
           event.preventDefault();
           closeModal();
+          return;
+        }
+
+        if (event.key === "Tab") {
+          const focusable = Array.from(
+            modal.querySelectorAll(
+              'a[href], button:not([disabled]), video[controls], [tabindex]:not([tabindex="-1"])'
+            )
+          ).filter((element) => element.offsetParent !== null);
+
+          if (!focusable.length) return;
+
+          const first = focusable[0];
+          const last = focusable[focusable.length - 1];
+
+          if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+          } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+          }
         }
       });
 
