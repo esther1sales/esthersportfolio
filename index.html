@@ -59,7 +59,7 @@
     .line {
       position: absolute;
       background-color: #fdf1dd;
-      transition: transform 0.42s ease;
+      transition: transform 0.7s ease;
       pointer-events: none;
     }
 
@@ -149,6 +149,13 @@
       window.setTimeout(() => {
         window.location.replace("main.html");
       }, 980);
+      window.setTimeout(() => {
+  document.body.classList.add("leaving");
+}, 1150);
+
+window.setTimeout(() => {
+  window.location.replace("main.html");
+}, 1350);
     }
   </script>
 </body>
